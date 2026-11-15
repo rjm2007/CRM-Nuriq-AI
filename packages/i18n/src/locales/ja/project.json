@@ -418,6 +418,11 @@
     "prd_page_placeholder": "PRD ページを選択",
     "prd_page_missing": "リンクされた PRD ページは利用できなくなりました。公開ページを選択してください。",
     "open_prd": "PRD を開く",
-    "target_date_past_warning": "目標日が過去の日付です。"
+    "target_date_past_warning": "目標日が今日または過去の日付です。",
+    "target_date_overdue": "期限切れ",
+    "prd_page_missing_short": "ページを利用できません",
+    "prd_page_search_placeholder": "ページを検索...",
+    "prd_page_empty": "このプロジェクトの公開済みかつアーカイブされていないページのみリンクできます",
+    "prd_page_none": "PRD ページなし"
   }
 }

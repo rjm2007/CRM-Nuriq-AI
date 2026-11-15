@@ -418,6 +418,11 @@
     "prd_page_placeholder": "PRD 페이지 선택",
     "prd_page_missing": "연결된 PRD 페이지를 더 이상 사용할 수 없습니다. 공개 페이지를 선택하세요.",
     "open_prd": "PRD 열기",
-    "target_date_past_warning": "목표 날짜가 지났습니다."
+    "target_date_past_warning": "목표 날짜가 오늘이거나 이미 지났습니다.",
+    "target_date_overdue": "기한 초과",
+    "prd_page_missing_short": "페이지를 사용할 수 없음",
+    "prd_page_search_placeholder": "페이지 검색...",
+    "prd_page_empty": "이 프로젝트의 공개되고 보관되지 않은 페이지만 연결할 수 있습니다",
+    "prd_page_none": "PRD 페이지 없음"
   }
 }

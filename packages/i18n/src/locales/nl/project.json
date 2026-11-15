@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Selecteer een PRD-pagina",
     "prd_page_missing": "De gekoppelde PRD-pagina is niet meer beschikbaar. Kies een openbare pagina.",
     "open_prd": "PRD openen",
-    "target_date_past_warning": "De streefdatum ligt in het verleden."
+    "target_date_past_warning": "De streefdatum is vandaag of ligt in het verleden.",
+    "target_date_overdue": "Achterstallig",
+    "prd_page_missing_short": "Pagina niet beschikbaar",
+    "prd_page_search_placeholder": "Pagina's zoeken...",
+    "prd_page_empty": "Alleen openbare, niet-gearchiveerde pagina's van dit project kunnen worden gekoppeld",
+    "prd_page_none": "Geen PRD-pagina"
   }
 }

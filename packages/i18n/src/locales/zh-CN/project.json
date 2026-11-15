@@ -418,6 +418,11 @@
     "prd_page_placeholder": "选择 PRD 页面",
     "prd_page_missing": "关联的 PRD 页面已不可用。请选择一个公开页面。",
     "open_prd": "打开 PRD",
-    "target_date_past_warning": "目标日期已过。"
+    "target_date_past_warning": "目标日期为今天或已过。",
+    "target_date_overdue": "已逾期",
+    "prd_page_missing_short": "页面不可用",
+    "prd_page_search_placeholder": "搜索页面...",
+    "prd_page_empty": "只能关联此项目中公开且未归档的页面",
+    "prd_page_none": "无 PRD 页面"
   }
 }

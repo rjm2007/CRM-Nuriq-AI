@@ -37,3 +37,5 @@ No unit tests in this package yet (no `test` script). `pnpm turbo run check --fi
 ## Our changes (Neuric)
 
 None yet (2026-11-15).
+
+- 2026-11-15: `src/project/target-date.ts` (`isProjectTargetDateOverdue`, see `src/project/CLAUDE.md`), exported from `src/index.ts` as `./project/target-date` (folder sits next to upstream `project.ts`).

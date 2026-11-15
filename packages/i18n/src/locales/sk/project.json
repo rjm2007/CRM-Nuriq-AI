@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Vyberte stránku PRD",
     "prd_page_missing": "Prepojená stránka PRD už nie je dostupná. Vyberte verejnú stránku.",
     "open_prd": "Otvoriť PRD",
-    "target_date_past_warning": "Cieľový dátum je v minulosti."
+    "target_date_past_warning": "Cieľový dátum je dnes alebo v minulosti.",
+    "target_date_overdue": "Po termíne",
+    "prd_page_missing_short": "Stránka nie je dostupná",
+    "prd_page_search_placeholder": "Hľadať stránky...",
+    "prd_page_empty": "Prepojiť možno iba verejné, nearchivované stránky tohto projektu",
+    "prd_page_none": "Bez stránky PRD"
   }
 }

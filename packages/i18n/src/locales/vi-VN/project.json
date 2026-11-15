@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Chọn trang PRD",
     "prd_page_missing": "Trang PRD được liên kết không còn khả dụng. Hãy chọn một trang công khai.",
     "open_prd": "Mở PRD",
-    "target_date_past_warning": "Ngày mục tiêu đã qua."
+    "target_date_past_warning": "Ngày mục tiêu là hôm nay hoặc đã qua.",
+    "target_date_overdue": "Quá hạn",
+    "prd_page_missing_short": "Trang không khả dụng",
+    "prd_page_search_placeholder": "Tìm kiếm trang...",
+    "prd_page_empty": "Chỉ có thể liên kết các trang công khai, chưa lưu trữ của dự án này",
+    "prd_page_none": "Không có trang PRD"
   }
 }

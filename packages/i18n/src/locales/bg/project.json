@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Изберете страница PRD",
     "prd_page_missing": "Свързаната страница PRD вече не е достъпна. Изберете публична страница.",
     "open_prd": "Отваряне на PRD",
-    "target_date_past_warning": "Целевата дата е в миналото."
+    "target_date_past_warning": "Целевата дата е днес или в миналото.",
+    "target_date_overdue": "Просрочен",
+    "prd_page_missing_short": "Страницата не е достъпна",
+    "prd_page_search_placeholder": "Търсене на страници...",
+    "prd_page_empty": "Могат да се свързват само публични, неархивирани страници от този проект",
+    "prd_page_none": "Без страница PRD"
   }
 }

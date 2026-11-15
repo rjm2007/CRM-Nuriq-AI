@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Selectați o pagină PRD",
     "prd_page_missing": "Pagina PRD asociată nu mai este disponibilă. Alegeți o pagină publică.",
     "open_prd": "Deschideți PRD",
-    "target_date_past_warning": "Data țintă este în trecut."
+    "target_date_past_warning": "Data țintă este astăzi sau în trecut.",
+    "target_date_overdue": "Întârziat",
+    "prd_page_missing_short": "Pagină indisponibilă",
+    "prd_page_search_placeholder": "Căutați pagini...",
+    "prd_page_empty": "Pot fi asociate doar paginile publice, nearhivate ale acestui proiect",
+    "prd_page_none": "Nicio pagină PRD"
   }
 }

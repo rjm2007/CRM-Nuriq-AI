@@ -47,3 +47,4 @@ Composite, Plane-specific React components built on `@makeplane/propel` primitiv
 ## Our changes (Neuric)
 
 - 2026-11-15: `PageSelect` (`src/property-select/page-select.tsx` + `page-select.test.tsx`), exported from `@plane/blocks/property-select` with `PageOption`/`PageSelectProps`. Sync-mode single picker: pages come in via `options`, `value` is a page id, `onChange(id | null)`, `missingLabel` when the id is not in `options`.
+- 2026-11-15 (review fixes): `PageSelect` gained `id` (trigger id for `<label htmlFor>`), `clearable`/`clearLabel` (header clear row like `CycleSelect`, emits `null`; re-picking no longer clears) and `contentSizing`; `DateSelect`/`DateRangeSelect` common props gained `id` and `aria-describedby` (on the trigger, `date-select-shell.tsx`). Tests in `page-select.test.tsx`, `date-select.test.tsx`.

@@ -463,6 +463,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
             control={control}
             workspaceSlug={workspaceSlug}
             projectId={projectId}
+            savedPrdPageId={project.prd_page}
             disabled={!isAdmin}
           />
         </div>

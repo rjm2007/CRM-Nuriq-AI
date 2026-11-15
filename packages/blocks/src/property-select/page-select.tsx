@@ -4,10 +4,15 @@
  * See the LICENSE file for details.
  */
 
+import { useMemo } from "react";
 import type { ReactNode } from "react";
+import type { ComboboxContentSizing } from "@makeplane/propel/components/combobox";
 import { PagesOutline } from "@makeplane/propel/icons";
 import { Select } from "../select/select";
 import type { SelectTooltip, SelectVariant } from "../select/types";
+
+/** Id for the clear row — an empty string maps back to `null` via `id || null` (same as `CycleSelect`). */
+const CLEAR_OPTION_ID = "";
 
 /** Minimal page shape the dropdown needs — the client maps its page store record down to this. */
 export type PageOption = {
@@ -21,7 +26,7 @@ export type PageSelectProps = {
   options: PageOption[];
   /** Selected page id, or `null` when none. */
   value: string | null | undefined;
-  /** Emits the picked page id, or `null` when the selection is cleared (re-picking the current page). */
+  /** Emits the picked page id, or `null` when the selection is cleared (the `clearable` row). */
   onChange: (id: string | null) => void;
   /** Controls trigger chrome, button sizing, and arrow visibility. */
   variant: SelectVariant;
@@ -40,6 +45,14 @@ export type PageSelectProps = {
   testId?: string;
   /** Tab order of the trigger, for forms that sequence focus explicitly. */
   tabIndex?: number;
+  /** DOM id of the trigger, so a form `<label htmlFor>` names and focuses it. */
+  id?: string;
+  /** Pins a clear row to the top of the list; picking it emits `null`. Defaults to `false`. */
+  clearable?: boolean;
+  /** Label for the clear row. Defaults to `placeholder`. */
+  clearLabel?: string;
+  /** Dropdown width: `auto` (default) hugs the content, `anchor` matches the trigger. */
+  contentSizing?: ComboboxContentSizing;
 };
 
 /**
@@ -62,11 +75,20 @@ export function PageSelect(props: PageSelectProps) {
     tooltip,
     testId,
     tabIndex,
+    id: triggerId,
+    clearable = false,
+    clearLabel,
+    contentSizing,
   } = props;
 
   const selected = value ? (options.find((page) => page.id === value) ?? null) : null;
   const isMissing = !!value && !selected;
   const emptyLabel = isMissing && missingLabel ? missingLabel : placeholder;
+  const resolvedClearLabel = clearLabel ?? placeholder;
+  const clearOption = useMemo<PageOption>(
+    () => ({ id: CLEAR_OPTION_ID, name: resolvedClearLabel }),
+    [resolvedClearLabel]
+  );
 
   return (
     <Select<PageOption>
@@ -78,14 +100,19 @@ export function PageSelect(props: PageSelectProps) {
       searchPlaceholder={searchPlaceholder}
       emptyMessage={emptyMessage}
       onClose={onClose}
+      contentSizing={contentSizing}
+      headerItems={clearable ? [clearOption] : undefined}
       getOptionValue={(page) => page.id}
       getOptionLabel={(page) => page.name}
-      getOptionIcon={() => <PagesOutline className="size-4 shrink-0 text-secondary" />}
+      getOptionIcon={(page) =>
+        page.id === CLEAR_OPTION_ID ? undefined : <PagesOutline className="size-4 shrink-0 text-secondary" />
+      }
     >
       <Select.Trigger<PageOption>
         disabled={disabled}
         variant={variant}
         tabIndex={tabIndex}
+        id={triggerId}
         className={className}
         data-testid={testId}
         prependIcon={<PagesOutline />}

@@ -65,4 +65,54 @@ describe("PageSelect", () => {
     await user.click(await popup().findByRole("option", { name: /Product spec/ }));
     expect(onChange).toHaveBeenCalledWith("spec");
   });
+
+  it("is named by a form label through `id`", () => {
+    render(
+      <>
+        <label htmlFor="project-prd-page">PRD page</label>
+        <PageSelect options={PAGES} value="spec" onChange={vi.fn()} variant="select-lg" id="project-prd-page" />
+      </>
+    );
+    const trigger = screen.getByLabelText("PRD page");
+    expect(trigger.id).toBe("project-prd-page");
+    expect(trigger.tagName).toBe("BUTTON");
+  });
+
+  it("emits null from the clear row when clearable", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(
+      <PageSelect
+        options={PAGES}
+        value="spec"
+        onChange={onChange}
+        variant="select-lg"
+        placeholder="PRD page"
+        clearable
+        clearLabel="No PRD page"
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /Product spec/ }));
+    await user.click(await popup().findByRole("option", { name: /No PRD page/ }));
+    expect(onChange).toHaveBeenCalledWith(null);
+  });
+
+  it("has no clear row unless clearable", async () => {
+    const user = userEvent.setup();
+    render(
+      <PageSelect
+        options={PAGES}
+        value="spec"
+        onChange={vi.fn()}
+        variant="select-lg"
+        placeholder="PRD page"
+        clearLabel="No PRD page"
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /Product spec/ }));
+    await popup().findByRole("option", { name: /Meeting notes/ });
+    expect(popup().queryByRole("option", { name: /No PRD page/ })).toBeNull();
+  });
 });

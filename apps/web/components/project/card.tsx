@@ -38,7 +38,7 @@ import type { IProject, IUserLite } from "@plane/types";
 import type { TContextMenuItem } from "@plane/blocks/context-menu";
 import { ContextMenu, getRenderableItems, resolveItemVariant } from "@plane/blocks/context-menu";
 import { FavoriteStar } from "@plane/blocks/common";
-import { copyUrlToClipboard, cn, getFileURL, renderFormattedDate } from "@plane/utils";
+import { copyUrlToClipboard, cn, getFileURL, isProjectTargetDateOverdue, renderFormattedDate } from "@plane/utils";
 // components
 // hooks
 import { useMember } from "@/hooks/store/use-member";
@@ -51,7 +51,6 @@ import { CoverImage } from "@/components/common/cover-image";
 import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
 import { ArchiveRestoreProjectModal } from "./archive-restore-modal";
-import { isProjectTargetDatePast } from "./form-target-prd";
 
 type Props = {
   project: IProject;
@@ -107,7 +106,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
   // archive
   const isArchived = !!project.archived_at;
   // Neuric: target date pill, red when overdue on an active project
-  const isTargetDateOverdue = !isArchived && isProjectTargetDatePast(project.target_date);
+  const isTargetDateOverdue = isProjectTargetDateOverdue(project.target_date, isArchived);
   // local storage
   const { setValue: toggleFavoriteMenu, storedValue: isFavoriteMenuOpen } = useLocalStorage<boolean>(
     IS_FAVORITE_MENU_OPEN,
@@ -343,7 +342,12 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                 </div>
               )}
               {project.target_date && (
-                <Tooltip label={t("target_date")} disabled={isMobile}>
+                <Tooltip
+                  label={
+                    isTargetDateOverdue ? `${t("target_date")}: ${t("project.target_date_overdue")}` : t("target_date")
+                  }
+                  disabled={isMobile}
+                >
                   <div
                     data-testid="project-card-target-date"
                     data-overdue={isTargetDateOverdue || undefined}
@@ -353,6 +357,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                   >
                     <CalendarOutline className="size-3.5 shrink-0" />
                     <span>{renderFormattedDate(project.target_date)}</span>
+                    {isTargetDateOverdue && <span className="sr-only">{t("project.target_date_overdue")}</span>}
                   </div>
                 </Tooltip>
               )}

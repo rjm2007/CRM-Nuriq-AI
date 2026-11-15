@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Seleziona una pagina PRD",
     "prd_page_missing": "La pagina PRD collegata non è più disponibile. Scegli una pagina pubblica.",
     "open_prd": "Apri PRD",
-    "target_date_past_warning": "La data obiettivo è nel passato."
+    "target_date_past_warning": "La data obiettivo è oggi o nel passato.",
+    "target_date_overdue": "In ritardo",
+    "prd_page_missing_short": "Pagina non disponibile",
+    "prd_page_search_placeholder": "Cerca pagine...",
+    "prd_page_empty": "Si possono collegare solo pagine pubbliche e non archiviate di questo progetto",
+    "prd_page_none": "Nessuna pagina PRD"
   }
 }

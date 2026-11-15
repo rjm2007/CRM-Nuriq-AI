@@ -29,6 +29,8 @@ export * from "./page";
 export * from "./permission";
 export * from "./project-views";
 export * from "./project";
+// Neuric: `./project/` sits next to upstream `./project.ts`, so import the file directly.
+export * from "./project/target-date";
 export * from "./rich-filters";
 export * from "./router";
 export * from "./string";

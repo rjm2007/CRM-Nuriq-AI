@@ -104,6 +104,7 @@ const ProjectAttributes = observer(function ProjectAttributes(props: Props) {
             clearLabel={t("common.clear")}
             variant="pill-md"
             tabIndex={getIndex("target_date")}
+            testId="create-project-target-date-select"
           />
         )}
       />

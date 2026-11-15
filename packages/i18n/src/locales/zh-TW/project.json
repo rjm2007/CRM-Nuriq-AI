@@ -418,6 +418,11 @@
     "prd_page_placeholder": "選擇 PRD 頁面",
     "prd_page_missing": "連結的 PRD 頁面已無法使用。請選擇一個公開頁面。",
     "open_prd": "開啟 PRD",
-    "target_date_past_warning": "目標日期已過。"
+    "target_date_past_warning": "目標日期為今天或已過。",
+    "target_date_overdue": "已逾期",
+    "prd_page_missing_short": "頁面無法使用",
+    "prd_page_search_placeholder": "搜尋頁面...",
+    "prd_page_empty": "只能連結此專案中公開且未封存的頁面",
+    "prd_page_none": "無 PRD 頁面"
   }
 }

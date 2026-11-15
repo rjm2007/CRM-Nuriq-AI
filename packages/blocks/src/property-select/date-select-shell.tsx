@@ -77,6 +77,10 @@ export type DateSelectCommonProps = {
    * Only read when `showTooltip` is set.
    */
   tooltipContent?: string;
+  /** DOM id of the trigger button, so a form `<label htmlFor>` names and focuses it. */
+  id?: string;
+  /** Id(s) of hint/error text describing the trigger, forwarded as `aria-describedby`. */
+  "aria-describedby"?: string;
 };
 
 type DateSelectShellProps = DateSelectCommonProps & {
@@ -122,6 +126,8 @@ export function DateSelectShell(props: DateSelectShellProps) {
     canClear,
     onClear,
     children,
+    id,
+    "aria-describedby": ariaDescribedBy,
   } = props;
   // translation
   const { t } = useTranslation();
@@ -142,6 +148,8 @@ export function DateSelectShell(props: DateSelectShellProps) {
           label={label}
           isEmpty={isEmpty}
           tabIndex={tabIndex}
+          id={id}
+          aria-describedby={ariaDescribedBy}
         >
           <span className="min-w-0 grow truncate text-left">{label}</span>
         </SelectTriggerChrome>

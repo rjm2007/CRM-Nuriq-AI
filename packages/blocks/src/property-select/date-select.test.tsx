@@ -59,6 +59,26 @@ describe("DateSelect", () => {
     expect(screen.getByRole("button", { name: /set date/i }).getAttribute("tabindex")).toBe("4");
   });
 
+  it("is named by a form label through `id` and described by `aria-describedby`", () => {
+    render(
+      <>
+        <label htmlFor="project-target-date">Target date</label>
+        <DateSelect
+          value={null}
+          onChange={vi.fn()}
+          variant="select-md"
+          placeholder="Set date"
+          id="project-target-date"
+          aria-describedby="target-date-hint"
+        />
+        <p id="target-date-hint">In the past</p>
+      </>
+    );
+    const trigger = screen.getByLabelText("Target date");
+    expect(trigger.tagName).toBe("BUTTON");
+    expect(trigger.getAttribute("aria-describedby")).toBe("target-date-hint");
+  });
+
   it("opens the calendar on mount with defaultOpen", () => {
     render(
       <DateSelect

@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Bir PRD sayfası seçin",
     "prd_page_missing": "Bağlı PRD sayfası artık kullanılamıyor. Herkese açık bir sayfa seçin.",
     "open_prd": "PRD'yi aç",
-    "target_date_past_warning": "Hedef tarih geçmişte kaldı."
+    "target_date_past_warning": "Hedef tarih bugün veya geçmişte.",
+    "target_date_overdue": "Gecikmiş",
+    "prd_page_missing_short": "Sayfa kullanılamıyor",
+    "prd_page_search_placeholder": "Sayfa ara...",
+    "prd_page_empty": "Yalnızca bu projenin herkese açık ve arşivlenmemiş sayfaları bağlanabilir",
+    "prd_page_none": "PRD sayfası yok"
   }
 }

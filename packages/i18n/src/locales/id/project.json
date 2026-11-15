@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Pilih halaman PRD",
     "prd_page_missing": "Halaman PRD yang ditautkan tidak lagi tersedia. Pilih halaman publik.",
     "open_prd": "Buka PRD",
-    "target_date_past_warning": "Tanggal target sudah lewat."
+    "target_date_past_warning": "Tanggal target adalah hari ini atau sudah lewat.",
+    "target_date_overdue": "Terlambat",
+    "prd_page_missing_short": "Halaman tidak tersedia",
+    "prd_page_search_placeholder": "Cari halaman...",
+    "prd_page_empty": "Hanya halaman publik yang tidak diarsipkan dari proyek ini yang dapat ditautkan",
+    "prd_page_none": "Tanpa halaman PRD"
   }
 }

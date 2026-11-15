@@ -418,6 +418,11 @@
     "prd_page_placeholder": "Виберіть сторінку PRD",
     "prd_page_missing": "Пов’язана сторінка PRD більше недоступна. Виберіть публічну сторінку.",
     "open_prd": "Відкрити PRD",
-    "target_date_past_warning": "Цільова дата вже минула."
+    "target_date_past_warning": "Цільова дата — сьогодні або вже минула.",
+    "target_date_overdue": "Прострочено",
+    "prd_page_missing_short": "Сторінка недоступна",
+    "prd_page_search_placeholder": "Пошук сторінок...",
+    "prd_page_empty": "Можна прив’язати лише публічні, неархівовані сторінки цього проєкту",
+    "prd_page_none": "Без сторінки PRD"
   }
 }
