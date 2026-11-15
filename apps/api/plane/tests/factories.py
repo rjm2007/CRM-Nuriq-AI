@@ -6,7 +6,7 @@ import factory
 from uuid import uuid4
 from django.utils import timezone
 
-from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember
+from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember, Page, ProjectPage
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -84,3 +84,22 @@ class ProjectMemberFactory(factory.django.DjangoModelFactory):
     role = 20  # Admin role by default
     created_at = factory.LazyFunction(timezone.now)
     updated_at = factory.LazyFunction(timezone.now)
+
+
+# Neuric
+class PageFactory(factory.django.DjangoModelFactory):
+    """Factory for creating Page instances (public, not archived by default)"""
+
+    class Meta:
+        model = Page
+
+    id = factory.LazyFunction(uuid4)
+    name = factory.Sequence(lambda n: f"Page {n}")
+    workspace = factory.SubFactory(WorkspaceFactory)
+    owned_by = factory.SelfAttribute("workspace.owner")
+    access = Page.PUBLIC_ACCESS
+
+
+def link_page_to_project(page, project):
+    """Create the ProjectPage row linking ``page`` to ``project``."""
+    return ProjectPage.objects.create(project=project, page=page, workspace_id=project.workspace_id)

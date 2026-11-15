@@ -1,9 +1,11 @@
 # db/models — Django models
 
 ## Purpose
+
 Every table. One file per domain; all exported from `__init__.py`.
 
 ## Key files
+
 - `base.py` — BaseModel (UUID id, timestamps, created_by/updated_by, soft delete)
 - `workspace.py`, `project.py` — tenancy. `ProjectBaseModel` (in project.py) auto-sets workspace from project.
 - `issue.py` — Issue (tasks; `parent` = subtask), IssueRelation (dependencies), IssueActivity, IssueComment, IssueMention, IssueAssignee, IssueLabel, IssueLink, IssueAttachment
@@ -13,6 +15,7 @@ Every table. One file per domain; all exported from `__init__.py`.
 - `estimate.py`, `label.py`, `view.py`, `notification.py`, `webhook.py`, `api.py` (API tokens)
 
 ## Rules
+
 - New project-scoped model → extend `ProjectBaseModel`; workspace-scoped → `WorkspaceBaseModel`.
 - Add `db_table`, `ordering`, indexes and unique constraints in `Meta` like existing models.
 - Export new models in `__init__.py`.
@@ -20,4 +23,5 @@ Every table. One file per domain; all exported from `__init__.py`.
 - Add our new models in new files (e.g. `phase.py`, `worklog.py`, `testcase.py`, `ai.py`) to keep upstream merges clean.
 
 ## Our changes (Neuric)
-- None yet.
+
+- 2026-11-15: `Project.target_date` (DateField, nullable) and `Project.prd_page` (FK Page, SET_NULL, related_name `prd_projects`), under `# Neuric` in project.py. Migration `0126_project_target_date_prd_page`.

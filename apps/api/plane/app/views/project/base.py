@@ -195,6 +195,9 @@ class ProjectViewSet(BaseViewSet):
             "updated_at",
             "created_by",
             "updated_by",
+            # Neuric
+            "target_date",
+            "prd_page",
         )
 
         if WorkspaceMember.objects.filter(

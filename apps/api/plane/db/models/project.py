@@ -120,6 +120,15 @@ class Project(ChangeTrackerMixin, BaseModel):
     # external_id for imports
     external_source = models.CharField(max_length=255, null=True, blank=True)
     external_id = models.CharField(max_length=255, blank=True, null=True)
+    # Neuric
+    target_date = models.DateField(null=True, blank=True)
+    prd_page = models.ForeignKey(
+        "db.Page",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="prd_projects",
+    )
 
     def __init__(self, *args, **kwargs):
         # Track if timezone is provided, if so, don't override it with the workspace timezone when saving

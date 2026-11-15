@@ -26,6 +26,7 @@ from plane.db.models import (
 from plane.utils.content_validator import (
     validate_html_content,
 )
+from plane.app.serializers.neuric_project import validate_prd_page
 
 
 class ProjectSerializer(BaseSerializer):
@@ -97,6 +98,14 @@ class ProjectSerializer(BaseSerializer):
 
             if not is_valid:
                 raise serializers.ValidationError({"error": "html content is not valid"})
+
+        # Neuric: PRD page can only be linked to an existing project
+        if "prd_page" in data:
+            if self.instance is None:
+                if data["prd_page"] is not None:
+                    raise serializers.ValidationError({"prd_page": "PRD page can only be set on an existing project."})
+            else:
+                validate_prd_page(data["prd_page"], self.instance)
 
         return data
 

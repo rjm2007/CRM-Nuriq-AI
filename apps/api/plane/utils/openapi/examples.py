@@ -55,6 +55,8 @@ PROJECT_EXAMPLE = OpenApiExample(
         "project_lead": "550e8400-e29b-41d4-a716-446655440001",
         "created_at": "2024-01-15T10:30:00Z",
         "updated_at": "2024-01-15T10:30:00Z",
+        "target_date": "2024-06-30",
+        "prd_page": "550e8400-e29b-41d4-a716-446655440003",
     },
 )
 
@@ -315,6 +317,7 @@ PROJECT_CREATE_EXAMPLE = OpenApiExample(
         "description": "New project description",
         "identifier": "new-project",
         "project_lead": "0ec6cfa4-e906-4aad-9390-2df0303a41ce",
+        "target_date": "2024-06-30",
     },
     description="Example request for creating a project",
 )
@@ -326,6 +329,8 @@ PROJECT_UPDATE_EXAMPLE = OpenApiExample(
         "description": "Updated project description",
         "identifier": "updated-project",
         "project_lead": "0ec6cfa4-e906-4aad-9390-2df0303a41ce",
+        "target_date": "2024-06-30",
+        "prd_page": "550e8400-e29b-41d4-a716-446655440003",
     },
     description="Example request for updating a project",
 )

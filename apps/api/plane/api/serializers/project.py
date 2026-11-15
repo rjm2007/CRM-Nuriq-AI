@@ -16,6 +16,7 @@ from plane.db.models import Project, ProjectIdentifier, WorkspaceMember, State, 
 from plane.utils.content_validator import (
     validate_html_content,
 )
+from plane.app.serializers.neuric_project import validate_prd_page as check_prd_page
 from .base import BaseSerializer
 
 
@@ -92,6 +93,8 @@ class ProjectCreateSerializer(BaseSerializer):
             "external_id",
             "is_issue_type_enabled",
             "is_time_tracking_enabled",
+            # Neuric
+            "target_date",
         ]
 
         read_only_fields = [
@@ -176,9 +179,19 @@ class ProjectUpdateSerializer(ProjectCreateSerializer):
         fields = ProjectCreateSerializer.Meta.fields + [
             "default_state",
             "estimate",
+            # Neuric
+            "prd_page",
         ]
 
         read_only_fields = ProjectCreateSerializer.Meta.read_only_fields
+
+    def validate_prd_page(self, page):
+        # Neuric: checked at field level (not in update()) so a bad page is a 400;
+        # the v1 patch view maps ValidationErrors raised during save() to a 409.
+        try:
+            return check_prd_page(page, self.instance)
+        except serializers.ValidationError as exc:
+            raise serializers.ValidationError(exc.detail["prd_page"])
 
     def update(self, instance, validated_data):
         project_name = validated_data.get("name", None)
