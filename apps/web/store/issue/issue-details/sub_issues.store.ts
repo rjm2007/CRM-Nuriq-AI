@@ -145,6 +145,8 @@ export class IssueSubIssuesStore implements IIssueSubIssuesStore {
     if (issueList) {
       this.rootIssueDetailStore.rootIssueStore.issues.updateIssue(parentIssueId, {
         sub_issues_count: issueList.length,
+        // Neuric: keep the parent's "done/total" in step with the loaded sub-work items
+        completed_sub_issues_count: subIssuesStateDistribution.completed?.length ?? 0,
       });
     }
 
@@ -186,10 +188,10 @@ export class IssueSubIssuesStore implements IIssueSubIssuesStore {
         });
       });
 
-      const issueIds = subIssues.map((issue) => issue.id);
+      const addedIssueIds = subIssues.map((issue) => issue.id);
       update(this.subIssues, [parentIssueId], (issues) => {
-        if (!issues) return issueIds;
-        return concat(issues, issueIds);
+        if (!issues) return addedIssueIds;
+        return concat(issues, addedIssueIds);
       });
     });
 

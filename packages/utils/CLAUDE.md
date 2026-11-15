@@ -36,6 +36,5 @@ No unit tests in this package yet (no `test` script). `pnpm turbo run check --fi
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15).
-
 - 2026-11-15: `src/project/target-date.ts` (`isProjectTargetDateOverdue`, see `src/project/CLAUDE.md`), exported from `src/index.ts` as `./project/target-date` (folder sits next to upstream `project.ts`).
+- Our changes (Neuric) 2026-11-15, subtask rules: `src/work-item/subtask-rules.ts`: `getSubtaskRuleError(err, t)` (maps `error_code`, list or string, to `sub_work_item.errors.<code>`; falls back to the first field message; `undefined` when no `error_code`), `getSubtaskRuleErrorCode`, `getCompletedSubIssuesCountDelta`, `adjustCompletedSubIssuesCount`, `isSubtaskRollupReady`, `formatSubIssuesProgress`. Tests live in `packages/blocks/src/__tests__/subtask-rules.test.ts` (this package has no runner).

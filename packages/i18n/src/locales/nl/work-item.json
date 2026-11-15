@@ -307,6 +307,16 @@
         "description": "Wis alle toegepaste filters om alle werkitems te zien.",
         "action": "Filters wissen"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Een werkitem kan niet zijn eigen bovenliggende item zijn.",
+      "subtask_parent_is_subtask": "Het geselecteerde bovenliggende item is zelf een subwerkitem. Er is maar één niveau subwerkitems toegestaan.",
+      "subtask_has_children": "Dit werkitem heeft subwerkitems en kan daarom geen subwerkitem worden.",
+      "subtask_date_after_parent": "De vervaldatum van een subwerkitem kan niet na de vervaldatum van het bovenliggende item liggen ({date}).",
+      "parent_date_before_subtasks": "De vervaldatum kan niet vóór de vervaldatum van de subwerkitems liggen ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(alle subwerkitems klaar)"
     }
   },
   "issue_relation": {

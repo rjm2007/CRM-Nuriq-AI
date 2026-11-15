@@ -13,13 +13,14 @@ import { useParams } from "next/navigation";
 import { ChevronRightOutline } from "@makeplane/propel/icons";
 // types
 import { setToast } from "@plane/blocks/toast";
+import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TIssue, IIssueDisplayProperties, TIssueMap } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
 import { ControlLink, Row } from "@plane/blocks/layout";
 import { Spinner } from "@plane/blocks/spinner";
-import { cn, generateWorkItemLink } from "@plane/utils";
+import { cn, formatSubIssuesProgress, generateWorkItemLink } from "@plane/utils";
 // components
 import { MultipleSelectEntityAction } from "@/components/core/multiple-select";
 import { IssueProperties } from "@/components/issues/issue-layouts/properties";
@@ -80,6 +81,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
   const projectId = routerProjectId?.toString();
   // hooks
   const { sidebarCollapsed: isSidebarCollapsed } = useAppTheme();
+  const { t } = useTranslation();
   const { getProjectIdentifierById, currentProjectNextSequenceId } = useProject();
   const {
     getIsIssuePeeked,
@@ -105,6 +107,8 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
   // derived values
   const issue = issuesMap[issueId];
   const subIssuesCount = issue?.sub_issues_count ?? 0;
+  // Neuric: "done/total" when the list endpoint sent completed_sub_issues_count
+  const subIssuesProgress = formatSubIssuesProgress(subIssuesCount, issue?.completed_sub_issues_count);
   const canEditIssueProperties = canEditProperties(issue?.project_id ?? undefined);
   const isDraggingAllowed = canDrag && canEditIssueProperties;
 
@@ -259,6 +263,9 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
                     type="button"
                     className="grid size-4 place-items-center rounded-xs text-placeholder hover:text-tertiary"
                     onClick={handleToggleExpand}
+                    aria-expanded={isExpanded}
+                    aria-label={`${t("common.sub_work_items")}: ${subIssuesProgress}`}
+                    title={`${t("common.sub_work_items")}: ${subIssuesProgress}`}
                   >
                     <ChevronRightOutline
                       className={cn("size-4", {

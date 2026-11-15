@@ -32,9 +32,11 @@ import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-mo
 import { IssueIdentifier } from "@/components/issues/issue-detail/issue-identifier";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useUserProfile } from "@/hooks/store/user";
+import { useParentIssue } from "@/hooks/use-parent-issue";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
 type TIssueDefaultPropertiesProps = {
@@ -74,8 +76,15 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const { getProjectDefaultStateId } = useProjectState();
   const { isMobile } = usePlatformOS();
   const { data: userProfile } = useUserProfile();
+  const {
+    issue: { getIssueById },
+  } = useIssueDetail();
+  // Neuric: a sub-work item's due date can't be after its parent's
+  const { parentTargetDate } = useParentIssue(workspaceSlug, projectId, parentId);
   // derived values
   const projectDetails = getProjectById(projectId);
+  // Neuric: one level of sub-work items only, so an existing work item with sub-work items can't get a parent
+  const hasSubWorkItems = !!id && !isDraft && (getIssueById(id)?.sub_issues_count ?? 0) > 0;
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
 
@@ -190,6 +199,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
               handleFormChange();
             }}
             minDate={minDate ?? undefined}
+            maxDate={parentId ? parentTargetDate : undefined}
             placeholder={t("due_date")}
             icon={<CalendarOutline />}
             weekStartsOn={userProfile?.start_of_the_week}
@@ -295,7 +305,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
             />
           </MenuContent>
         </Menu>
-      ) : (
+      ) : hasSubWorkItems ? null : (
         <Pill
           size="sm"
           variant="outline"

@@ -54,4 +54,10 @@ describe("WorkItemPropertyCountChip", () => {
     await userEvent.click(chip);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
+
+  it("shows displayValue (e.g. done/total) instead of the count", () => {
+    render(<WorkItemPropertyCountChip icon={<svg />} count={5} displayValue="3/5" label="Sub-work items" />);
+    const chip = screen.getByRole("img", { name: "Sub-work items: 3/5" });
+    expect(chip.textContent).toContain("3/5");
+  });
 });

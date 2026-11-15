@@ -307,6 +307,16 @@
         "description": "모든 작업 항목을 보려면 모든 적용된 필터를 지우세요.",
         "action": "필터 지우기"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "작업 항목은 자기 자신을 상위 항목으로 지정할 수 없습니다.",
+      "subtask_parent_is_subtask": "선택한 상위 항목은 하위 작업 항목입니다. 하위 작업 항목은 한 단계만 허용됩니다.",
+      "subtask_has_children": "이 작업 항목에는 하위 작업 항목이 있으므로 하위 작업 항목이 될 수 없습니다.",
+      "subtask_date_after_parent": "하위 작업 항목의 마감일은 상위 항목의 마감일({date})보다 늦을 수 없습니다.",
+      "parent_date_before_subtasks": "마감일은 하위 작업 항목의 마감일({items})보다 빠를 수 없습니다."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(모든 하위 작업 항목 완료)"
     }
   },
   "issue_relation": {

@@ -307,6 +307,16 @@
         "description": "Para ver todos os itens de trabalho, limpe todos os filtros aplicados.",
         "action": "Limpar filtros"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Um item de trabalho não pode ser seu próprio pai.",
+      "subtask_parent_is_subtask": "O pai selecionado já é um sub-item de trabalho. Só é permitido um nível de sub-itens de trabalho.",
+      "subtask_has_children": "Este item de trabalho tem sub-itens de trabalho, então não pode se tornar um sub-item de trabalho.",
+      "subtask_date_after_parent": "A data de vencimento de um sub-item de trabalho não pode ser posterior à do seu pai ({date}).",
+      "parent_date_before_subtasks": "A data de vencimento não pode ser anterior à dos seus sub-itens de trabalho ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(todos os sub-itens de trabalho concluídos)"
     }
   },
   "issue_relation": {

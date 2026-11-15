@@ -307,6 +307,16 @@
         "description": "Để xem tất cả các mục công việc, hãy xóa tất cả các bộ lọc đã áp dụng.",
         "action": "Xóa bộ lọc"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Mục công việc không thể là mục cha của chính nó.",
+      "subtask_parent_is_subtask": "Mục cha đã chọn là một mục công việc con. Chỉ cho phép một cấp mục công việc con.",
+      "subtask_has_children": "Mục công việc này có mục công việc con nên không thể trở thành mục công việc con.",
+      "subtask_date_after_parent": "Ngày hết hạn của mục công việc con không thể sau ngày hết hạn của mục cha ({date}).",
+      "parent_date_before_subtasks": "Ngày hết hạn không thể trước ngày hết hạn của các mục công việc con ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(tất cả mục công việc con đã xong)"
     }
   },
   "issue_relation": {

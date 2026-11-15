@@ -18,6 +18,7 @@ import { StateSelect } from "@/components/dropdowns/state/state-select";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useUserProfile } from "@/hooks/store/user";
+import { useParentIssue } from "@/hooks/use-parent-issue";
 // local imports
 import type { TIssueOperations } from "./root";
 
@@ -48,6 +49,8 @@ export const IssueDetailMetaRow = observer(function IssueDetailMetaRow(props: Pr
   const { data: userProfile } = useUserProfile();
   // derived values
   const issue = getIssueById(issueId);
+  // Neuric: a sub-work item's due date can't be after its parent's
+  const { parentTargetDate } = useParentIssue(workspaceSlug, issue?.project_id ?? projectId, issue?.parent_id);
   if (!issue) return null;
 
   const stateDetails = getStateById(issue.state_id);
@@ -136,6 +139,7 @@ export const IssueDetailMetaRow = observer(function IssueDetailMetaRow(props: Pr
               })
             }
             minDate={minDate}
+            maxDate={parentTargetDate}
             disabled={disabled}
             clearable
             className={getIssueDueDateClassName(issue.target_date, stateDetails?.group)}

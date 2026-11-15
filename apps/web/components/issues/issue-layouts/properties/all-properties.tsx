@@ -38,6 +38,7 @@ import { ISSUE_PRIORITIES } from "@plane/constants";
 import type { TIssue, IIssueDisplayProperties, TIssuePriorities } from "@plane/types";
 // ui
 import {
+  formatSubIssuesProgress,
   getDate,
   renderFormattedDate,
   renderFormattedPayloadDate,
@@ -131,6 +132,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   // derived values
   const stateDetails = getStateById(issue.state_id);
   const subIssueCount = issue?.sub_issues_count ?? 0;
+  // Neuric: "done/total" when the list endpoint sent completed_sub_issues_count
+  const subIssueProgress = formatSubIssuesProgress(subIssueCount, issue?.completed_sub_issues_count);
 
   const issueOperations = useMemo(
     () => ({
@@ -543,11 +546,12 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
     entries.push({
       key: "sub_issue_count",
       hidePriority: getWorkItemPropertyHidePriority("sub_issue_count"),
-      measureKey: `${subIssueCount}`,
+      measureKey: subIssueProgress,
       chip: (
         <WorkItemPropertyCountChip
           icon={SubWorkItemsOutline}
           count={subIssueCount}
+          displayValue={subIssueProgress}
           label={t("common.sub_work_items")}
           tooltipDisabled={isMobile}
           onFocus={handleEventPropagation}
@@ -561,7 +565,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       menuRow: {
         icon: <Icon icon={SubWorkItemsOutline} />,
         label: t("common.sub_work_items"),
-        preview: `${subIssueCount}`,
+        preview: subIssueProgress,
         onSelect: redirectToIssueDetail,
       },
     });

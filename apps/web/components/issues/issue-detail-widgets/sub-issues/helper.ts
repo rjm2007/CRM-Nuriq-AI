@@ -10,7 +10,7 @@ import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
 import type { TIssueServiceType, TSubIssueOperations } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
-import { copyUrlToClipboard } from "@plane/utils";
+import { copyUrlToClipboard, getSubtaskRuleError } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 
@@ -71,16 +71,18 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
                   : t("issue.label", { count: issueIds.length }),
             }),
           });
-        } catch {
+        } catch (error) {
           setToast({
             type: "error",
             title: t("toast.error"),
-            message: t("entity.add.failed", {
-              entity:
-                issueServiceType === EIssueServiceType.ISSUES
-                  ? t("common.sub_work_items")
-                  : t("issue.label", { count: issueIds.length }),
-            }),
+            message:
+              getSubtaskRuleError(error, t) ??
+              t("entity.add.failed", {
+                entity:
+                  issueServiceType === EIssueServiceType.ISSUES
+                    ? t("common.sub_work_items")
+                    : t("issue.label", { count: issueIds.length }),
+              }),
           });
         }
       },
@@ -102,11 +104,11 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
             message: t("sub_work_item.update.success"),
           });
           setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
-        } catch (_error) {
+        } catch (error) {
           setToast({
             type: "error",
             title: t("toast.error"),
-            message: t("sub_work_item.update.error"),
+            message: getSubtaskRuleError(error, t) ?? t("sub_work_item.update.error"),
           });
         }
       },

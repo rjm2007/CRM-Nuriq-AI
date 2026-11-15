@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import type { TIssue } from "@plane/types";
 // helpers
 import { Row } from "@plane/blocks/layout";
-import { cn } from "@plane/utils";
+import { cn, formatSubIssuesProgress } from "@plane/utils";
 // hooks
 import { useAppRouter } from "@/hooks/use-app-router";
 
@@ -35,7 +35,9 @@ export const SpreadsheetSubIssueColumn = observer(function SpreadsheetSubIssueCo
     );
   };
 
-  const label = `${subIssueCount} sub-work item${subIssueCount !== 1 ? "s" : ""}`;
+  // Neuric: "done/total" when the list endpoint sent completed_sub_issues_count
+  const progress = formatSubIssuesProgress(subIssueCount, issue?.completed_sub_issues_count);
+  const label = `${progress} sub-work item${subIssueCount !== 1 ? "s" : ""}`;
 
   return (
     <Row

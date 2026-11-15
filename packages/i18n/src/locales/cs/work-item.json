@@ -307,6 +307,16 @@
         "description": "Chcete-li zobrazit všechny pracovní položky, odstraňte všechny použité filtry.",
         "action": "Odstranit filtry"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Pracovní položka nemůže být svým vlastním rodičem.",
+      "subtask_parent_is_subtask": "Vybraný rodič je sám podřízenou položkou. Povolena je jen jedna úroveň podřízených položek.",
+      "subtask_has_children": "Tato pracovní položka má podřízené položky, proto se nemůže stát podřízenou položkou.",
+      "subtask_date_after_parent": "Termín podřízené položky nemůže být po termínu jejího rodiče ({date}).",
+      "parent_date_before_subtasks": "Termín nemůže být před termínem jejích podřízených položek ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(všechny podřízené položky jsou hotové)"
     }
   },
   "issue_relation": {

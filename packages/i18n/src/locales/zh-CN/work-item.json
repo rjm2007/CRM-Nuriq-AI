@@ -307,6 +307,16 @@
         "description": "要查看所有工作项，请清除所有应用的过滤器。",
         "action": "清除过滤器"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "工作项不能成为自身的父项。",
+      "subtask_parent_is_subtask": "所选父项本身是子工作项。子工作项只允许一级。",
+      "subtask_has_children": "此工作项包含子工作项，因此不能成为子工作项。",
+      "subtask_date_after_parent": "子工作项的截止日期不能晚于其父项的截止日期（{date}）。",
+      "parent_date_before_subtasks": "截止日期不能早于其子工作项的截止日期（{items}）。"
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "（所有子工作项已完成）"
     }
   },
   "issue_relation": {

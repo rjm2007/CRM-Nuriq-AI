@@ -307,6 +307,16 @@
         "description": "Pour voir tous les éléments de travail, effacer tous les filtres appliqués.",
         "action": "Effacer les filtres"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Un élément de travail ne peut pas être son propre parent.",
+      "subtask_parent_is_subtask": "Le parent sélectionné est lui-même un sous-élément de travail. Un seul niveau de sous-éléments de travail est autorisé.",
+      "subtask_has_children": "Cet élément de travail a des sous-éléments de travail, il ne peut donc pas devenir un sous-élément de travail.",
+      "subtask_date_after_parent": "La date d’échéance d’un sous-élément de travail ne peut pas être postérieure à celle de son parent ({date}).",
+      "parent_date_before_subtasks": "La date d’échéance ne peut pas être antérieure à celle de ses sous-éléments de travail ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(tous les sous-éléments de travail sont terminés)"
     }
   },
   "issue_relation": {

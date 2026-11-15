@@ -307,6 +307,16 @@
         "description": "Aby zobaczyć wszystkie elementy pracy, wyczyść wszystkie zastosowane filtry.",
         "action": "Wyczyść filtry"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Element pracy nie może być swoim własnym elementem nadrzędnym.",
+      "subtask_parent_is_subtask": "Wybrany element nadrzędny sam jest elementem podrzędnym. Dozwolony jest tylko jeden poziom elementów podrzędnych.",
+      "subtask_has_children": "Ten element pracy ma elementy podrzędne, więc nie może stać się elementem podrzędnym.",
+      "subtask_date_after_parent": "Termin elementu podrzędnego nie może być późniejszy niż termin jego elementu nadrzędnego ({date}).",
+      "parent_date_before_subtasks": "Termin nie może być wcześniejszy niż termin jego elementów podrzędnych ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(wszystkie elementy podrzędne ukończone)"
     }
   },
   "issue_relation": {

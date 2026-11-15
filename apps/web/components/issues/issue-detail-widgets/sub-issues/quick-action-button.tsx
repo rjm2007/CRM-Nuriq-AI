@@ -40,20 +40,21 @@ export const SubIssuesActionButton = observer(function SubIssuesActionButton(pro
   // derived values
   const issue = getIssueById(issueId);
 
-  if (!issue) return <></>;
+  // Neuric: one level of sub-work items only, so a sub-work item can't get its own
+  if (!issue || issue.parent_id) return <></>;
 
   // handlers
   const handleIssueCrudState = (
     key: "create" | "existing",
     _parentIssueId: string | null,
-    issue: TIssue | null = null
+    crudIssue: TIssue | null = null
   ) => {
     setIssueCrudOperationState({
       ...issueCrudOperationState,
       [key]: {
         toggle: !issueCrudOperationState[key].toggle,
         parentIssueId: _parentIssueId,
-        issue: issue,
+        issue: crudIssue,
       },
     });
   };

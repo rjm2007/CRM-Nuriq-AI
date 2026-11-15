@@ -12,6 +12,7 @@ import { useTranslation } from "@plane/i18n";
 import { setPromiseToast, setToast } from "@plane/blocks/toast";
 import type { TIssue } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
+import { getSubtaskRuleError } from "@plane/utils";
 // assets
 import emptyIssue from "@/app/assets/empty-state/issue.svg?url";
 // components
@@ -60,7 +61,7 @@ export type TIssueDetailRoot = {
 
 export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDetailRoot) {
   const { t } = useTranslation();
-  const { workspaceSlug, projectId, issueId, is_archived = false } = props;
+  const { is_archived = false } = props;
   // router
   const router = useAppRouter();
   // hooks
@@ -99,7 +100,7 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
           setToast({
             title: t("common.error.label"),
             type: "error",
-            message: t("entity.update.failed", { entity: t("issue.label") }),
+            message: getSubtaskRuleError(error, t) ?? t("entity.update.failed", { entity: t("issue.label") }),
           });
         }
       },
@@ -215,6 +216,8 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
     ]
   );
 
+  // read after `issueOperations` so its parameters don't shadow these (no-shadow)
+  const { workspaceSlug, projectId, issueId } = props;
   // issue details
   const issue = getIssueById(issueId);
   // checking if issue is editable, based on user role

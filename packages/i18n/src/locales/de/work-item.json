@@ -307,6 +307,16 @@
         "description": "Um alle Arbeitselemente anzuzeigen, entfernen Sie alle angewendeten Filter.",
         "action": "Filter entfernen"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Ein Arbeitselement kann nicht sein eigenes übergeordnetes Element sein.",
+      "subtask_parent_is_subtask": "Das ausgewählte übergeordnete Element ist selbst ein untergeordnetes Element. Es ist nur eine Ebene untergeordneter Elemente erlaubt.",
+      "subtask_has_children": "Dieses Arbeitselement hat untergeordnete Elemente und kann daher kein untergeordnetes Element werden.",
+      "subtask_date_after_parent": "Das Fälligkeitsdatum eines untergeordneten Elements darf nicht nach dem des übergeordneten Elements liegen ({date}).",
+      "parent_date_before_subtasks": "Das Fälligkeitsdatum darf nicht vor dem Fälligkeitsdatum seiner untergeordneten Elemente liegen ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(alle untergeordneten Elemente erledigt)"
     }
   },
   "issue_relation": {

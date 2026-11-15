@@ -55,6 +55,8 @@ export type TBaseIssue = {
   estimate_point: string | null;
 
   sub_issues_count: number;
+  // Neuric: children in the "completed" state group (issue list endpoints only)
+  completed_sub_issues_count?: number;
   attachment_count: number;
   link_count: number;
 
@@ -180,6 +182,7 @@ export interface IPublicIssue extends Pick<
   | "assignee_ids"
   | "attachment_count"
   | "sub_issues_count"
+  | "completed_sub_issues_count"
   | "link_count"
   | "estimate_point"
 > {

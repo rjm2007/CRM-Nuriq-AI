@@ -307,6 +307,16 @@
         "description": "Pentru a vedea toate elementele de lucru, șterge toate filtrele aplicate.",
         "action": "Șterge filtrele"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "O activitate nu poate fi propriul său părinte.",
+      "subtask_parent_is_subtask": "Părintele selectat este el însuși o sub-activitate. Este permis un singur nivel de sub-activități.",
+      "subtask_has_children": "Această activitate are sub-activități, deci nu poate deveni o sub-activitate.",
+      "subtask_date_after_parent": "Data limită a unei sub-activități nu poate fi după data limită a părintelui ei ({date}).",
+      "parent_date_before_subtasks": "Data limită nu poate fi înainte de data limită a sub-activităților sale ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(toate sub-activitățile finalizate)"
     }
   },
   "issue_relation": {

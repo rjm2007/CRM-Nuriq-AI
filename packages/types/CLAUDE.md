@@ -33,3 +33,4 @@ No unit tests. `pnpm turbo run check --filter=@plane/types`
 ## Our changes (Neuric)
 
 - 2026-11-15: `IPartialProject` gains `target_date?: string | null` and `prd_page?: string | null` (`src/project/projects.ts`).
+- Our changes (Neuric) 2026-11-15, subtask rules: `TBaseIssue.completed_sub_issues_count?: number` and the same key in `IPublicIssue`'s pick (`src/issues/issue.ts`).

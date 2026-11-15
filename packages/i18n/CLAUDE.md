@@ -39,3 +39,4 @@ i18next (ICU message format) setup, React provider/hook, and all UI strings for 
 ## Our changes (Neuric)
 
 - 2026-11-15: `project.json` (all 22 locales): `project.prd_page`, `project.prd_page_placeholder`, `project.prd_page_missing`, `project.open_prd`, `project.target_date_past_warning`. Target date label reuses top-level `target_date` (common.json).
+- Our changes (Neuric) 2026-11-15, subtask rules: `work-item.json` (all 22 locales): `sub_work_item.errors.{subtask_self_parent, subtask_parent_is_subtask, subtask_has_children, subtask_date_after_parent ({date}), parent_date_before_subtasks ({items})}` and `sub_work_item.activity.auto_completed_by_subtasks`. Keys follow Plane's existing `sub_work_item.*` prefix (there is no `work_item.*` root object).

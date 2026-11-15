@@ -45,6 +45,7 @@ import {
   getSubGroupIssueKeyActions,
 } from "./base-issues-utils";
 import type { IBaseIssueFilterStore } from "./issue-filter-helper.store";
+import { scheduleParentRollupRefetch, syncParentCompletedCount } from "./subtask-progress.helper";
 
 export type TIssueDisplayFilterOptions = Exclude<TIssueGroupByOptions, null> | "target_date";
 
@@ -561,6 +562,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
   ) {
     // Store Before state of the issue
     const issueBeforeUpdate = clone(this.rootIssueStore.issues.getIssueById(issueId));
+    let revertParentCompletedCount: (() => void) | undefined;
     try {
       // Update the Respective Stores
       this.rootIssueStore.issues.updateIssue(issueId, data);
@@ -575,13 +577,28 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         ...data,
       } as TIssue);
 
+      // Neuric: optimistic "done/total" on the parent work item's card
+      revertParentCompletedCount = syncParentCompletedCount(this.rootIssueStore, issueBeforeUpdate, data);
+
       // call API to update the issue
       await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data);
+
+      // Neuric: re-fetch the parent once the API auto-completes it (all sub-work items done)
+      scheduleParentRollupRefetch(
+        this.rootIssueStore,
+        workspaceSlug,
+        issueBeforeUpdate,
+        data,
+        (slug, parentProjectId, issueIds) => this.issueService.retrieveIssues(slug, parentProjectId, issueIds),
+        (parentProjectId, parentId, parent) =>
+          void this.issueUpdate(workspaceSlug, parentProjectId, parentId, parent, false)
+      );
 
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
     } catch (error) {
       // If errored out update store again to revert the change
+      revertParentCompletedCount?.();
       this.rootIssueStore.issues.updateIssue(issueId, issueBeforeUpdate ?? {});
       this.updateIssueList(issueBeforeUpdate, { ...issueBeforeUpdate, ...data } as TIssue);
       throw error;

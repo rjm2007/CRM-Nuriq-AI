@@ -37,4 +37,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- Our changes (Neuric) 2026-11-15, subtask rules: new `issue/helpers/subtask-progress.helper.ts`, called from `issueUpdate` in `issue/helpers/base-issues.store.ts`: optimistic parent `completed_sub_issues_count` when a child crosses into/out of the completed group (reverted on API error), and one debounced parent re-fetch (`SUBTASK_ROLLUP_REFETCH_DELAY_MS`, 1.5 s) when all siblings are completed/cancelled with at least one completed, so the API's auto-done shows (also refreshes the parent's loaded activity). `issue/issue-details/sub_issues.store.ts` `fetchSubIssues` sets the parent's completed count from `state_distribution`. Pure rules live in `@plane/utils` (`work-item/subtask-rules.ts`).

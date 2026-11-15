@@ -307,6 +307,16 @@
         "description": "Tüm iş öğelerini görmek için tüm uygulanan filtreleri temizleyin.",
         "action": "Filtreleri temizle"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Bir iş öğesi kendi üst öğesi olamaz.",
+      "subtask_parent_is_subtask": "Seçilen üst öğe zaten bir alt iş öğesi. Yalnızca bir seviye alt iş öğesine izin verilir.",
+      "subtask_has_children": "Bu iş öğesinin alt iş öğeleri var, bu yüzden alt iş öğesi olamaz.",
+      "subtask_date_after_parent": "Bir alt iş öğesinin son tarihi, üst öğesinin son tarihinden ({date}) sonra olamaz.",
+      "parent_date_before_subtasks": "Son tarih, alt iş öğelerinin son tarihinden ({items}) önce olamaz."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(tüm alt iş öğeleri tamamlandı)"
     }
   },
   "issue_relation": {

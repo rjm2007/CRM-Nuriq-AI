@@ -57,6 +57,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
   const { getProjectById } = useProject();
   const {
     issue: { getIssueById },
+    subIssues: { subIssuesByIssueId },
   } = useIssueDetail();
   const { isParentIssueModalOpen, toggleParentIssueModal } = useIssueDetail();
 
@@ -66,6 +67,8 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
   const parentIssueProjectDetails =
     parentIssue && parentIssue.project_id ? getProjectById(parentIssue.project_id) : undefined;
   const { isMobile } = usePlatformOS();
+  // Neuric: one level of sub-work items only, so a work item with sub-work items can't get a parent
+  const hasSubWorkItems = (issue?.sub_issues_count ?? 0) > 0 || (subIssuesByIssueId(issueId)?.length ?? 0) > 0;
 
   if (!issue) return <></>;
 
@@ -76,7 +79,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
         issueId={issueId}
         isOpen={isParentIssueModalOpen === issueId}
         handleClose={() => toggleParentIssueModal(null)}
-        onChange={(issue: any) => handleParentIssue(issue?.id)}
+        onChange={(selectedIssue) => handleParentIssue(selectedIssue?.id)}
       />
       <div
         className={cn(
@@ -147,21 +150,29 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
             )}
           </>
         ) : (
-          <Button
-            type="button"
-            variant="ghost"
-            size="md"
-            stretch="full"
-            onClick={() => toggleParentIssueModal(issue.id)}
-            disabled={disabled}
+          <Tooltip
+            label={t("sub_work_item.errors.subtask_has_children")}
+            side="bottom"
+            disabled={!hasSubWorkItems || disabled || isMobile}
           >
-            <span className="grow text-left text-body-xs-regular text-placeholder">{t("issue.add.parent")}</span>
-            {!disabled && (
-              <span className="shrink-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100">
-                <Icon icon={EditOutline} />
-              </span>
-            )}
-          </Button>
+            <span className="flex w-full">
+              <Button
+                type="button"
+                variant="ghost"
+                size="md"
+                stretch="full"
+                onClick={() => toggleParentIssueModal(issue.id)}
+                disabled={disabled || hasSubWorkItems}
+              >
+                <span className="grow text-left text-body-xs-regular text-placeholder">{t("issue.add.parent")}</span>
+                {!disabled && !hasSubWorkItems && (
+                  <span className="shrink-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100">
+                    <Icon icon={EditOutline} />
+                  </span>
+                )}
+              </Button>
+            </span>
+          </Tooltip>
         )}
       </div>
     </>

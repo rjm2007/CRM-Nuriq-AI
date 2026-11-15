@@ -307,6 +307,16 @@
         "description": "To see all work items, clear all applied filters.",
         "action": "Clear filters"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "A work item can't be its own parent.",
+      "subtask_parent_is_subtask": "The selected parent is itself a sub-work item. Only one level of sub-work items is allowed.",
+      "subtask_has_children": "This work item has sub-work items, so it can't become a sub-work item.",
+      "subtask_date_after_parent": "A sub-work item's due date can't be after its parent's due date ({date}).",
+      "parent_date_before_subtasks": "The due date can't be before the due date of its sub-work items ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(all sub-work items done)"
     }
   },
   "issue_relation": {

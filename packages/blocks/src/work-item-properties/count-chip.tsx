@@ -14,6 +14,8 @@ export type WorkItemPropertyCountChipProps = {
   /** The property glyph, e.g. `SubWorkItemsOutline`; rendered at the chip's icon size. */
   icon: React.ComponentProps<typeof Icon>["icon"];
   count: number;
+  /** Text shown instead of `count`, e.g. `"3/5"` for done/total sub-work items. Defaults to `count`. */
+  displayValue?: string;
   /** Translated property name, e.g. "Attachments". Tooltip and accessible name read "<label>: <count>". */
   label: string;
   /** Makes the chip a button. Omit for a display-only chip (e.g. public boards). */
@@ -25,11 +27,13 @@ export type WorkItemPropertyCountChipProps = {
 
 /**
  * An outlined count chip for a work item's sub-work items, attachments or links. With `onClick` it
- * is a button; without, it is a display-only chip that is not focusable.
+ * is a button; without, it is a display-only chip that is not focusable. `displayValue` overrides the
+ * shown text (e.g. `"3/5"`).
  */
 export function WorkItemPropertyCountChip(props: WorkItemPropertyCountChipProps) {
-  const { icon, count, label, onClick, onFocus, tooltipDisabled = false } = props;
-  const accessibleName = `${label}: ${count}`;
+  const { icon, count, displayValue, label, onClick, onFocus, tooltipDisabled = false } = props;
+  const value = displayValue ?? `${count}`;
+  const accessibleName = `${label}: ${value}`;
 
   return (
     <Tooltip label={accessibleName} disabled={tooltipDisabled}>
@@ -37,7 +41,7 @@ export function WorkItemPropertyCountChip(props: WorkItemPropertyCountChipProps)
         <Pill
           size="sm"
           aria-label={accessibleName}
-          label={`${count}`}
+          label={value}
           startIcon={<Icon icon={icon} />}
           onClick={onClick}
           onFocus={onFocus}
@@ -54,7 +58,7 @@ export function WorkItemPropertyCountChip(props: WorkItemPropertyCountChipProps)
           }}
         >
           <Icon icon={icon} />
-          <PillLabel>{count}</PillLabel>
+          <PillLabel>{value}</PillLabel>
         </PillElement>
       )}
     </Tooltip>

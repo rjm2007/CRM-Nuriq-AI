@@ -307,6 +307,16 @@
         "description": "すべての作業項目を表示するには、すべての適用されたフィルターをクリアしてください。",
         "action": "フィルターをクリア"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "作業項目を自身の親にすることはできません。",
+      "subtask_parent_is_subtask": "選択した親はサブ作業項目です。サブ作業項目は1階層までしか作成できません。",
+      "subtask_has_children": "この作業項目にはサブ作業項目があるため、サブ作業項目にすることはできません。",
+      "subtask_date_after_parent": "サブ作業項目の期限を親の期限（{date}）より後にすることはできません。",
+      "parent_date_before_subtasks": "期限をサブ作業項目の期限（{items}）より前にすることはできません。"
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "（すべてのサブ作業項目が完了）"
     }
   },
   "issue_relation": {

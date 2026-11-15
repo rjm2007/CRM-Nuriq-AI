@@ -32,4 +32,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- Our changes (Neuric) 2026-11-15, subtask rules: `use-parent-issue.ts` (`useParentIssue(workspaceSlug, projectId, parentId)`): parent from the issue map, fetched once per id if missing (`issues.getIssues`), plus `parentTargetDate` for `DateSelect` `maxDate`.

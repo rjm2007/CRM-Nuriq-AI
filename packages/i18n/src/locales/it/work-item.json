@@ -307,6 +307,16 @@
         "description": "Per vedere tutti gli elementi di lavoro, cancella tutti i filtri applicati.",
         "action": "Cancella filtri"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Un elemento di lavoro non può essere il proprio elemento padre.",
+      "subtask_parent_is_subtask": "L'elemento padre selezionato è a sua volta un sotto-elemento di lavoro. È consentito un solo livello di sotto-elementi di lavoro.",
+      "subtask_has_children": "Questo elemento di lavoro ha sotto-elementi di lavoro, quindi non può diventare un sotto-elemento di lavoro.",
+      "subtask_date_after_parent": "La scadenza di un sotto-elemento di lavoro non può essere successiva a quella del suo elemento padre ({date}).",
+      "parent_date_before_subtasks": "La scadenza non può essere precedente a quella dei suoi sotto-elementi di lavoro ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(tutti i sotto-elementi di lavoro completati)"
     }
   },
   "issue_relation": {

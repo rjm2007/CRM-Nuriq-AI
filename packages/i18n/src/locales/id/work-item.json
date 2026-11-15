@@ -307,6 +307,16 @@
         "description": "Untuk melihat semua item kerja, hapus semua filter yang diterapkan.",
         "action": "Hapus filter"
       }
+    },
+    "errors": {
+      "subtask_self_parent": "Item kerja tidak dapat menjadi induknya sendiri.",
+      "subtask_parent_is_subtask": "Induk yang dipilih sendiri merupakan sub-item kerja. Hanya satu tingkat sub-item kerja yang diizinkan.",
+      "subtask_has_children": "Item kerja ini memiliki sub-item kerja, sehingga tidak dapat menjadi sub-item kerja.",
+      "subtask_date_after_parent": "Tanggal jatuh tempo sub-item kerja tidak boleh setelah tanggal jatuh tempo induknya ({date}).",
+      "parent_date_before_subtasks": "Tanggal jatuh tempo tidak boleh sebelum tanggal jatuh tempo sub-item kerjanya ({items})."
+    },
+    "activity": {
+      "auto_completed_by_subtasks": "(semua sub-item kerja selesai)"
     }
   },
   "issue_relation": {
