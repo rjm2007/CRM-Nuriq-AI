@@ -23,6 +23,8 @@ export { MemberSelect, MAX_TRIGGER_AVATARS } from "./member-select";
 export type { MemberOption, MemberSelectProps, MemberSelectVariant } from "./member-select";
 export { ModuleSelect } from "./module-select";
 export type { ModuleOption, ModuleSelectProps } from "./module-select";
+export { PageSelect } from "./page-select";
+export type { PageOption, PageSelectProps } from "./page-select";
 export { PrioritySelect } from "./priority-select";
 export type { PriorityOption, PrioritySelectProps } from "./priority-select";
 export { ProjectSelect } from "./project-select";

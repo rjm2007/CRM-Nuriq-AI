@@ -413,6 +413,11 @@
           "message": "Something went wrong."
         }
       }
-    }
+    },
+    "prd_page": "PRD page",
+    "prd_page_placeholder": "Select a PRD page",
+    "prd_page_missing": "The linked PRD page is no longer available. Pick a public page.",
+    "open_prd": "Open PRD",
+    "target_date_past_warning": "The target date is in the past."
   }
 }

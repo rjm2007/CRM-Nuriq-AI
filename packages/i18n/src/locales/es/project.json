@@ -413,6 +413,11 @@
           "message": "Algo salió mal."
         }
       }
-    }
+    },
+    "prd_page": "Página PRD",
+    "prd_page_placeholder": "Seleccionar una página PRD",
+    "prd_page_missing": "La página PRD vinculada ya no está disponible. Elija una página pública.",
+    "open_prd": "Abrir PRD",
+    "target_date_past_warning": "La fecha objetivo está en el pasado."
   }
 }

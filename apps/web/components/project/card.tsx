@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
+  CalendarOutline,
   DeleteOutline,
   LeadOutline,
   LinkOutline,
@@ -37,7 +38,7 @@ import type { IProject, IUserLite } from "@plane/types";
 import type { TContextMenuItem } from "@plane/blocks/context-menu";
 import { ContextMenu, getRenderableItems, resolveItemVariant } from "@plane/blocks/context-menu";
 import { FavoriteStar } from "@plane/blocks/common";
-import { copyUrlToClipboard, cn, getFileURL } from "@plane/utils";
+import { copyUrlToClipboard, cn, getFileURL, renderFormattedDate } from "@plane/utils";
 // components
 // hooks
 import { useMember } from "@/hooks/store/use-member";
@@ -50,6 +51,7 @@ import { CoverImage } from "@/components/common/cover-image";
 import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
 import { ArchiveRestoreProjectModal } from "./archive-restore-modal";
+import { isProjectTargetDatePast } from "./form-target-prd";
 
 type Props = {
   project: IProject;
@@ -104,6 +106,8 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
   const hasMemberRole = project.member_role === EUserPermissions.MEMBER;
   // archive
   const isArchived = !!project.archived_at;
+  // Neuric: target date pill, red when overdue on an active project
+  const isTargetDateOverdue = !isArchived && isProjectTargetDatePast(project.target_date);
   // local storage
   const { setValue: toggleFavoriteMenu, storedValue: isFavoriteMenuOpen } = useLocalStorage<boolean>(
     IS_FAVORITE_MENU_OPEN,
@@ -337,6 +341,20 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                   />
                   <span className="truncate text-caption-md-regular text-secondary">{projectLead.display_name}</span>
                 </div>
+              )}
+              {project.target_date && (
+                <Tooltip label={t("target_date")} disabled={isMobile}>
+                  <div
+                    data-testid="project-card-target-date"
+                    data-overdue={isTargetDateOverdue || undefined}
+                    className={cn("ml-auto flex shrink-0 items-center gap-1 text-caption-md-regular text-tertiary", {
+                      "text-danger-primary": isTargetDateOverdue,
+                    })}
+                  >
+                    <CalendarOutline className="size-3.5 shrink-0" />
+                    <span>{renderFormattedDate(project.target_date)}</span>
+                  </div>
+                </Tooltip>
               )}
             </div>
           </div>

@@ -413,6 +413,11 @@
           "message": "發生錯誤。"
         }
       }
-    }
+    },
+    "prd_page": "PRD 頁面",
+    "prd_page_placeholder": "選擇 PRD 頁面",
+    "prd_page_missing": "連結的 PRD 頁面已無法使用。請選擇一個公開頁面。",
+    "open_prd": "開啟 PRD",
+    "target_date_past_warning": "目標日期已過。"
   }
 }

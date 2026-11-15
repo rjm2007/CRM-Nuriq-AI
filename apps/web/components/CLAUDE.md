@@ -44,4 +44,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- 2026-11-15: project `target_date` + `prd_page`. `projects/create/attributes.tsx` (target-date `DateSelect` pill, now an `observer`), `projects/create/utils.ts` (default `target_date: null`), `project/form.tsx` (payload + `prd_page` 400 toast), new `project/form-target-prd.tsx` (`ProjectTargetDateField`, `ProjectPrdPageField` using `PageSelect` with the project's public non-archived pages from the project page store, "Open PRD" link, missing/past-date hints, `isProjectTargetDatePast`), `project/card.tsx` (target-date pill, red when overdue and not archived).

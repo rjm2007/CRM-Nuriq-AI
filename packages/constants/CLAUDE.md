@@ -30,4 +30,4 @@ No unit tests in this package. `pnpm turbo run check --filter=@plane/constants`
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15).
+- 2026-11-15: `PROJECT_CREATE_TAB_INDICES` gains `"target_date"` after `"lead"` (`src/tab-indices.ts`).

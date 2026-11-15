@@ -4,25 +4,31 @@
  * See the LICENSE file for details.
  */
 
+import { observer } from "mobx-react";
 import { Controller, useFormContext } from "react-hook-form";
 // plane imports
+import { CalendarOutline } from "@makeplane/propel/icons";
+import { DateSelect } from "@plane/blocks/property-select";
 import { Select } from "@plane/blocks/select";
 import type { TNetworkChoice } from "@plane/constants";
 import { NETWORK_CHOICES, ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { IProject } from "@plane/types";
-import { getTabIndex } from "@plane/utils";
+import { getDate, getTabIndex, renderFormattedPayloadDate } from "@plane/utils";
 // components
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { ProjectNetworkIcon } from "@/components/project/project-network-icon";
+// hooks
+import { useUserProfile } from "@/hooks/store/user";
 
 type Props = {
   isMobile?: boolean;
 };
 
-function ProjectAttributes(props: Props) {
+const ProjectAttributes = observer(function ProjectAttributes(props: Props) {
   const { isMobile = false } = props;
   const { t } = useTranslation();
+  const { data: userProfile } = useUserProfile();
   const { control } = useFormContext<IProject>();
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_CREATE, isMobile);
   return (
@@ -83,9 +89,27 @@ function ProjectAttributes(props: Props) {
           else return <></>;
         }}
       />
+      {/* Neuric: project target (completion) date */}
+      <Controller
+        name="target_date"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <DateSelect
+            value={getDate(value) ?? null}
+            onChange={(date) => onChange(date ? (renderFormattedPayloadDate(date) ?? null) : null)}
+            placeholder={t("target_date")}
+            icon={<CalendarOutline />}
+            weekStartsOn={userProfile?.start_of_the_week}
+            clearable
+            clearLabel={t("common.clear")}
+            variant="pill-md"
+            tabIndex={getIndex("target_date")}
+          />
+        )}
+      />
     </div>
   );
-}
+});
 
 export default ProjectAttributes;
 

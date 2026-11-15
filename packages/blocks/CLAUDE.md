@@ -46,4 +46,4 @@ Composite, Plane-specific React components built on `@makeplane/propel` primitiv
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15).
+- 2026-11-15: `PageSelect` (`src/property-select/page-select.tsx` + `page-select.test.tsx`), exported from `@plane/blocks/property-select` with `PageOption`/`PageSelectProps`. Sync-mode single picker: pages come in via `options`, `value` is a page id, `onChange(id | null)`, `missingLabel` when the id is not in `options`.

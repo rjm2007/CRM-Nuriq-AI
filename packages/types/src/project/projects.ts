@@ -40,6 +40,9 @@ export interface IPartialProject {
   created_by?: string;
   updated_by?: string;
   intake_count?: number;
+  // Neuric: planned completion date ("YYYY-MM-DD") and linked PRD page id (list + retrieve return both)
+  target_date?: string | null;
+  prd_page?: string | null;
 }
 
 export interface IProject extends IPartialProject {

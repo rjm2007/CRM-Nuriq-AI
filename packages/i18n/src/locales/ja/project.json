@@ -413,6 +413,11 @@
           "message": "問題が発生しました。"
         }
       }
-    }
+    },
+    "prd_page": "PRD ページ",
+    "prd_page_placeholder": "PRD ページを選択",
+    "prd_page_missing": "リンクされた PRD ページは利用できなくなりました。公開ページを選択してください。",
+    "open_prd": "PRD を開く",
+    "target_date_past_warning": "目標日が過去の日付です。"
   }
 }

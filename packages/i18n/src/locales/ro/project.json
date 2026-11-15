@@ -413,6 +413,11 @@
           "message": "Ceva nu a funcționat."
         }
       }
-    }
+    },
+    "prd_page": "Pagină PRD",
+    "prd_page_placeholder": "Selectați o pagină PRD",
+    "prd_page_missing": "Pagina PRD asociată nu mai este disponibilă. Alegeți o pagină publică.",
+    "open_prd": "Deschideți PRD",
+    "target_date_past_warning": "Data țintă este în trecut."
   }
 }

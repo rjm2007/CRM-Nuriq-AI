@@ -34,6 +34,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { ProjectService } from "@/services/project";
 // local imports
 import { ProjectNetworkIcon } from "./project-network-icon";
+import { ProjectPrdPageField, ProjectTargetDateField } from "./form-target-prd";
 
 export interface IProjectDetailsForm {
   project: IProject;
@@ -100,6 +101,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
           title: t("toast.success"),
           message: t("project_settings.general.toast.success"),
         });
+        return undefined;
       })
       .catch((err) => {
         try {
@@ -109,8 +111,10 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
           const nameError = errorData.name?.includes("PROJECT_NAME_ALREADY_EXIST");
           const identifierError = errorData?.identifier?.includes("PROJECT_IDENTIFIER_ALREADY_EXIST");
           const nameSpecialCharError = errorData?.name?.includes("PROJECT_NAME_CANNOT_CONTAIN_SPECIAL_CHARACTERS");
+          // Neuric: 400 {"prd_page": [...]} when the page is not public / archived / not in this project
+          const prdPageError = !!errorData?.prd_page;
 
-          if (nameError || identifierError || nameSpecialCharError) {
+          if (nameError || identifierError || nameSpecialCharError || prdPageError) {
             if (nameError) {
               setToast({
                 type: "error",
@@ -132,6 +136,14 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                 type: "error",
                 title: t("toast.error"),
                 message: t("project_name_cannot_contain_special_characters"),
+              });
+            }
+
+            if (prdPageError) {
+              setToast({
+                type: "error",
+                title: t("toast.error"),
+                message: t("project.prd_page_missing"),
               });
             }
           } else {
@@ -164,7 +176,10 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
 
       logo_props: formData.logo_props,
       timezone: formData.timezone,
+      // Neuric
+      target_date: formData.target_date ?? null,
     };
+    if ((formData.prd_page ?? null) !== (project.prd_page ?? null)) payload.prd_page = formData.prd_page ?? null;
 
     // Handle cover image changes
     try {
@@ -193,8 +208,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
       await projectService
         .checkProjectIdentifierAvailability(workspaceSlug, payload.identifier ?? "")
         .then(async (res) => {
-          if (res.exists) setError("identifier", { message: t("common.identifier_already_exists") });
-          else await handleUpdateChange(payload);
+          if (res.exists) return setError("identifier", { message: t("common.identifier_already_exists") });
+          return handleUpdateChange(payload);
         });
     else await handleUpdateChange(payload);
     setTimeout(() => {
@@ -430,8 +445,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                     fieldLabel={t("common.project_timezone")}
                     errorMessage={errors.timezone?.message}
                     value={value}
-                    onChange={(value: string) => {
-                      onChange(value);
+                    onChange={(timezone: string) => {
+                      onChange(timezone);
                     }}
                     label={t("common.project_timezone")}
                     error={Boolean(errors.timezone)}
@@ -442,6 +457,14 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               )}
             />
           </div>
+          {/* Neuric: target date + PRD page */}
+          <ProjectTargetDateField control={control} disabled={!isAdmin} />
+          <ProjectPrdPageField
+            control={control}
+            workspaceSlug={workspaceSlug}
+            projectId={projectId}
+            disabled={!isAdmin}
+          />
         </div>
         <div className="flex items-center justify-between py-2">
           <>

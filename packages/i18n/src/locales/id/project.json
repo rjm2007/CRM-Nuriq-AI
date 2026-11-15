@@ -413,6 +413,11 @@
           "message": "Terjadi kesalahan."
         }
       }
-    }
+    },
+    "prd_page": "Halaman PRD",
+    "prd_page_placeholder": "Pilih halaman PRD",
+    "prd_page_missing": "Halaman PRD yang ditautkan tidak lagi tersedia. Pilih halaman publik.",
+    "open_prd": "Buka PRD",
+    "target_date_past_warning": "Tanggal target sudah lewat."
   }
 }

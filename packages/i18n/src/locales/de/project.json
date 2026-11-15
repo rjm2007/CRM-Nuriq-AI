@@ -413,6 +413,11 @@
           "message": "Etwas ist schief gelaufen."
         }
       }
-    }
+    },
+    "prd_page": "PRD-Seite",
+    "prd_page_placeholder": "PRD-Seite auswählen",
+    "prd_page_missing": "Die verknüpfte PRD-Seite ist nicht mehr verfügbar. Wählen Sie eine öffentliche Seite.",
+    "open_prd": "PRD öffnen",
+    "target_date_past_warning": "Das Zieldatum liegt in der Vergangenheit."
   }
 }

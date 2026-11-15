@@ -413,6 +413,11 @@
           "message": "Něco se pokazilo."
         }
       }
-    }
+    },
+    "prd_page": "Stránka PRD",
+    "prd_page_placeholder": "Vyberte stránku PRD",
+    "prd_page_missing": "Propojená stránka PRD již není dostupná. Vyberte veřejnou stránku.",
+    "open_prd": "Otevřít PRD",
+    "target_date_past_warning": "Cílové datum je v minulosti."
   }
 }

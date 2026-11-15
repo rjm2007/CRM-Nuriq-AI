@@ -413,6 +413,11 @@
           "message": "Bir şeyler ters gitti."
         }
       }
-    }
+    },
+    "prd_page": "PRD sayfası",
+    "prd_page_placeholder": "Bir PRD sayfası seçin",
+    "prd_page_missing": "Bağlı PRD sayfası artık kullanılamıyor. Herkese açık bir sayfa seçin.",
+    "open_prd": "PRD'yi aç",
+    "target_date_past_warning": "Hedef tarih geçmişte kaldı."
   }
 }

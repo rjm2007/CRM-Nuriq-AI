@@ -32,4 +32,4 @@ No unit tests. `pnpm turbo run check --filter=@plane/types`
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15).
+- 2026-11-15: `IPartialProject` gains `target_date?: string | null` and `prd_page?: string | null` (`src/project/projects.ts`).

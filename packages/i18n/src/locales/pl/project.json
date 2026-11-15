@@ -413,6 +413,11 @@
           "message": "Coś poszło nie tak."
         }
       }
-    }
+    },
+    "prd_page": "Strona PRD",
+    "prd_page_placeholder": "Wybierz stronę PRD",
+    "prd_page_missing": "Powiązana strona PRD nie jest już dostępna. Wybierz stronę publiczną.",
+    "open_prd": "Otwórz PRD",
+    "target_date_past_warning": "Data docelowa jest w przeszłości."
   }
 }

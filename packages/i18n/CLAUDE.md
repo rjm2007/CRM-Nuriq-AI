@@ -38,4 +38,4 @@ i18next (ICU message format) setup, React provider/hook, and all UI strings for 
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15).
+- 2026-11-15: `project.json` (all 22 locales): `project.prd_page`, `project.prd_page_placeholder`, `project.prd_page_missing`, `project.open_prd`, `project.target_date_past_warning`. Target date label reuses top-level `target_date` (common.json).

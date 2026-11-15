@@ -413,6 +413,11 @@
           "message": "Une erreur s'est produite."
         }
       }
-    }
+    },
+    "prd_page": "Page PRD",
+    "prd_page_placeholder": "Sélectionner une page PRD",
+    "prd_page_missing": "La page PRD liée n’est plus disponible. Choisissez une page publique.",
+    "open_prd": "Ouvrir le PRD",
+    "target_date_past_warning": "La date cible est dans le passé."
   }
 }

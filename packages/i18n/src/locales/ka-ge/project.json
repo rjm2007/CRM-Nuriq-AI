@@ -413,6 +413,11 @@
           "message": "Something went wrong."
         }
       }
-    }
+    },
+    "prd_page": "PRD გვერდი",
+    "prd_page_placeholder": "აირჩიეთ PRD გვერდი",
+    "prd_page_missing": "დაკავშირებული PRD გვერდი აღარ არის ხელმისაწვდომი. აირჩიეთ საჯარო გვერდი.",
+    "open_prd": "PRD-ის გახსნა",
+    "target_date_past_warning": "სამიზნე თარიღი წარსულშია."
   }
 }

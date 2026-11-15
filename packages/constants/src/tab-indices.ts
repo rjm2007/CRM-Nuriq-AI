@@ -52,6 +52,7 @@ export const PROJECT_CREATE_TAB_INDICES = [
   "description",
   "network",
   "lead",
+  "target_date",
   "cancel",
   "submit",
   "close",
