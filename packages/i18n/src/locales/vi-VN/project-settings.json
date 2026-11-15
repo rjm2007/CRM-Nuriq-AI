@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Giai đoạn",
+      "short_title": "Giai đoạn",
+      "heading": "Giai đoạn",
+      "description": "Chia dự án thành các giai đoạn theo thứ tự và đưa các mô-đun vào đó. Kéo các giai đoạn để sắp xếp lại.",
+      "count": "Giai đoạn: {count}",
+      "add": "Thêm giai đoạn",
+      "admin_only": "Chỉ quản trị viên dự án mới có thể tạo, chỉnh sửa hoặc sắp xếp giai đoạn.",
+      "load_error": "Không thể tải giai đoạn. Vui lòng thử lại sau.",
+      "no_dates": "Chưa có ngày",
+      "no_keywords": "Chưa có mô-đun nào trong giai đoạn này.",
+      "add_keywords": "Thêm mô-đun",
+      "remove_keyword": "Xóa {name} khỏi giai đoạn này",
+      "keyword_outside_dates": "{name} có ngày nằm ngoài ngày của giai đoạn này.",
+      "keyword_span": "Ngày của mô-đun: {dates}",
+      "keyword_span_empty": "Ngày của mô-đun: chưa đặt",
+      "form": {
+        "name": "Tên giai đoạn",
+        "name_required": "Tên giai đoạn là bắt buộc.",
+        "description_placeholder": "Mô tả giai đoạn này cho các thành viên.",
+        "create": "Tạo giai đoạn",
+        "update": "Lưu giai đoạn"
+      },
+      "delete": {
+        "title": "Xóa giai đoạn",
+        "content": "Xóa giai đoạn {name}? Các mô-đun của nó vẫn ở trong dự án mà không có giai đoạn. Không thể hoàn tác."
+      },
+      "empty_state": {
+        "title": "Chưa có giai đoạn nào",
+        "description": "Giai đoạn chia dự án thành các bước theo thứ tự. Mỗi mô-đun có thể thuộc một giai đoạn."
+      },
+      "toast": {
+        "created": "Đã tạo giai đoạn.",
+        "updated": "Đã cập nhật giai đoạn.",
+        "deleted": "Đã xóa giai đoạn.",
+        "create_error": "Không thể tạo giai đoạn. Vui lòng thử lại.",
+        "update_error": "Không thể cập nhật giai đoạn. Vui lòng thử lại.",
+        "delete_error": "Không thể xóa giai đoạn. Vui lòng thử lại.",
+        "reorder_error": "Không thể sắp xếp lại giai đoạn. Vui lòng thử lại.",
+        "keyword_moved": "{name} đã được chuyển đến đây từ giai đoạn {from}."
+      },
+      "move_up": "Di chuyển lên",
+      "move_down": "Di chuyển xuống"
     }
   }
 }

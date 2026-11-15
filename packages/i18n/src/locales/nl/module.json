@@ -10,5 +10,46 @@
         "empty": "Voeg werkitems toe aan de module om de voortgang te volgen."
       }
     }
+  },
+  "phase": {
+    "label": "Fase",
+    "label_plural": "Fasen",
+    "no_phase": "Geen fase",
+    "search": "Fasen zoeken...",
+    "missing": "Onbekende fase",
+    "empty_options": "Nog geen fasen. Voeg ze toe in de projectinstellingen.",
+    "toast": {
+      "keyword_error": "Kan de fase van de module niet wijzigen. Probeer het opnieuw."
+    },
+    "activity": {
+      "moved": "heeft dit werkitem verplaatst van fase {from} naar fase {to}",
+      "added": "heeft dit werkitem toegevoegd aan fase {to}",
+      "removed": "heeft dit werkitem verwijderd uit fase {from}",
+      "updated": "heeft de fase van dit werkitem gewijzigd",
+      "moved_feed": "heeft {item} verplaatst van fase {from} naar fase {to}",
+      "added_feed": "heeft {item} toegevoegd aan fase {to}",
+      "removed_feed": "heeft {item} verwijderd uit fase {from}",
+      "updated_feed": "heeft de fase van {item} gewijzigd"
+    }
+  },
+  "keyword_map": {
+    "layout": "Kaart",
+    "canvas_label": "Modulekaart",
+    "no_phase": "Geen fase",
+    "node_meta": "{completed}/{total} werkitems voltooid",
+    "add_label": "Label toevoegen",
+    "edit_label": "Label bewerken",
+    "label_input": "Relatielabel",
+    "delete_relation": "Relatie verwijderen",
+    "zoom_in": "Inzoomen",
+    "zoom_out": "Uitzoomen",
+    "fit_view": "Passend in beeld",
+    "controls": "Kaartbediening",
+    "errors": {
+      "load": "Kan de modulerelaties niet laden.",
+      "create": "Kan de modules niet koppelen. Probeer het opnieuw.",
+      "update": "Kan het relatielabel niet opslaan. Probeer het opnieuw.",
+      "delete": "Kan de relatie niet verwijderen. Probeer het opnieuw."
+    }
   }
 }

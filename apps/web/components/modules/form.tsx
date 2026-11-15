@@ -4,7 +4,9 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 // plane imports
 import {
@@ -28,12 +30,17 @@ import { getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { ModuleStatusSelect } from "@/components/modules";
+import { ProjectPhaseSelect } from "@/components/phases/phase-select";
 // hooks
+import { usePhase } from "@/hooks/store/use-phase";
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
 
+/** Neuric: the keyword's phase picked in the form (phases are not a module field; saved after the module). */
+export type TModuleFormPhase = { phaseId: string | null; changed: boolean };
+
 type Props = {
-  handleFormSubmit: (values: Partial<IModule>, dirtyFields: any) => Promise<void>;
+  handleFormSubmit: (values: Partial<IModule>, dirtyFields: any, phase?: TModuleFormPhase) => Promise<void>;
   handleClose: () => void;
   status: boolean;
   projectId: string;
@@ -50,11 +57,18 @@ const defaultValues: Partial<IModule> = {
   member_ids: [],
 };
 
-export function ModuleForm(props: Props) {
+export const ModuleForm = observer(function ModuleForm(props: Props) {
   const { handleFormSubmit, handleClose, status, projectId, setActiveProject, data, isMobile = false } = props;
   // store hooks
   const { projectsWithCreatePermissions } = useUser();
   const { data: userProfile } = useUserProfile();
+  const { getPhaseIdByModuleId } = usePhase();
+  const { workspaceSlug } = useParams();
+  // Neuric: phase of the keyword (Step 2)
+  const initialPhaseId = (data?.id && getPhaseIdByModuleId(data.id)) || null;
+  // `undefined` until the user picks, so a phase list that loads after the form opened still shows
+  const [pickedPhaseId, setPhaseId] = useState<string | null | undefined>(undefined);
+  const phaseId = pickedPhaseId === undefined ? initialPhaseId : pickedPhaseId;
   // form info
   const {
     formState: { errors, isSubmitting, dirtyFields },
@@ -77,7 +91,7 @@ export function ModuleForm(props: Props) {
   const { t } = useTranslation();
 
   const handleCreateUpdateModule = async (formData: Partial<IModule>) => {
-    await handleFormSubmit(formData, dirtyFields);
+    await handleFormSubmit(formData, dirtyFields, { phaseId, changed: phaseId !== initialPhaseId });
 
     reset({
       ...defaultValues,
@@ -107,6 +121,8 @@ export function ModuleForm(props: Props) {
                       if (!val) return;
                       onChange(val);
                       setActiveProject(val);
+                      // phases belong to one project
+                      setPhaseId(null);
                     }}
                     multiple={false}
                     variant="pill-sm"
@@ -149,6 +165,7 @@ export function ModuleForm(props: Props) {
                     placeholder={t("title")}
                     aria-label={t("title")}
                     tabIndex={getIndex("name")}
+                    // oxlint-disable-next-line jsx-a11y/no-autofocus -- the create/edit dialog opens on the title field
                     autoFocus
                   />
                 )}
@@ -205,6 +222,18 @@ export function ModuleForm(props: Props) {
                 )}
               />
               <ModuleStatusSelect control={control} error={errors.status} tabIndex={getIndex("status")} />
+              {/* Neuric: phase (Step 2) */}
+              {workspaceSlug && projectId && (
+                <ProjectPhaseSelect
+                  workspaceSlug={workspaceSlug.toString()}
+                  projectId={projectId}
+                  value={phaseId}
+                  onChange={setPhaseId}
+                  variant="pill-sm"
+                  tabIndex={getIndex("phase")}
+                  testId="module-form-phase-select"
+                />
+              )}
               <Controller
                 control={control}
                 name="lead_id"
@@ -268,4 +297,4 @@ export function ModuleForm(props: Props) {
       </DialogActions>
     </form>
   );
-}
+});

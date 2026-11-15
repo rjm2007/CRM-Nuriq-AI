@@ -12,7 +12,7 @@ import { action, computed, makeObservable, observable, runInAction } from "mobx"
 import { computedFn } from "mobx-utils";
 // plane imports
 import { PHASE_SEQUENCE_GAP } from "@plane/constants";
-import type { IModuleRelation, IPhase, TModuleRelationPayload, TPhasePayload } from "@plane/types";
+import type { IModuleRelation, IPhase, TModuleRelationPayload, TPhaseApiError, TPhasePayload } from "@plane/types";
 // services
 import { PhaseService } from "@/services/phase.service";
 // store
@@ -20,11 +20,16 @@ import type { CoreRootStore } from "./root.store";
 
 const sortPhases = (phases: IPhase[]) => sortBy(phases, ["sequence", "created_at"]);
 
+/** `PhaseService` errors carry the HTTP `status` (see `toPhaseError`). */
+const isForbidden = (error: unknown) => (error as TPhaseApiError | undefined)?.status === 403;
+
 export interface IPhaseStore {
   // observables
   phasesMap: Record<string, IPhase>;
   /** projectId -> true once the phases of that project were fetched. */
   fetchedMap: Record<string, boolean>;
+  /** projectId -> true when the phases list answered 403 (guest without "view all features"): phases are hidden. */
+  forbiddenMap: Record<string, boolean>;
   // computed
   /** Phase ids of the project in the URL, by sequence; `undefined` until fetched. */
   projectPhaseIds: string[] | undefined;
@@ -35,18 +40,21 @@ export interface IPhaseStore {
   getProjectPhases: (projectId: string | undefined | null) => IPhase[] | undefined;
   getPhaseById: (phaseId: string | undefined | null) => IPhase | undefined;
   getPhaseIdByModuleId: (moduleId: string | undefined | null) => string | undefined;
+  /** The user may not read this project's phases (API 403); UI hides phase rows instead of showing an error. */
+  isPhasesForbidden: (projectId: string | undefined | null) => boolean;
   /** Distinct phase names of these keywords, in phase order (a work item in two keywords may have two phases). */
   getPhaseNamesByModuleIds: (moduleIds: string[] | undefined | null) => string[];
   // actions
+  /** A 403 resolves to `[]` and sets `forbiddenMap`; other errors are thrown. */
   fetchPhases: (workspaceSlug: string, projectId: string) => Promise<IPhase[]>;
   createPhase: (workspaceSlug: string, projectId: string, data: TPhasePayload) => Promise<IPhase>;
   updatePhase: (workspaceSlug: string, projectId: string, phaseId: string, data: TPhasePayload) => Promise<IPhase>;
   deletePhase: (workspaceSlug: string, projectId: string, phaseId: string) => Promise<void>;
   /** Moves a phase to `sequence` (optimistic; rolled back on error). */
   movePhase: (workspaceSlug: string, projectId: string, phaseId: string, sequence: number) => Promise<void>;
-  /** Puts keywords into a phase, moving them out of their old phase (optimistic). */
+  /** Puts keywords into a phase, moving them out of their old phase (optimistic; on error only these keywords go back, then a re-fetch). */
   assignModules: (workspaceSlug: string, projectId: string, phaseId: string, moduleIds: string[]) => Promise<void>;
-  /** Takes one keyword out of a phase (optimistic). */
+  /** Takes one keyword out of a phase (optimistic; on error only this keyword goes back, then a re-fetch). */
   removeModule: (workspaceSlug: string, projectId: string, phaseId: string, moduleId: string) => Promise<void>;
   /** One call for pickers: `phaseId` null removes the keyword from its current phase. */
   setModulePhase: (workspaceSlug: string, projectId: string, moduleId: string, phaseId: string | null) => Promise<void>;
@@ -75,6 +83,7 @@ export interface IModuleRelationStore {
 export class PhaseStore implements IPhaseStore {
   phasesMap: Record<string, IPhase> = {};
   fetchedMap: Record<string, boolean> = {};
+  forbiddenMap: Record<string, boolean> = {};
   // root store
   rootStore: CoreRootStore;
   // services
@@ -84,6 +93,7 @@ export class PhaseStore implements IPhaseStore {
     makeObservable(this, {
       phasesMap: observable,
       fetchedMap: observable,
+      forbiddenMap: observable,
       projectPhaseIds: computed,
       moduleIdToPhaseId: computed,
       fetchPhases: action,
@@ -128,6 +138,10 @@ export class PhaseStore implements IPhaseStore {
     moduleId ? this.moduleIdToPhaseId[moduleId] : undefined
   );
 
+  isPhasesForbidden = computedFn((projectId: string | undefined | null) =>
+    projectId ? !!this.forbiddenMap[projectId] : false
+  );
+
   getPhaseNamesByModuleIds = computedFn((moduleIds: string[] | undefined | null) => {
     if (!moduleIds?.length) return [];
     const phaseIds = new Set<string>();
@@ -143,7 +157,16 @@ export class PhaseStore implements IPhaseStore {
   });
 
   fetchPhases = async (workspaceSlug: string, projectId: string) => {
-    const phases = await this.phaseService.list(workspaceSlug, projectId);
+    let phases: IPhase[];
+    let forbidden = false;
+    try {
+      phases = await this.phaseService.list(workspaceSlug, projectId);
+    } catch (error) {
+      // a guest of a project with guest_view_all_features off gets 403: quietly "no phases", not an error
+      if (!isForbidden(error)) throw error;
+      phases = [];
+      forbidden = true;
+    }
     runInAction(() => {
       // drop phases of this project that are gone on the server
       Object.values(this.phasesMap).forEach((phase) => {
@@ -151,6 +174,7 @@ export class PhaseStore implements IPhaseStore {
       });
       phases.forEach((phase) => set(this.phasesMap, [phase.id], { ...phase, project: phase.project ?? projectId }));
       set(this.fetchedMap, [projectId], true);
+      set(this.forbiddenMap, [projectId], forbidden);
     });
     return phases;
   };
@@ -207,41 +231,59 @@ export class PhaseStore implements IPhaseStore {
     }
   };
 
-  /** Snapshot of `module_ids` per phase, for rollback. */
-  private snapshotModuleIds() {
-    const snapshot: Record<string, string[]> = {};
-    Object.values(this.phasesMap).forEach((phase) => {
-      snapshot[phase.id] = [...(phase.module_ids ?? [])];
-    });
-    return snapshot;
+  /** Writes a new `module_ids` array (never mutates in place, so every observer of the phase recomputes). */
+  private setPhaseModuleIds(phaseId: string, moduleIds: string[]) {
+    if (this.phasesMap[phaseId]) set(this.phasesMap, [phaseId, "module_ids"], moduleIds);
   }
 
-  private restoreModuleIds(snapshot: Record<string, string[]>) {
-    Object.entries(snapshot).forEach(([phaseId, moduleIds]) => {
-      if (this.phasesMap[phaseId]) set(this.phasesMap, [phaseId, "module_ids"], moduleIds);
+  /**
+   * Undo of a failed keyword move: only the keywords of that request go back to where they were, so a parallel
+   * change that succeeded is kept. Then the project's phases are re-fetched to match the server.
+   */
+  private rollbackModules(
+    workspaceSlug: string,
+    projectId: string,
+    previousPhaseIds: Record<string, string | undefined>
+  ) {
+    runInAction(() => {
+      Object.entries(previousPhaseIds).forEach(([moduleId, previousPhaseId]) => {
+        Object.values(this.phasesMap).forEach((phase) => {
+          if (phase.id !== previousPhaseId && phase.module_ids?.includes(moduleId))
+            this.setPhaseModuleIds(
+              phase.id,
+              phase.module_ids.filter((id) => id !== moduleId)
+            );
+        });
+        const previous = previousPhaseId ? this.phasesMap[previousPhaseId] : undefined;
+        if (previous && !previous.module_ids?.includes(moduleId))
+          this.setPhaseModuleIds(previous.id, [...(previous.module_ids ?? []), moduleId]);
+      });
     });
+    this.fetchPhases(workspaceSlug, projectId).catch(() => undefined);
   }
 
   assignModules = async (workspaceSlug: string, projectId: string, phaseId: string, moduleIds: string[]) => {
     if (!this.phasesMap[phaseId] || moduleIds.length === 0) return;
-    const snapshot = this.snapshotModuleIds();
+    const previousPhaseIds: Record<string, string | undefined> = {};
+    moduleIds.forEach((moduleId) => {
+      previousPhaseIds[moduleId] = this.moduleIdToPhaseId[moduleId];
+    });
     runInAction(() => {
       // one phase per keyword: take the keywords out of every other phase first
       Object.values(this.phasesMap).forEach((phase) => {
         if (phase.id === phaseId || !phase.module_ids?.some((id) => moduleIds.includes(id))) return;
-        set(
-          this.phasesMap,
-          [phase.id, "module_ids"],
+        this.setPhaseModuleIds(
+          phase.id,
           phase.module_ids.filter((id) => !moduleIds.includes(id))
         );
       });
       const current = this.phasesMap[phaseId]?.module_ids ?? [];
-      set(this.phasesMap, [phaseId, "module_ids"], [...current, ...moduleIds.filter((id) => !current.includes(id))]);
+      this.setPhaseModuleIds(phaseId, [...current, ...moduleIds.filter((id) => !current.includes(id))]);
     });
     try {
       await this.phaseService.addModules(workspaceSlug, projectId, phaseId, { module_ids: moduleIds });
     } catch (error) {
-      runInAction(() => this.restoreModuleIds(snapshot));
+      this.rollbackModules(workspaceSlug, projectId, previousPhaseIds);
       throw error;
     }
   };
@@ -249,20 +291,16 @@ export class PhaseStore implements IPhaseStore {
   removeModule = async (workspaceSlug: string, projectId: string, phaseId: string, moduleId: string) => {
     const phase = this.phasesMap[phaseId];
     if (!phase) return;
-    const oldModuleIds = [...(phase.module_ids ?? [])];
     runInAction(() =>
-      set(
-        this.phasesMap,
-        [phaseId, "module_ids"],
-        oldModuleIds.filter((id) => id !== moduleId)
+      this.setPhaseModuleIds(
+        phaseId,
+        (phase.module_ids ?? []).filter((id) => id !== moduleId)
       )
     );
     try {
       await this.phaseService.removeModule(workspaceSlug, projectId, phaseId, moduleId);
     } catch (error) {
-      runInAction(() => {
-        if (this.phasesMap[phaseId]) set(this.phasesMap, [phaseId, "module_ids"], oldModuleIds);
-      });
+      this.rollbackModules(workspaceSlug, projectId, { [moduleId]: phaseId });
       throw error;
     }
   };
@@ -303,7 +341,14 @@ export class ModuleRelationStore implements IModuleRelationStore {
   getRelationById = computedFn((relationId: string) => this.relationsMap[relationId]);
 
   fetchRelations = async (workspaceSlug: string, projectId: string) => {
-    const relations = await this.phaseService.listRelations(workspaceSlug, projectId);
+    let relations: IModuleRelation[];
+    try {
+      relations = await this.phaseService.listRelations(workspaceSlug, projectId);
+    } catch (error) {
+      // same as phases: a 403 (guest without "view all features") means "no relations", not an error
+      if (!isForbidden(error)) throw error;
+      relations = [];
+    }
     runInAction(() => {
       (this.projectRelationIds[projectId] ?? []).forEach((id) => delete this.relationsMap[id]);
       relations.forEach((relation) => set(this.relationsMap, [relation.id], relation));

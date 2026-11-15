@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Phases",
+      "short_title": "Phases",
+      "heading": "Phases",
+      "description": "Divisez le projet en phases ordonnées et placez-y ses modules. Faites glisser les phases pour les réordonner.",
+      "count": "Phases : {count}",
+      "add": "Ajouter une phase",
+      "admin_only": "Seuls les administrateurs du projet peuvent créer, modifier ou réordonner les phases.",
+      "load_error": "Impossible de charger les phases. Réessayez plus tard.",
+      "no_dates": "Aucune date",
+      "no_keywords": "Aucun module dans cette phase pour l'instant.",
+      "add_keywords": "Ajouter des modules",
+      "remove_keyword": "Retirer {name} de cette phase",
+      "keyword_outside_dates": "{name} a des dates en dehors des dates de cette phase.",
+      "keyword_span": "Dates des modules : {dates}",
+      "keyword_span_empty": "Dates des modules : aucune",
+      "form": {
+        "name": "Nom de la phase",
+        "name_required": "Le nom de la phase est obligatoire.",
+        "description_placeholder": "Décrivez cette phase pour vos membres.",
+        "create": "Créer la phase",
+        "update": "Enregistrer la phase"
+      },
+      "delete": {
+        "title": "Supprimer la phase",
+        "content": "Supprimer la phase {name} ? Ses modules restent dans le projet sans phase. Cette action est irréversible."
+      },
+      "empty_state": {
+        "title": "Aucune phase pour l'instant",
+        "description": "Les phases divisent le projet en étapes ordonnées. Chaque module peut appartenir à une phase."
+      },
+      "toast": {
+        "created": "Phase créée.",
+        "updated": "Phase mise à jour.",
+        "deleted": "Phase supprimée.",
+        "create_error": "Impossible de créer la phase. Réessayez.",
+        "update_error": "Impossible de mettre à jour la phase. Réessayez.",
+        "delete_error": "Impossible de supprimer la phase. Réessayez.",
+        "reorder_error": "Impossible de réordonner les phases. Réessayez.",
+        "keyword_moved": "{name} a été déplacé ici depuis la phase {from}."
+      },
+      "move_up": "Monter",
+      "move_down": "Descendre"
     }
   }
 }

@@ -67,6 +67,8 @@ export const PROJECT_MODULE_TAB_INDICES = [
   "description",
   "date_range",
   "status",
+  // Neuric: keyword (module) phase picker (Step 2)
+  "phase",
   "lead",
   "member_ids",
   "cancel",

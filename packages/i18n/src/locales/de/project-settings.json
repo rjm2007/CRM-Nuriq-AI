@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Phasen",
+      "short_title": "Phasen",
+      "heading": "Phasen",
+      "description": "Teilen Sie das Projekt in geordnete Phasen und ordnen Sie ihnen Module zu. Ziehen Sie Phasen, um sie neu zu ordnen.",
+      "count": "Phasen: {count}",
+      "add": "Phase hinzufügen",
+      "admin_only": "Nur Projektadministratoren können Phasen erstellen, bearbeiten oder neu ordnen.",
+      "load_error": "Phasen konnten nicht geladen werden. Versuchen Sie es später erneut.",
+      "no_dates": "Keine Daten",
+      "no_keywords": "Noch keine Module in dieser Phase.",
+      "add_keywords": "Module hinzufügen",
+      "remove_keyword": "{name} aus dieser Phase entfernen",
+      "keyword_outside_dates": "{name} hat Daten außerhalb der Daten dieser Phase.",
+      "keyword_span": "Moduldaten: {dates}",
+      "keyword_span_empty": "Moduldaten: keine festgelegt",
+      "form": {
+        "name": "Phasenname",
+        "name_required": "Ein Phasenname ist erforderlich.",
+        "description_placeholder": "Beschreiben Sie diese Phase für Ihre Mitglieder.",
+        "create": "Phase erstellen",
+        "update": "Phase speichern"
+      },
+      "delete": {
+        "title": "Phase löschen",
+        "content": "Phase {name} löschen? Ihre Module bleiben ohne Phase im Projekt. Dies kann nicht rückgängig gemacht werden."
+      },
+      "empty_state": {
+        "title": "Noch keine Phasen",
+        "description": "Phasen teilen das Projekt in geordnete Abschnitte. Jedes Modul kann zu einer Phase gehören."
+      },
+      "toast": {
+        "created": "Phase erstellt.",
+        "updated": "Phase aktualisiert.",
+        "deleted": "Phase gelöscht.",
+        "create_error": "Die Phase konnte nicht erstellt werden. Versuchen Sie es erneut.",
+        "update_error": "Die Phase konnte nicht aktualisiert werden. Versuchen Sie es erneut.",
+        "delete_error": "Die Phase konnte nicht gelöscht werden. Versuchen Sie es erneut.",
+        "reorder_error": "Die Phasen konnten nicht neu geordnet werden. Versuchen Sie es erneut.",
+        "keyword_moved": "{name} wurde aus Phase {from} hierher verschoben."
+      },
+      "move_up": "Nach oben verschieben",
+      "move_down": "Nach unten verschieben"
     }
   }
 }

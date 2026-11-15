@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fases",
+      "short_title": "Fases",
+      "heading": "Fases",
+      "description": "Divida o projeto em fases ordenadas e coloque seus módulos nelas. Arraste as fases para reordená-las.",
+      "count": "Fases: {count}",
+      "add": "Adicionar fase",
+      "admin_only": "Somente administradores do projeto podem criar, editar ou reordenar fases.",
+      "load_error": "Não foi possível carregar as fases. Tente novamente mais tarde.",
+      "no_dates": "Sem datas",
+      "no_keywords": "Ainda não há módulos nesta fase.",
+      "add_keywords": "Adicionar módulos",
+      "remove_keyword": "Remover {name} desta fase",
+      "keyword_outside_dates": "{name} tem datas fora das datas desta fase.",
+      "keyword_span": "Datas dos módulos: {dates}",
+      "keyword_span_empty": "Datas dos módulos: nenhuma",
+      "form": {
+        "name": "Nome da fase",
+        "name_required": "O nome da fase é obrigatório.",
+        "description_placeholder": "Descreva esta fase para seus membros.",
+        "create": "Criar fase",
+        "update": "Salvar fase"
+      },
+      "delete": {
+        "title": "Excluir fase",
+        "content": "Excluir a fase {name}? Seus módulos permanecem no projeto sem fase. Isso não pode ser desfeito."
+      },
+      "empty_state": {
+        "title": "Ainda não há fases",
+        "description": "As fases dividem o projeto em etapas ordenadas. Cada módulo pode pertencer a uma fase."
+      },
+      "toast": {
+        "created": "Fase criada.",
+        "updated": "Fase atualizada.",
+        "deleted": "Fase excluída.",
+        "create_error": "Não foi possível criar a fase. Tente novamente.",
+        "update_error": "Não foi possível atualizar a fase. Tente novamente.",
+        "delete_error": "Não foi possível excluir a fase. Tente novamente.",
+        "reorder_error": "Não foi possível reordenar as fases. Tente novamente.",
+        "keyword_moved": "{name} foi movido para cá da fase {from}."
+      },
+      "move_up": "Mover para cima",
+      "move_down": "Mover para baixo"
     }
   }
 }

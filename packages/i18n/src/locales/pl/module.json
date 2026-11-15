@@ -10,5 +10,46 @@
         "empty": "Dodanie elementów pracy do modułu pozwoli śledzić postęp."
       }
     }
+  },
+  "phase": {
+    "label": "Faza",
+    "label_plural": "Fazy",
+    "no_phase": "Brak fazy",
+    "search": "Szukaj faz...",
+    "missing": "Nieznana faza",
+    "empty_options": "Nie ma jeszcze faz. Dodaj je w ustawieniach projektu.",
+    "toast": {
+      "keyword_error": "Nie udało się zmienić fazy modułu. Spróbuj ponownie."
+    },
+    "activity": {
+      "moved": "przeniósł ten element pracy z fazy {from} do fazy {to}",
+      "added": "dodał ten element pracy do fazy {to}",
+      "removed": "usunął ten element pracy z fazy {from}",
+      "updated": "zmienił fazę tego elementu pracy",
+      "moved_feed": "przeniósł {item} z fazy {from} do fazy {to}",
+      "added_feed": "dodał {item} do fazy {to}",
+      "removed_feed": "usunął {item} z fazy {from}",
+      "updated_feed": "zmienił fazę elementu pracy {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Mapa",
+    "canvas_label": "Mapa modułów",
+    "no_phase": "Brak fazy",
+    "node_meta": "Ukończono {completed}/{total} elementów pracy",
+    "add_label": "Dodaj etykietę",
+    "edit_label": "Edytuj etykietę",
+    "label_input": "Etykieta relacji",
+    "delete_relation": "Usuń relację",
+    "zoom_in": "Powiększ",
+    "zoom_out": "Pomniejsz",
+    "fit_view": "Dopasuj widok",
+    "controls": "Sterowanie mapą",
+    "errors": {
+      "load": "Nie udało się wczytać relacji między modułami.",
+      "create": "Nie udało się połączyć modułów. Prosimy spróbować ponownie.",
+      "update": "Nie udało się zapisać etykiety relacji. Prosimy spróbować ponownie.",
+      "delete": "Nie udało się usunąć relacji. Prosimy spróbować ponownie."
+    }
   }
 }

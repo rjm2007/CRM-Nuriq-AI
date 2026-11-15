@@ -29,4 +29,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- 2026-11-16, Step 2: `auth-layout/project-wrapper.tsx` prefetches the project's phases (`useProjectPhases`).

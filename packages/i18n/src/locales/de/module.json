@@ -10,5 +10,46 @@
         "empty": "Fügen Sie dem Modul Arbeitselemente hinzu, um den Fortschritt zu verfolgen."
       }
     }
+  },
+  "phase": {
+    "label": "Phase",
+    "label_plural": "Phasen",
+    "no_phase": "Keine Phase",
+    "search": "Phasen suchen...",
+    "missing": "Unbekannte Phase",
+    "empty_options": "Noch keine Phasen. Fügen Sie sie in den Projekteinstellungen hinzu.",
+    "toast": {
+      "keyword_error": "Die Phase des Moduls konnte nicht geändert werden. Versuchen Sie es erneut."
+    },
+    "activity": {
+      "moved": "hat dieses Arbeitselement von Phase {from} nach Phase {to} verschoben",
+      "added": "hat dieses Arbeitselement zu Phase {to} hinzugefügt",
+      "removed": "hat dieses Arbeitselement aus Phase {from} entfernt",
+      "updated": "hat die Phase dieses Arbeitselements geändert",
+      "moved_feed": "hat {item} von Phase {from} nach Phase {to} verschoben",
+      "added_feed": "hat {item} zu Phase {to} hinzugefügt",
+      "removed_feed": "hat {item} aus Phase {from} entfernt",
+      "updated_feed": "hat die Phase von {item} geändert"
+    }
+  },
+  "keyword_map": {
+    "layout": "Karte",
+    "canvas_label": "Modulkarte",
+    "no_phase": "Keine Phase",
+    "node_meta": "{completed}/{total} Arbeitselemente erledigt",
+    "add_label": "Beschriftung hinzufügen",
+    "edit_label": "Beschriftung bearbeiten",
+    "label_input": "Beziehungsbeschriftung",
+    "delete_relation": "Beziehung löschen",
+    "zoom_in": "Vergrößern",
+    "zoom_out": "Verkleinern",
+    "fit_view": "An Ansicht anpassen",
+    "controls": "Kartensteuerung",
+    "errors": {
+      "load": "Die Modulbeziehungen konnten nicht geladen werden.",
+      "create": "Die Module konnten nicht verknüpft werden. Bitte versuchen Sie es erneut.",
+      "update": "Die Beziehungsbeschriftung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "delete": "Die Beziehung konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+    }
   }
 }

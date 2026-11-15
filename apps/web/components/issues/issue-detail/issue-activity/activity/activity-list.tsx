@@ -31,6 +31,7 @@ import {
   IssueArchivedAtActivity,
   IssueInboxActivity,
   IssueWorkLogActivity,
+  IssuePhaseActivity,
 } from "./actions";
 
 type TIssueActivityItem = {
@@ -94,6 +95,8 @@ export const IssueActivityItem = observer(function IssueActivityItem(props: TIss
       return <IssueInboxActivity {...componentDefaultProps} />;
     case "worklog": // Neuric: time tracking
       return <IssueWorkLogActivity {...componentDefaultProps} />;
+    case "phase": // Neuric: a keyword of this work item changed phase (Step 2)
+      return <IssuePhaseActivity {...componentDefaultProps} />;
     default:
       return null;
   }

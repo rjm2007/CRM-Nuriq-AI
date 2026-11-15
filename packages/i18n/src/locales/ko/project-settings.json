@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "단계",
+      "short_title": "단계",
+      "heading": "단계",
+      "description": "프로젝트를 순서가 있는 단계로 나누고 모듈을 각 단계에 넣으세요. 단계를 드래그해 순서를 바꿀 수 있습니다.",
+      "count": "단계: {count}",
+      "add": "단계 추가",
+      "admin_only": "프로젝트 관리자만 단계를 만들고 편집하거나 순서를 바꿀 수 있습니다.",
+      "load_error": "단계를 불러오지 못했습니다. 나중에 다시 시도하세요.",
+      "no_dates": "날짜 없음",
+      "no_keywords": "이 단계에는 아직 모듈이 없습니다.",
+      "add_keywords": "모듈 추가",
+      "remove_keyword": "이 단계에서 {name} 제거",
+      "keyword_outside_dates": "{name}의 날짜가 이 단계의 날짜를 벗어납니다.",
+      "keyword_span": "모듈 날짜: {dates}",
+      "keyword_span_empty": "모듈 날짜: 설정 안 됨",
+      "form": {
+        "name": "단계 이름",
+        "name_required": "단계 이름은 필수입니다.",
+        "description_placeholder": "멤버를 위해 이 단계를 설명하세요.",
+        "create": "단계 만들기",
+        "update": "단계 저장"
+      },
+      "delete": {
+        "title": "단계 삭제",
+        "content": "{name} 단계를 삭제할까요? 해당 모듈은 단계 없이 프로젝트에 남습니다. 이 작업은 되돌릴 수 없습니다."
+      },
+      "empty_state": {
+        "title": "아직 단계가 없습니다",
+        "description": "단계는 프로젝트를 순서 있는 구간으로 나눕니다. 각 모듈은 하나의 단계에 속할 수 있습니다."
+      },
+      "toast": {
+        "created": "단계를 만들었습니다.",
+        "updated": "단계를 업데이트했습니다.",
+        "deleted": "단계를 삭제했습니다.",
+        "create_error": "단계를 만들지 못했습니다. 다시 시도하세요.",
+        "update_error": "단계를 업데이트하지 못했습니다. 다시 시도하세요.",
+        "delete_error": "단계를 삭제하지 못했습니다. 다시 시도하세요.",
+        "reorder_error": "단계 순서를 바꾸지 못했습니다. 다시 시도하세요.",
+        "keyword_moved": "{name}을(를) {from} 단계에서 여기로 옮겼습니다."
+      },
+      "move_up": "위로 이동",
+      "move_down": "아래로 이동"
     }
   }
 }

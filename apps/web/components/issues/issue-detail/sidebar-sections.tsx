@@ -26,6 +26,7 @@ import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select"
 import { useWorkLogPermissions } from "@/components/issues/issue-detail-widgets/time/helper";
 import { IssueWorkLogTotal } from "@/components/issues/issue-detail-widgets/time/title";
 import { IssueParentSelectRoot } from "@/components/issues/parent-select-root";
+import { IssuePhaseRow } from "@/components/phases/phase-badges";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -187,6 +188,11 @@ export const IssueDetailSidebarSections = observer(function IssueDetailSidebarSe
                     disabled={disabled}
                   />
                 </SidebarPropertyListItem>
+              )}
+
+              {/* Neuric: read-only phases, derived from the work item's keywords (Step 2) */}
+              {projectDetails?.module_view && (
+                <IssuePhaseRow workspaceSlug={workspaceSlug} projectId={projectId} moduleIds={issue.module_ids} />
               )}
             </IssueDetailSidebarGroup>
           </>

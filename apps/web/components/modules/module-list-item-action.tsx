@@ -21,6 +21,7 @@ import { renderFormattedPayloadDate, getDate } from "@plane/utils";
 // components
 import { ModuleQuickActions } from "@/components/modules";
 import { ModuleStatusDropdown } from "@/components/modules/module-status-dropdown";
+import { ModulePhaseBadge } from "@/components/phases/phase-badges";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useModule } from "@/hooks/store/use-module";
@@ -67,6 +68,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
       () => {
         // open favorites menu if closed
         if (!storedValue) toggleFavoriteMenu(true);
+        return undefined;
       }
     );
 
@@ -110,27 +112,28 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
   const handleModuleDetailsChange = async (payload: Partial<IModule>) => {
     if (!workspaceSlug || !projectId) return;
 
-    await updateModuleDetails(workspaceSlug.toString(), projectId.toString(), moduleId, payload)
-      .then(() => {
-        setToast({
-          type: "success",
-          title: "Success!",
-          message: "Module updated successfully.",
-        });
-      })
-      .catch((err) => {
-        setToast({
-          type: "error",
-          title: "Error!",
-          message: err?.detail ?? "Module could not be updated. Please try again.",
-        });
+    try {
+      await updateModuleDetails(workspaceSlug.toString(), projectId.toString(), moduleId, payload);
+      setToast({
+        type: "success",
+        title: "Success!",
+        message: "Module updated successfully.",
       });
+    } catch (err) {
+      setToast({
+        type: "error",
+        title: "Error!",
+        message: (err as { detail?: string } | undefined)?.detail ?? "Module could not be updated. Please try again.",
+      });
+    }
   };
 
   const moduleLeadDetails = moduleDetails.lead_id ? getUserDetails(moduleDetails.lead_id) : undefined;
 
   return (
     <>
+      {/* Neuric: the keyword's phase (Step 2) */}
+      <ModulePhaseBadge moduleId={moduleId} />
       <DateRangeSelect
         variant="pill-sm"
         className="max-w-none"

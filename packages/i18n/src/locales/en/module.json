@@ -1,14 +1,55 @@
 {
   "module": {
-    "label": "{count, plural, one {Module} other {Modules}}",
-    "no_module": "No module",
-    "select": "Add modules",
+    "label": "{count, plural, one {Keyword} other {Keywords}}",
+    "no_module": "No keyword",
+    "select": "Add keywords",
     "details_drawer": {
       "progress": {
         "done": "{completed} of {scope, plural, one {# work item} other {# work items}} done",
         "points_done": "{completed} of {scope, plural, one {# point} other {# points}} done",
-        "empty": "Add work items to the module to track progress."
+        "empty": "Add work items to the keyword to track progress."
       }
+    }
+  },
+  "phase": {
+    "label": "Phase",
+    "label_plural": "Phases",
+    "no_phase": "No phase",
+    "search": "Search phases...",
+    "missing": "Unknown phase",
+    "empty_options": "No phases yet. Add them in project settings.",
+    "toast": {
+      "keyword_error": "Couldn't change the keyword's phase. Try again."
+    },
+    "activity": {
+      "moved": "moved this work item from phase {from} to phase {to}",
+      "added": "added this work item to phase {to}",
+      "removed": "removed this work item from phase {from}",
+      "updated": "changed the phase of this work item",
+      "moved_feed": "moved {item} from phase {from} to phase {to}",
+      "added_feed": "added {item} to phase {to}",
+      "removed_feed": "removed {item} from phase {from}",
+      "updated_feed": "changed the phase of {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Map",
+    "canvas_label": "Keyword map",
+    "no_phase": "No phase",
+    "node_meta": "{completed}/{total} work items done",
+    "add_label": "Add label",
+    "edit_label": "Edit label",
+    "label_input": "Relation label",
+    "delete_relation": "Delete relation",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "fit_view": "Fit view",
+    "controls": "Map controls",
+    "errors": {
+      "load": "Couldn't load the keyword relations.",
+      "create": "Couldn't link the keywords. Please try again.",
+      "update": "Couldn't save the relation label. Please try again.",
+      "delete": "Couldn't delete the relation. Please try again."
     }
   }
 }

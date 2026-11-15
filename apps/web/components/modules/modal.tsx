@@ -14,8 +14,10 @@ import { useTranslation } from "@plane/i18n";
 import type { IModule } from "@plane/types";
 // components
 import { ModuleForm } from "@/components/modules";
+import type { TModuleFormPhase } from "@/components/modules/form";
 // hooks
 import { useModule } from "@/hooks/store/use-module";
+import { usePhase } from "@/hooks/store/use-phase";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
@@ -44,6 +46,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
   // store hooks
   const { workspaceProjectIds } = useProject();
   const { createModule, updateModuleDetails } = useModule();
+  const { setModulePhase } = usePhase();
   const { isMobile } = usePlatformOS();
 
   const handleClose = () => {
@@ -55,59 +58,70 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
     defaultValues,
   });
 
-  const handleCreateModule = async (payload: Partial<IModule>) => {
+  /** Neuric: saves the keyword's phase after the keyword itself; a failure only warns (the keyword is saved). */
+  const savePhase = async (projectIdToSave: string, moduleId: string | undefined, phase?: TModuleFormPhase) => {
+    if (!moduleId || !phase?.changed) return;
+    try {
+      await setModulePhase(workspaceSlug.toString(), projectIdToSave, moduleId, phase.phaseId);
+    } catch {
+      setToast({ type: "error", title: t("toast.error"), message: t("phase.toast.keyword_error") });
+    }
+  };
+
+  const handleCreateModule = async (payload: Partial<IModule>, phase?: TModuleFormPhase) => {
     if (!workspaceSlug || !projectId) return;
 
     const selectedProjectId = payload.project_id ?? projectId.toString();
-    await createModule(workspaceSlug.toString(), selectedProjectId, payload)
-      .then((_res) => {
-        handleClose();
-        setToast({
-          type: "success",
-          title: "Success!",
-          message: "Module created successfully.",
-        });
-      })
-      .catch((err) => {
-        setToast({
-          type: "error",
-          title: "Error!",
-          message: err?.detail ?? err?.error ?? "Module could not be created. Please try again.",
-        });
+    try {
+      const res = await createModule(workspaceSlug.toString(), selectedProjectId, payload);
+      await savePhase(selectedProjectId, res?.id, phase);
+      handleClose();
+      setToast({
+        type: "success",
+        title: "Success!",
+        message: "Module created successfully.",
       });
+    } catch (err) {
+      const error = err as { detail?: string; error?: string } | undefined;
+      setToast({
+        type: "error",
+        title: "Error!",
+        message: error?.detail ?? error?.error ?? "Module could not be created. Please try again.",
+      });
+    }
   };
 
-  const handleUpdateModule = async (payload: Partial<IModule>) => {
+  const handleUpdateModule = async (payload: Partial<IModule>, phase?: TModuleFormPhase) => {
     if (!workspaceSlug || !projectId || !data) return;
 
     const selectedProjectId = payload.project_id ?? projectId.toString();
-    await updateModuleDetails(workspaceSlug.toString(), selectedProjectId, data.id, payload)
-      .then((_res) => {
-        handleClose();
-
-        setToast({
-          type: "success",
-          title: "Success!",
-          message: "Module updated successfully.",
-        });
-      })
-      .catch((err) => {
-        setToast({
-          type: "error",
-          title: "Error!",
-          message: err?.detail ?? err?.error ?? "Module could not be updated. Please try again.",
-        });
+    try {
+      await updateModuleDetails(workspaceSlug.toString(), selectedProjectId, data.id, payload);
+      await savePhase(selectedProjectId, data.id, phase);
+      handleClose();
+      setToast({
+        type: "success",
+        title: "Success!",
+        message: "Module updated successfully.",
       });
+    } catch (err) {
+      const error = err as { detail?: string; error?: string } | undefined;
+      setToast({
+        type: "error",
+        title: "Error!",
+        message: error?.detail ?? error?.error ?? "Module could not be updated. Please try again.",
+      });
+    }
   };
 
-  const handleFormSubmit = async (formData: Partial<IModule>) => {
+  const handleFormSubmit = async (formData: Partial<IModule>, _dirtyFields: unknown, phase?: TModuleFormPhase) => {
     if (!workspaceSlug || !projectId) return;
 
     const payload: Partial<IModule> = {
       ...formData,
     };
-    if (!data) await handleCreateModule(payload);
-    else await handleUpdateModule(payload);
+    if (!data) await handleCreateModule(payload, phase);
+    else await handleUpdateModule(payload, phase);
   };
 
   useEffect(() => {

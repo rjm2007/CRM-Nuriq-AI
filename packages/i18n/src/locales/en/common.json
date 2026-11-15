@@ -216,7 +216,7 @@
   "open_project": "Open project",
   "issues": "Work items",
   "cycles": "Cycles",
-  "modules": "Modules",
+  "modules": "Keywords",
   "pages": "Pages",
   "intake": "Intake",
   "renew": "Renew",
@@ -226,7 +226,7 @@
   "projects_and_issues": "Projects and work items",
   "projects_and_issues_description": "Toggle these on or off this project.",
   "cycles_description": "Timebox work per project and adjust the time period as needed. One cycle can be 2 weeks, the next 1 week.",
-  "modules_description": "Organize work into sub-projects with dedicated leads and assignees.",
+  "modules_description": "Group work items by topic with dedicated leads and assignees.",
   "views_description": "Save custom sorts, filters, and display options or share them with your team.",
   "pages_description": "Create and edit free-form content; notes, docs, anything.",
   "intake_description": "Let non-members share bugs, feedback, and suggestions; without disrupting your workflow.",
@@ -436,8 +436,8 @@
     "project": "Project",
     "cycle": "Cycle",
     "cycles": "Cycles",
-    "module": "Module",
-    "modules": "Modules",
+    "module": "Keyword",
+    "modules": "Keywords",
     "labels": "Labels",
     "label": "Label",
     "admins": "Admins",
@@ -806,7 +806,7 @@
     },
     "member": {
       "title": "Member",
-      "description": "Ability to read, write, edit, and delete entities inside projects, cycles, and modules"
+      "description": "Ability to read, write, edit, and delete entities inside projects, cycles, and keywords"
     },
     "admin": {
       "title": "Admin",

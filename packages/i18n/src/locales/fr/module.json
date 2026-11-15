@@ -10,5 +10,46 @@
         "empty": "Ajoutez des éléments de travail au module pour suivre la progression."
       }
     }
+  },
+  "phase": {
+    "label": "Phase",
+    "label_plural": "Phases",
+    "no_phase": "Aucune phase",
+    "search": "Rechercher des phases...",
+    "missing": "Phase inconnue",
+    "empty_options": "Aucune phase pour l'instant. Ajoutez-en dans les paramètres du projet.",
+    "toast": {
+      "keyword_error": "Impossible de modifier la phase du module. Réessayez."
+    },
+    "activity": {
+      "moved": "a déplacé cet élément de travail de la phase {from} vers la phase {to}",
+      "added": "a ajouté cet élément de travail à la phase {to}",
+      "removed": "a retiré cet élément de travail de la phase {from}",
+      "updated": "a modifié la phase de cet élément de travail",
+      "moved_feed": "a déplacé {item} de la phase {from} vers la phase {to}",
+      "added_feed": "a ajouté {item} à la phase {to}",
+      "removed_feed": "a retiré {item} de la phase {from}",
+      "updated_feed": "a modifié la phase de {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Carte",
+    "canvas_label": "Carte des modules",
+    "no_phase": "Aucune phase",
+    "node_meta": "{completed}/{total} éléments de travail terminés",
+    "add_label": "Ajouter une étiquette",
+    "edit_label": "Modifier l'étiquette",
+    "label_input": "Étiquette de la relation",
+    "delete_relation": "Supprimer la relation",
+    "zoom_in": "Zoom avant",
+    "zoom_out": "Zoom arrière",
+    "fit_view": "Ajuster à la vue",
+    "controls": "Commandes de la carte",
+    "errors": {
+      "load": "Impossible de charger les relations entre modules.",
+      "create": "Impossible de lier les modules. Veuillez réessayer.",
+      "update": "Impossible d'enregistrer l'étiquette de la relation. Veuillez réessayer.",
+      "delete": "Impossible de supprimer la relation. Veuillez réessayer."
+    }
   }
 }

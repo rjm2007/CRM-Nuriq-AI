@@ -10,5 +10,46 @@
         "empty": "Přidejte do modulu pracovní položky a sledujte průběh."
       }
     }
+  },
+  "phase": {
+    "label": "Fáze",
+    "label_plural": "Fáze",
+    "no_phase": "Bez fáze",
+    "search": "Hledat fáze...",
+    "missing": "Neznámá fáze",
+    "empty_options": "Zatím žádné fáze. Přidejte je v nastavení projektu.",
+    "toast": {
+      "keyword_error": "Fázi modulu se nepodařilo změnit. Zkuste to znovu."
+    },
+    "activity": {
+      "moved": "přesunul tuto pracovní položku z fáze {from} do fáze {to}",
+      "added": "přidal tuto pracovní položku do fáze {to}",
+      "removed": "odebral tuto pracovní položku z fáze {from}",
+      "updated": "změnil fázi této pracovní položky",
+      "moved_feed": "přesunul {item} z fáze {from} do fáze {to}",
+      "added_feed": "přidal {item} do fáze {to}",
+      "removed_feed": "odebral {item} z fáze {from}",
+      "updated_feed": "změnil fázi pracovní položky {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Mapa",
+    "canvas_label": "Mapa modulů",
+    "no_phase": "Bez fáze",
+    "node_meta": "Hotovo {completed}/{total} pracovních položek",
+    "add_label": "Přidat popisek",
+    "edit_label": "Upravit popisek",
+    "label_input": "Popisek vztahu",
+    "delete_relation": "Smazat vztah",
+    "zoom_in": "Přiblížit",
+    "zoom_out": "Oddálit",
+    "fit_view": "Přizpůsobit zobrazení",
+    "controls": "Ovládání mapy",
+    "errors": {
+      "load": "Vztahy mezi moduly se nepodařilo načíst.",
+      "create": "Moduly se nepodařilo propojit. Zkuste to znovu.",
+      "update": "Popisek vztahu se nepodařilo uložit. Zkuste to znovu.",
+      "delete": "Vztah se nepodařilo smazat. Zkuste to znovu."
+    }
   }
 }

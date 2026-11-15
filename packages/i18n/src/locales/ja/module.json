@@ -10,5 +10,46 @@
         "empty": "進捗を追跡するには、モジュールに作業項目を追加してください。"
       }
     }
+  },
+  "phase": {
+    "label": "フェーズ",
+    "label_plural": "フェーズ",
+    "no_phase": "フェーズなし",
+    "search": "フェーズを検索...",
+    "missing": "不明なフェーズ",
+    "empty_options": "フェーズはまだありません。プロジェクト設定で追加してください。",
+    "toast": {
+      "keyword_error": "モジュールのフェーズを変更できませんでした。もう一度お試しください。"
+    },
+    "activity": {
+      "moved": "この作業項目をフェーズ {from} からフェーズ {to} に移動しました",
+      "added": "この作業項目をフェーズ {to} に追加しました",
+      "removed": "この作業項目をフェーズ {from} から外しました",
+      "updated": "この作業項目のフェーズを変更しました",
+      "moved_feed": "{item} をフェーズ {from} からフェーズ {to} に移動しました",
+      "added_feed": "{item} をフェーズ {to} に追加しました",
+      "removed_feed": "{item} をフェーズ {from} から外しました",
+      "updated_feed": "{item} のフェーズを変更しました"
+    }
+  },
+  "keyword_map": {
+    "layout": "マップ",
+    "canvas_label": "モジュールマップ",
+    "no_phase": "フェーズなし",
+    "node_meta": "{total} 件中 {completed} 件の作業項目が完了",
+    "add_label": "ラベルを追加",
+    "edit_label": "ラベルを編集",
+    "label_input": "関係のラベル",
+    "delete_relation": "関係を削除",
+    "zoom_in": "拡大",
+    "zoom_out": "縮小",
+    "fit_view": "全体を表示",
+    "controls": "マップの操作",
+    "errors": {
+      "load": "モジュール間の関係を読み込めませんでした。",
+      "create": "モジュールをリンクできませんでした。もう一度お試しください。",
+      "update": "関係のラベルを保存できませんでした。もう一度お試しください。",
+      "delete": "関係を削除できませんでした。もう一度お試しください。"
+    }
   }
 }

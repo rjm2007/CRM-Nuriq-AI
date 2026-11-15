@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Faze",
+      "short_title": "Faze",
+      "heading": "Faze",
+      "description": "Împarte proiectul în faze ordonate și pune modulele în ele. Trage fazele pentru a le reordona.",
+      "count": "Faze: {count}",
+      "add": "Adaugă fază",
+      "admin_only": "Doar administratorii proiectului pot crea, edita sau reordona fazele.",
+      "load_error": "Fazele nu au putut fi încărcate. Încearcă mai târziu.",
+      "no_dates": "Fără date",
+      "no_keywords": "Nu există încă module în această fază.",
+      "add_keywords": "Adaugă module",
+      "remove_keyword": "Elimină {name} din această fază",
+      "keyword_outside_dates": "{name} are date în afara datelor acestei faze.",
+      "keyword_span": "Datele modulelor: {dates}",
+      "keyword_span_empty": "Datele modulelor: nesetate",
+      "form": {
+        "name": "Numele fazei",
+        "name_required": "Numele fazei este obligatoriu.",
+        "description_placeholder": "Descrie această fază pentru membri.",
+        "create": "Creează faza",
+        "update": "Salvează faza"
+      },
+      "delete": {
+        "title": "Șterge faza",
+        "content": "Ștergi faza {name}? Modulele ei rămân în proiect fără fază. Acțiunea nu poate fi anulată."
+      },
+      "empty_state": {
+        "title": "Nu există încă faze",
+        "description": "Fazele împart proiectul în etape ordonate. Fiecare modul poate aparține unei singure faze."
+      },
+      "toast": {
+        "created": "Faza a fost creată.",
+        "updated": "Faza a fost actualizată.",
+        "deleted": "Faza a fost ștearsă.",
+        "create_error": "Faza nu a putut fi creată. Încearcă din nou.",
+        "update_error": "Faza nu a putut fi actualizată. Încearcă din nou.",
+        "delete_error": "Faza nu a putut fi ștearsă. Încearcă din nou.",
+        "reorder_error": "Fazele nu au putut fi reordonate. Încearcă din nou.",
+        "keyword_moved": "{name} a fost mutat aici din faza {from}."
+      },
+      "move_up": "Mută în sus",
+      "move_down": "Mută în jos"
     }
   }
 }

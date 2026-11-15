@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "阶段",
+      "short_title": "阶段",
+      "heading": "阶段",
+      "description": "将项目拆分为有序的阶段，并把模块放入其中。拖动阶段可调整顺序。",
+      "count": "阶段：{count}",
+      "add": "添加阶段",
+      "admin_only": "只有项目管理员可以创建、编辑或排序阶段。",
+      "load_error": "无法加载阶段，请稍后重试。",
+      "no_dates": "无日期",
+      "no_keywords": "此阶段还没有模块。",
+      "add_keywords": "添加模块",
+      "remove_keyword": "将 {name} 从此阶段移除",
+      "keyword_outside_dates": "{name} 的日期超出了此阶段的日期。",
+      "keyword_span": "模块日期：{dates}",
+      "keyword_span_empty": "模块日期：未设置",
+      "form": {
+        "name": "阶段名称",
+        "name_required": "阶段名称为必填项。",
+        "description_placeholder": "为成员描述此阶段。",
+        "create": "创建阶段",
+        "update": "保存阶段"
+      },
+      "delete": {
+        "title": "删除阶段",
+        "content": "删除阶段 {name}？其模块将保留在项目中且不属于任何阶段。此操作无法撤销。"
+      },
+      "empty_state": {
+        "title": "还没有阶段",
+        "description": "阶段将项目划分为有序的步骤。每个模块可以属于一个阶段。"
+      },
+      "toast": {
+        "created": "阶段已创建。",
+        "updated": "阶段已更新。",
+        "deleted": "阶段已删除。",
+        "create_error": "无法创建阶段，请重试。",
+        "update_error": "无法更新阶段，请重试。",
+        "delete_error": "无法删除阶段，请重试。",
+        "reorder_error": "无法调整阶段顺序，请重试。",
+        "keyword_moved": "已将 {name} 从阶段 {from} 移到此处。"
+      },
+      "move_up": "上移",
+      "move_down": "下移"
     }
   }
 }

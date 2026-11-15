@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fasi",
+      "short_title": "Fasi",
+      "heading": "Fasi",
+      "description": "Dividi il progetto in fasi ordinate e inserisci i suoi moduli. Trascina le fasi per riordinarle.",
+      "count": "Fasi: {count}",
+      "add": "Aggiungi fase",
+      "admin_only": "Solo gli amministratori del progetto possono creare, modificare o riordinare le fasi.",
+      "load_error": "Impossibile caricare le fasi. Riprova più tardi.",
+      "no_dates": "Nessuna data",
+      "no_keywords": "Ancora nessun modulo in questa fase.",
+      "add_keywords": "Aggiungi moduli",
+      "remove_keyword": "Rimuovi {name} da questa fase",
+      "keyword_outside_dates": "{name} ha date al di fuori delle date di questa fase.",
+      "keyword_span": "Date dei moduli: {dates}",
+      "keyword_span_empty": "Date dei moduli: nessuna",
+      "form": {
+        "name": "Nome della fase",
+        "name_required": "Il nome della fase è obbligatorio.",
+        "description_placeholder": "Descrivi questa fase per i tuoi membri.",
+        "create": "Crea fase",
+        "update": "Salva fase"
+      },
+      "delete": {
+        "title": "Elimina fase",
+        "content": "Eliminare la fase {name}? I suoi moduli restano nel progetto senza fase. L'operazione non può essere annullata."
+      },
+      "empty_state": {
+        "title": "Ancora nessuna fase",
+        "description": "Le fasi dividono il progetto in tappe ordinate. Ogni modulo può appartenere a una fase."
+      },
+      "toast": {
+        "created": "Fase creata.",
+        "updated": "Fase aggiornata.",
+        "deleted": "Fase eliminata.",
+        "create_error": "Impossibile creare la fase. Riprova.",
+        "update_error": "Impossibile aggiornare la fase. Riprova.",
+        "delete_error": "Impossibile eliminare la fase. Riprova.",
+        "reorder_error": "Impossibile riordinare le fasi. Riprova.",
+        "keyword_moved": "{name} è stato spostato qui dalla fase {from}."
+      },
+      "move_up": "Sposta su",
+      "move_down": "Sposta giù"
     }
   }
 }

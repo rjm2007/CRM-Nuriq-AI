@@ -10,5 +10,46 @@
         "empty": "將工作事項加入模組以追蹤進度。"
       }
     }
+  },
+  "phase": {
+    "label": "階段",
+    "label_plural": "階段",
+    "no_phase": "無階段",
+    "search": "搜尋階段...",
+    "missing": "未知階段",
+    "empty_options": "還沒有階段。請在專案設定中新增。",
+    "toast": {
+      "keyword_error": "無法變更模組的階段，請再試一次。"
+    },
+    "activity": {
+      "moved": "將此工作項目從階段 {from} 移到階段 {to}",
+      "added": "將此工作項目新增到階段 {to}",
+      "removed": "將此工作項目從階段 {from} 移除",
+      "updated": "變更了此工作項目的階段",
+      "moved_feed": "將 {item} 從階段 {from} 移到階段 {to}",
+      "added_feed": "將 {item} 新增到階段 {to}",
+      "removed_feed": "將 {item} 從階段 {from} 移除",
+      "updated_feed": "變更了 {item} 的階段"
+    }
+  },
+  "keyword_map": {
+    "layout": "圖譜",
+    "canvas_label": "模組圖譜",
+    "no_phase": "無階段",
+    "node_meta": "已完成 {completed}/{total} 個工作事項",
+    "add_label": "新增標籤",
+    "edit_label": "編輯標籤",
+    "label_input": "關係標籤",
+    "delete_relation": "刪除關係",
+    "zoom_in": "放大",
+    "zoom_out": "縮小",
+    "fit_view": "調整至適合檢視",
+    "controls": "圖譜控制項",
+    "errors": {
+      "load": "無法載入模組關係。",
+      "create": "無法連結模組，請再試一次。",
+      "update": "無法儲存關係標籤，請再試一次。",
+      "delete": "無法刪除關係，請再試一次。"
+    }
   }
 }

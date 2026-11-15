@@ -17,6 +17,8 @@ export type ModuleOption = {
   name: string;
   /** Owning project's short code, shown as a pill when `showIdentifier` is set. */
   identifier?: string;
+  /** Muted second line under the name (e.g. the keyword's current phase), shown when `showDescription` is set. */
+  description?: string;
 };
 
 type ModuleSelectBaseProps = {
@@ -28,6 +30,8 @@ type ModuleSelectBaseProps = {
   className?: string;
   /** Shows each option's `identifier` as a pill, for a picker scoped across several projects. */
   showIdentifier?: boolean;
+  /** Shows each option's `description` as a muted second line. */
+  showDescription?: boolean;
   tooltip?: SelectTooltip;
   /** Tab order of the trigger, for forms that sequence focus explicitly (e.g. the work item create modal). */
   tabIndex?: number;
@@ -74,6 +78,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
       onClose,
       className,
       showIdentifier = false,
+      showDescription = false,
       tooltip,
       tabIndex,
     } = props;
@@ -91,6 +96,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
         getOptionValue={(module) => module.id}
         getOptionLabel={(module) => module.name}
         getOptionIcon={() => <ModuleOutline className="size-4 shrink-0 text-primary" />}
+        getOptionDescription={showDescription ? (module) => module.description : undefined}
         getOptionTrailing={
           showIdentifier
             ? (module) =>
@@ -128,6 +134,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
     onClose,
     className,
     showIdentifier = false,
+    showDescription = false,
     tooltip,
     tabIndex,
   } = props;
@@ -149,6 +156,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
       getOptionValue={(module) => module.id}
       getOptionLabel={(module) => module.name}
       getOptionIcon={() => <ModuleOutline className="size-4 shrink-0 text-primary" />}
+      getOptionDescription={showDescription ? (module) => module.description : undefined}
       getOptionTrailing={
         showIdentifier
           ? (module) =>

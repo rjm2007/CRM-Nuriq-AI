@@ -216,27 +216,27 @@
     }
   },
   "project_module": {
-    "add_module": "Add Module",
-    "update_module": "Update Module",
-    "create_module": "Create Module",
-    "archive_module": "Archive Module",
-    "restore_module": "Restore Module",
-    "delete_module": "Delete module",
+    "add_module": "Add Keyword",
+    "update_module": "Update Keyword",
+    "create_module": "Create Keyword",
+    "archive_module": "Archive Keyword",
+    "restore_module": "Restore Keyword",
+    "delete_module": "Delete keyword",
     "empty_state": {
       "general": {
-        "title": "Map your project milestones to Modules and track aggregated work easily.",
-        "description": "A group of work items that belong to a logical, hierarchical parent form a module. Think of them as a way to track work by project milestones. They have their own periods and deadlines as well as analytics to help you see how close or far you are from a milestone.",
+        "title": "Map your project milestones to Keywords and track aggregated work easily.",
+        "description": "A keyword groups related work items under one topic. Put keywords into phases, link them on the map, and track their own dates and progress.",
         "primary_button": {
-          "text": "Build your first module",
+          "text": "Build your first keyword",
           "comic": {
-            "title": "Modules help group work by hierarchy.",
-            "description": "A cart module, a chassis module, and a warehouse module are all good example of this grouping."
+            "title": "Keywords help group work by topic.",
+            "description": "Checkout, Payments and Search are good examples of keywords."
           }
         }
       },
       "no_issues": {
-        "title": "No work items in the module",
-        "description": "Create or add work items which you want to accomplish as part of this module",
+        "title": "No work items in the keyword",
+        "description": "Create or add work items which you want to accomplish as part of this keyword",
         "primary_button": {
           "text": "Create new work items"
         },
@@ -245,26 +245,26 @@
         }
       },
       "archived": {
-        "title": "No archived Modules yet",
-        "description": "To tidy up your project, archive completed or cancelled modules. Find them here once archived."
+        "title": "No archived Keywords yet",
+        "description": "To tidy up your project, archive completed or cancelled keywords. Find them here once archived."
       },
       "sidebar": {
-        "in_active": "This module isn't active yet.",
+        "in_active": "This keyword isn't active yet.",
         "invalid_date": "Invalid date. Please enter valid date."
       }
     },
     "quick_actions": {
-      "archive_module": "Archive module",
-      "archive_module_description": "Only completed or canceled\nmodule can be archived.",
-      "delete_module": "Delete module"
+      "archive_module": "Archive keyword",
+      "archive_module_description": "Only completed or canceled\nkeyword can be archived.",
+      "delete_module": "Delete keyword"
     },
     "toast": {
       "copy": {
-        "success": "Module link copied to clipboard"
+        "success": "Keyword link copied to clipboard"
       },
       "delete": {
-        "success": "Module deleted successfully",
-        "error": "Failed to delete module"
+        "success": "Keyword deleted successfully",
+        "error": "Failed to delete keyword"
       }
     }
   },
@@ -314,8 +314,8 @@
         }
       },
       "module": {
-        "title": "Modules are not enabled for the project.",
-        "description": "Modules are the building blocks of your project. Enable modules from project settings to start using them.",
+        "title": "Keywords are not enabled for the project.",
+        "description": "Keywords are the building blocks of your project. Enable keywords from project settings to start using them.",
         "primary_button": {
           "text": "Manage features"
         }

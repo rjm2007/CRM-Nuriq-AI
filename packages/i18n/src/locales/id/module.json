@@ -10,5 +10,46 @@
         "empty": "Tambahkan item kerja ke modul untuk melacak progres."
       }
     }
+  },
+  "phase": {
+    "label": "Fase",
+    "label_plural": "Fase",
+    "no_phase": "Tanpa fase",
+    "search": "Cari fase...",
+    "missing": "Fase tidak dikenal",
+    "empty_options": "Belum ada fase. Tambahkan di pengaturan proyek.",
+    "toast": {
+      "keyword_error": "Tidak dapat mengubah fase modul. Coba lagi."
+    },
+    "activity": {
+      "moved": "memindahkan item kerja ini dari fase {from} ke fase {to}",
+      "added": "menambahkan item kerja ini ke fase {to}",
+      "removed": "menghapus item kerja ini dari fase {from}",
+      "updated": "mengubah fase item kerja ini",
+      "moved_feed": "memindahkan {item} dari fase {from} ke fase {to}",
+      "added_feed": "menambahkan {item} ke fase {to}",
+      "removed_feed": "menghapus {item} dari fase {from}",
+      "updated_feed": "mengubah fase {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Peta",
+    "canvas_label": "Peta modul",
+    "no_phase": "Tanpa fase",
+    "node_meta": "{completed}/{total} item kerja selesai",
+    "add_label": "Tambah label",
+    "edit_label": "Edit label",
+    "label_input": "Label relasi",
+    "delete_relation": "Hapus relasi",
+    "zoom_in": "Perbesar",
+    "zoom_out": "Perkecil",
+    "fit_view": "Sesuaikan tampilan",
+    "controls": "Kontrol peta",
+    "errors": {
+      "load": "Tidak dapat memuat relasi modul.",
+      "create": "Tidak dapat menautkan modul. Silakan coba lagi.",
+      "update": "Tidak dapat menyimpan label relasi. Silakan coba lagi.",
+      "delete": "Tidak dapat menghapus relasi. Silakan coba lagi."
+    }
   }
 }

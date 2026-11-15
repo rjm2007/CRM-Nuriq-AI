@@ -10,5 +10,46 @@
         "empty": "Thêm mục công việc vào mô-đun để theo dõi tiến độ."
       }
     }
+  },
+  "phase": {
+    "label": "Giai đoạn",
+    "label_plural": "Giai đoạn",
+    "no_phase": "Không có giai đoạn",
+    "search": "Tìm giai đoạn...",
+    "missing": "Giai đoạn không xác định",
+    "empty_options": "Chưa có giai đoạn nào. Hãy thêm trong cài đặt dự án.",
+    "toast": {
+      "keyword_error": "Không thể đổi giai đoạn của mô-đun. Vui lòng thử lại."
+    },
+    "activity": {
+      "moved": "đã chuyển mục công việc này từ giai đoạn {from} sang giai đoạn {to}",
+      "added": "đã thêm mục công việc này vào giai đoạn {to}",
+      "removed": "đã xóa mục công việc này khỏi giai đoạn {from}",
+      "updated": "đã thay đổi giai đoạn của mục công việc này",
+      "moved_feed": "đã chuyển {item} từ giai đoạn {from} sang giai đoạn {to}",
+      "added_feed": "đã thêm {item} vào giai đoạn {to}",
+      "removed_feed": "đã xóa {item} khỏi giai đoạn {from}",
+      "updated_feed": "đã thay đổi giai đoạn của {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Bản đồ",
+    "canvas_label": "Bản đồ mô-đun",
+    "no_phase": "Không có giai đoạn",
+    "node_meta": "Đã hoàn thành {completed}/{total} mục công việc",
+    "add_label": "Thêm nhãn",
+    "edit_label": "Sửa nhãn",
+    "label_input": "Nhãn quan hệ",
+    "delete_relation": "Xóa quan hệ",
+    "zoom_in": "Phóng to",
+    "zoom_out": "Thu nhỏ",
+    "fit_view": "Vừa khung nhìn",
+    "controls": "Điều khiển bản đồ",
+    "errors": {
+      "load": "Không thể tải các quan hệ giữa mô-đun.",
+      "create": "Không thể liên kết các mô-đun. Vui lòng thử lại.",
+      "update": "Không thể lưu nhãn quan hệ. Vui lòng thử lại.",
+      "delete": "Không thể xóa quan hệ. Vui lòng thử lại."
+    }
   }
 }

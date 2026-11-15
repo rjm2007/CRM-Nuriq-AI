@@ -337,11 +337,11 @@
         "toggle_description": "Plan work in focused timeframes."
       },
       "modules": {
-        "title": "Modules",
-        "short_title": "Modules",
-        "description": "Organize work into sub-projects with dedicated leads and assignees.",
-        "toggle_title": "Enable modules",
-        "toggle_description": "Project members will be able to create and edit modules."
+        "title": "Keywords",
+        "short_title": "Keywords",
+        "description": "Group work items by topic with dedicated leads and assignees.",
+        "toggle_title": "Enable keywords",
+        "toggle_description": "Project members will be able to create and edit keywords."
       },
       "views": {
         "title": "Views",
@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Phases",
+      "short_title": "Phases",
+      "heading": "Phases",
+      "description": "Split the project into ordered phases and put its keywords into them. Drag phases to reorder them.",
+      "count": "Phases: {count}",
+      "add": "Add phase",
+      "admin_only": "Only project admins can create, edit or reorder phases.",
+      "load_error": "Couldn't load phases. Try again later.",
+      "no_dates": "No dates",
+      "no_keywords": "No keywords in this phase yet.",
+      "add_keywords": "Add keywords",
+      "remove_keyword": "Remove {name} from this phase",
+      "keyword_outside_dates": "{name} has dates outside this phase's dates.",
+      "keyword_span": "Keyword dates: {dates}",
+      "keyword_span_empty": "Keyword dates: none set",
+      "form": {
+        "name": "Phase name",
+        "name_required": "Phase name is required.",
+        "description_placeholder": "Describe this phase for your members.",
+        "create": "Create phase",
+        "update": "Save phase"
+      },
+      "delete": {
+        "title": "Delete phase",
+        "content": "Delete the phase {name}? Its keywords stay in the project without a phase. This can't be undone."
+      },
+      "empty_state": {
+        "title": "No phases yet",
+        "description": "Phases split the project into ordered stages. Each keyword can belong to one phase."
+      },
+      "toast": {
+        "created": "Phase created.",
+        "updated": "Phase updated.",
+        "deleted": "Phase deleted.",
+        "create_error": "Couldn't create the phase. Try again.",
+        "update_error": "Couldn't update the phase. Try again.",
+        "delete_error": "Couldn't delete the phase. Try again.",
+        "reorder_error": "Couldn't reorder the phases. Try again.",
+        "keyword_moved": "{name} was moved here from phase {from}."
+      },
+      "move_up": "Move up",
+      "move_down": "Move down"
     }
   }
 }

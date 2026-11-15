@@ -10,5 +10,46 @@
         "empty": "İlerlemeyi takip etmek için modüle iş öğeleri ekleyin."
       }
     }
+  },
+  "phase": {
+    "label": "Aşama",
+    "label_plural": "Aşamalar",
+    "no_phase": "Aşama yok",
+    "search": "Aşama ara...",
+    "missing": "Bilinmeyen aşama",
+    "empty_options": "Henüz aşama yok. Proje ayarlarından ekleyin.",
+    "toast": {
+      "keyword_error": "Modülün aşaması değiştirilemedi. Tekrar deneyin."
+    },
+    "activity": {
+      "moved": "bu iş öğesini {from} aşamasından {to} aşamasına taşıdı",
+      "added": "bu iş öğesini {to} aşamasına ekledi",
+      "removed": "bu iş öğesini {from} aşamasından çıkardı",
+      "updated": "bu iş öğesinin aşamasını değiştirdi",
+      "moved_feed": "{item} öğesini {from} aşamasından {to} aşamasına taşıdı",
+      "added_feed": "{item} öğesini {to} aşamasına ekledi",
+      "removed_feed": "{item} öğesini {from} aşamasından çıkardı",
+      "updated_feed": "{item} öğesinin aşamasını değiştirdi"
+    }
+  },
+  "keyword_map": {
+    "layout": "Harita",
+    "canvas_label": "Modül haritası",
+    "no_phase": "Aşama yok",
+    "node_meta": "{total} iş öğesinden {completed} tanesi tamamlandı",
+    "add_label": "Etiket ekle",
+    "edit_label": "Etiketi düzenle",
+    "label_input": "İlişki etiketi",
+    "delete_relation": "İlişkiyi sil",
+    "zoom_in": "Yakınlaştır",
+    "zoom_out": "Uzaklaştır",
+    "fit_view": "Görünüme sığdır",
+    "controls": "Harita kontrolleri",
+    "errors": {
+      "load": "Modül ilişkileri yüklenemedi.",
+      "create": "Modüller bağlanamadı. Lütfen tekrar deneyin.",
+      "update": "İlişki etiketi kaydedilemedi. Lütfen tekrar deneyin.",
+      "delete": "İlişki silinemedi. Lütfen tekrar deneyin."
+    }
   }
 }

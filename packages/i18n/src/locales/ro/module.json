@@ -10,5 +10,46 @@
         "empty": "Adăugați activități în modul pentru a urmări progresul."
       }
     }
+  },
+  "phase": {
+    "label": "Fază",
+    "label_plural": "Faze",
+    "no_phase": "Nicio fază",
+    "search": "Caută faze...",
+    "missing": "Fază necunoscută",
+    "empty_options": "Nu există încă faze. Adaugă-le în setările proiectului.",
+    "toast": {
+      "keyword_error": "Faza modulului nu a putut fi schimbată. Încearcă din nou."
+    },
+    "activity": {
+      "moved": "a mutat acest element de lucru din faza {from} în faza {to}",
+      "added": "a adăugat acest element de lucru în faza {to}",
+      "removed": "a eliminat acest element de lucru din faza {from}",
+      "updated": "a schimbat faza acestui element de lucru",
+      "moved_feed": "a mutat {item} din faza {from} în faza {to}",
+      "added_feed": "a adăugat {item} în faza {to}",
+      "removed_feed": "a eliminat {item} din faza {from}",
+      "updated_feed": "a schimbat faza elementului de lucru {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Hartă",
+    "canvas_label": "Harta modulelor",
+    "no_phase": "Nicio fază",
+    "node_meta": "{completed}/{total} activități finalizate",
+    "add_label": "Adaugă etichetă",
+    "edit_label": "Editează eticheta",
+    "label_input": "Eticheta relației",
+    "delete_relation": "Șterge relația",
+    "zoom_in": "Mărire",
+    "zoom_out": "Micșorare",
+    "fit_view": "Încadrare în vizualizare",
+    "controls": "Controale hartă",
+    "errors": {
+      "load": "Relațiile dintre module nu au putut fi încărcate.",
+      "create": "Modulele nu au putut fi legate. Încercați din nou.",
+      "update": "Eticheta relației nu a putut fi salvată. Încercați din nou.",
+      "delete": "Relația nu a putut fi ștearsă. Încercați din nou."
+    }
   }
 }

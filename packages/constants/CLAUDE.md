@@ -34,3 +34,6 @@ No unit tests in this package. `pnpm turbo run check --filter=@plane/constants`
 - Our changes (Neuric) 2026-11-15, subtask rules: `src/subtask.ts`: `SUBTASK_RULE_ERROR_CODES` / `TSubtaskRuleErrorCode`, `SUBTASK_ROLLUP_COMMENT` (must equal the backend constant in `bgtasks/subtask_rollup_task.py`), refetch delays (see below).
 - Our changes (Neuric) 2026-11-15, subtask rules review fixes: `SUBTASK_ROLLUP_REFETCH_DELAY_MS` replaced by `SUBTASK_ROLLUP_REFETCH_DELAYS_MS` (`[1500, 3000, 6000]`) and `SUBTASK_ROLLUP_ACTIVITY_REFETCH_DELAY_MS` (1000).
 - Our changes (Neuric) 2026-11-16: `PROJECT_SETTINGS.features_time_tracking` (href `/features/time-tracking`, ADMIN only, label `project_settings.features.time_tracking.short_title`), listed under FEATURES in `GROUPED_PROJECT_SETTINGS` (`src/settings/project.ts`). The route lives in `apps/web/app/routes/extended.ts`.
+- Our changes (Neuric) 2026-11-16, Step 2: `MODULE_VIEW_LAYOUTS` gains `{ key: "map", i18n_title: "keyword_map.layout" }` (`src/module.ts`).
+- Our changes (Neuric) 2026-11-16, Step 2: `PROJECT_SETTINGS.phases` is now listed under WORK_STRUCTURE (before States); `src/phase.ts` holds `PROJECT_PHASES_SWR_KEY`, `PHASE_SEQUENCE_GAP`, `PHASE_NAME_MAX_LENGTH`.
+- Our changes (Neuric) 2026-11-16, Step 2 review: `PROJECT_MODULE_TAB_INDICES` gains `"phase"` after `"status"` (keyword form phase picker).

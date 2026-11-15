@@ -26,6 +26,8 @@ export * from "./measure-text";
 export * from "./module";
 export * from "./notification";
 export * from "./page";
+// Neuric: project phases (Step 2)
+export * from "./phase";
 export * from "./permission";
 export * from "./project-views";
 export * from "./project";

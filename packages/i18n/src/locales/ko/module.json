@@ -10,5 +10,46 @@
         "empty": "진행 상황을 추적하려면 모듈에 작업 항목을 추가하십시오."
       }
     }
+  },
+  "phase": {
+    "label": "단계",
+    "label_plural": "단계",
+    "no_phase": "단계 없음",
+    "search": "단계 검색...",
+    "missing": "알 수 없는 단계",
+    "empty_options": "아직 단계가 없습니다. 프로젝트 설정에서 추가하세요.",
+    "toast": {
+      "keyword_error": "모듈의 단계를 변경하지 못했습니다. 다시 시도하세요."
+    },
+    "activity": {
+      "moved": "이 작업 항목을 {from} 단계에서 {to} 단계로 옮겼습니다",
+      "added": "이 작업 항목을 {to} 단계에 추가했습니다",
+      "removed": "이 작업 항목을 {from} 단계에서 제거했습니다",
+      "updated": "이 작업 항목의 단계를 변경했습니다",
+      "moved_feed": "{item}을(를) {from} 단계에서 {to} 단계로 옮겼습니다",
+      "added_feed": "{item}을(를) {to} 단계에 추가했습니다",
+      "removed_feed": "{item}을(를) {from} 단계에서 제거했습니다",
+      "updated_feed": "{item}의 단계를 변경했습니다"
+    }
+  },
+  "keyword_map": {
+    "layout": "맵",
+    "canvas_label": "모듈 맵",
+    "no_phase": "단계 없음",
+    "node_meta": "작업 항목 {total}개 중 {completed}개 완료",
+    "add_label": "레이블 추가",
+    "edit_label": "레이블 편집",
+    "label_input": "관계 레이블",
+    "delete_relation": "관계 삭제",
+    "zoom_in": "확대",
+    "zoom_out": "축소",
+    "fit_view": "화면에 맞추기",
+    "controls": "맵 컨트롤",
+    "errors": {
+      "load": "모듈 관계를 불러오지 못했습니다.",
+      "create": "모듈을 연결하지 못했습니다. 다시 시도하세요.",
+      "update": "관계 레이블을 저장하지 못했습니다. 다시 시도하세요.",
+      "delete": "관계를 삭제하지 못했습니다. 다시 시도하세요."
+    }
   }
 }

@@ -36,7 +36,7 @@ Composite, Plane-specific React components built on `@makeplane/propel` primitiv
 
 ## Depends on / used by
 
-- Uses: `@makeplane/propel`, `@base-ui/react`, `@plane/{constants,hooks,i18n,types,utils}`, recharts, `@tanstack/react-virtual`, pragmatic-drag-and-drop.
+- Uses: `@makeplane/propel`, `@base-ui/react`, `@plane/{constants,hooks,i18n,types,utils}`, recharts, `@tanstack/react-virtual`, pragmatic-drag-and-drop, `@xyflow/react` (graph-canvas).
 - Used by: `apps/web`, `apps/space`, `apps/admin`, `packages/editor`.
 
 ## How to test
@@ -52,3 +52,6 @@ Composite, Plane-specific React components built on `@makeplane/propel` primitiv
 - Our changes (Neuric) 2026-11-15, subtask rules review fixes: `WorkItemPropertyCountChip` gains `accessibleValue` (read in the accessible name and tooltip instead of `displayValue`) and merges classes with `cn`; test in `properties-list.test.tsx`. `subtask-rules.test.ts` covers the new helpers, the delta undo and the refetch timing constants.
 - Our changes (Neuric) 2026-11-15, time tracking: new subpath `@plane/blocks/duration-input` (`src/duration-input/`, see its CLAUDE.md): `DurationInput` + DOM tests. `src/__tests__/worklog.test.ts` holds the unit tests for the `@plane/utils` worklog helpers.
 - Our changes (Neuric) 2026-11-16, time tracking review fixes: `property-select/member-select.tsx` gains `id` (trigger id for `<label htmlFor>`; test in `member-select.test.tsx`). `duration-input` submits the form on a valid Enter. `__tests__/worklog.test.ts`: `parseWorkLogDuration` rejects 60+ minutes next to hours and decimal minutes, keeps `1.5h`.
+- Our changes (Neuric) 2026-11-16, Step 2 keyword map: new subpath `@plane/blocks/graph-canvas` (`src/graph-canvas/`, see its CLAUDE.md): React Flow (`@xyflow/react`) swimlane graph canvas + tests. `@xyflow/react` added to dependencies.
+- Our changes (Neuric) 2026-11-16, Step 2 phases: `src/__tests__/phase.test.ts` holds the unit tests for the `@plane/utils` phase helpers (`src/phase.ts`).
+- Our changes (Neuric) 2026-11-16, Step 2 phases review: `property-select/module-select.tsx` `ModuleOption.description` + `showDescription` prop (muted second line per option via the Select's `getOptionDescription`); tests in `module-select.test.tsx`.

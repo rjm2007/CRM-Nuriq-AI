@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fáze",
+      "short_title": "Fáze",
+      "heading": "Fáze",
+      "description": "Rozdělte projekt do seřazených fází a vložte do nich jeho moduly. Přetažením fáze změníte jejich pořadí.",
+      "count": "Fáze: {count}",
+      "add": "Přidat fázi",
+      "admin_only": "Fáze mohou vytvářet, upravovat a řadit pouze správci projektu.",
+      "load_error": "Fáze se nepodařilo načíst. Zkuste to později.",
+      "no_dates": "Bez dat",
+      "no_keywords": "V této fázi zatím nejsou žádné moduly.",
+      "add_keywords": "Přidat moduly",
+      "remove_keyword": "Odebrat {name} z této fáze",
+      "keyword_outside_dates": "{name} má data mimo data této fáze.",
+      "keyword_span": "Data modulů: {dates}",
+      "keyword_span_empty": "Data modulů: nenastavena",
+      "form": {
+        "name": "Název fáze",
+        "name_required": "Název fáze je povinný.",
+        "description_placeholder": "Popište tuto fázi pro členy.",
+        "create": "Vytvořit fázi",
+        "update": "Uložit fázi"
+      },
+      "delete": {
+        "title": "Smazat fázi",
+        "content": "Smazat fázi {name}? Její moduly zůstanou v projektu bez fáze. Tuto akci nelze vrátit."
+      },
+      "empty_state": {
+        "title": "Zatím žádné fáze",
+        "description": "Fáze dělí projekt do seřazených etap. Každý modul může patřit do jedné fáze."
+      },
+      "toast": {
+        "created": "Fáze vytvořena.",
+        "updated": "Fáze aktualizována.",
+        "deleted": "Fáze smazána.",
+        "create_error": "Fázi se nepodařilo vytvořit. Zkuste to znovu.",
+        "update_error": "Fázi se nepodařilo aktualizovat. Zkuste to znovu.",
+        "delete_error": "Fázi se nepodařilo smazat. Zkuste to znovu.",
+        "reorder_error": "Pořadí fází se nepodařilo změnit. Zkuste to znovu.",
+        "keyword_moved": "{name} bylo přesunuto sem z fáze {from}."
+      },
+      "move_up": "Posunout nahoru",
+      "move_down": "Posunout dolů"
     }
   }
 }

@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Aşamalar",
+      "short_title": "Aşamalar",
+      "heading": "Aşamalar",
+      "description": "Projeyi sıralı aşamalara bölün ve modüllerini bu aşamalara yerleştirin. Sıralamak için aşamaları sürükleyin.",
+      "count": "Aşamalar: {count}",
+      "add": "Aşama ekle",
+      "admin_only": "Yalnızca proje yöneticileri aşama oluşturabilir, düzenleyebilir veya sıralayabilir.",
+      "load_error": "Aşamalar yüklenemedi. Daha sonra tekrar deneyin.",
+      "no_dates": "Tarih yok",
+      "no_keywords": "Bu aşamada henüz modül yok.",
+      "add_keywords": "Modül ekle",
+      "remove_keyword": "{name} öğesini bu aşamadan çıkar",
+      "keyword_outside_dates": "{name} bu aşamanın tarihleri dışında tarihlere sahip.",
+      "keyword_span": "Modül tarihleri: {dates}",
+      "keyword_span_empty": "Modül tarihleri: ayarlanmadı",
+      "form": {
+        "name": "Aşama adı",
+        "name_required": "Aşama adı gereklidir.",
+        "description_placeholder": "Bu aşamayı üyeleriniz için açıklayın.",
+        "create": "Aşama oluştur",
+        "update": "Aşamayı kaydet"
+      },
+      "delete": {
+        "title": "Aşamayı sil",
+        "content": "{name} aşaması silinsin mi? Modülleri projede aşamasız kalır. Bu işlem geri alınamaz."
+      },
+      "empty_state": {
+        "title": "Henüz aşama yok",
+        "description": "Aşamalar projeyi sıralı evrelere böler. Her modül bir aşamaya ait olabilir."
+      },
+      "toast": {
+        "created": "Aşama oluşturuldu.",
+        "updated": "Aşama güncellendi.",
+        "deleted": "Aşama silindi.",
+        "create_error": "Aşama oluşturulamadı. Tekrar deneyin.",
+        "update_error": "Aşama güncellenemedi. Tekrar deneyin.",
+        "delete_error": "Aşama silinemedi. Tekrar deneyin.",
+        "reorder_error": "Aşamalar yeniden sıralanamadı. Tekrar deneyin.",
+        "keyword_moved": "{name}, {from} aşamasından buraya taşındı."
+      },
+      "move_up": "Yukarı taşı",
+      "move_down": "Aşağı taşı"
     }
   }
 }

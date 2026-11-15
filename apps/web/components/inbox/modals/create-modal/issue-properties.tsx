@@ -148,7 +148,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
           projectId={projectId}
           value={data?.module_ids || []}
           onChange={(moduleIds) => handleData("module_ids", moduleIds)}
-          placeholder="Modules"
+          placeholder={t("common.modules")}
           variant="pill-md"
           tabIndex={getIndex("module_ids")}
         />

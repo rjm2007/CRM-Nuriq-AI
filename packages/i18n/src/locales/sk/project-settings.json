@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fázy",
+      "short_title": "Fázy",
+      "heading": "Fázy",
+      "description": "Rozdeľte projekt do zoradených fáz a vložte do nich jeho moduly. Presunutím fáz zmeníte ich poradie.",
+      "count": "Fázy: {count}",
+      "add": "Pridať fázu",
+      "admin_only": "Fázy môžu vytvárať, upravovať a zoraďovať iba správcovia projektu.",
+      "load_error": "Fázy sa nepodarilo načítať. Skúste to neskôr.",
+      "no_dates": "Bez dátumov",
+      "no_keywords": "V tejto fáze zatiaľ nie sú žiadne moduly.",
+      "add_keywords": "Pridať moduly",
+      "remove_keyword": "Odobrať {name} z tejto fázy",
+      "keyword_outside_dates": "{name} má dátumy mimo dátumov tejto fázy.",
+      "keyword_span": "Dátumy modulov: {dates}",
+      "keyword_span_empty": "Dátumy modulov: nenastavené",
+      "form": {
+        "name": "Názov fázy",
+        "name_required": "Názov fázy je povinný.",
+        "description_placeholder": "Popíšte túto fázu pre členov.",
+        "create": "Vytvoriť fázu",
+        "update": "Uložiť fázu"
+      },
+      "delete": {
+        "title": "Odstrániť fázu",
+        "content": "Odstrániť fázu {name}? Jej moduly zostanú v projekte bez fázy. Túto akciu nemožno vrátiť."
+      },
+      "empty_state": {
+        "title": "Zatiaľ žiadne fázy",
+        "description": "Fázy delia projekt do zoradených etáp. Každý modul môže patriť do jednej fázy."
+      },
+      "toast": {
+        "created": "Fáza vytvorená.",
+        "updated": "Fáza aktualizovaná.",
+        "deleted": "Fáza odstránená.",
+        "create_error": "Fázu sa nepodarilo vytvoriť. Skúste to znova.",
+        "update_error": "Fázu sa nepodarilo aktualizovať. Skúste to znova.",
+        "delete_error": "Fázu sa nepodarilo odstrániť. Skúste to znova.",
+        "reorder_error": "Poradie fáz sa nepodarilo zmeniť. Skúste to znova.",
+        "keyword_moved": "{name} bolo presunuté sem z fázy {from}."
+      },
+      "move_up": "Posunúť nahor",
+      "move_down": "Posunúť nadol"
     }
   }
 }

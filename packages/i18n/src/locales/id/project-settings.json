@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fase",
+      "short_title": "Fase",
+      "heading": "Fase",
+      "description": "Bagi proyek menjadi fase berurutan dan masukkan modulnya ke dalamnya. Seret fase untuk mengubah urutannya.",
+      "count": "Fase: {count}",
+      "add": "Tambah fase",
+      "admin_only": "Hanya admin proyek yang dapat membuat, mengedit, atau mengurutkan fase.",
+      "load_error": "Tidak dapat memuat fase. Coba lagi nanti.",
+      "no_dates": "Tanpa tanggal",
+      "no_keywords": "Belum ada modul di fase ini.",
+      "add_keywords": "Tambah modul",
+      "remove_keyword": "Hapus {name} dari fase ini",
+      "keyword_outside_dates": "{name} memiliki tanggal di luar tanggal fase ini.",
+      "keyword_span": "Tanggal modul: {dates}",
+      "keyword_span_empty": "Tanggal modul: belum diatur",
+      "form": {
+        "name": "Nama fase",
+        "name_required": "Nama fase wajib diisi.",
+        "description_placeholder": "Jelaskan fase ini untuk anggota Anda.",
+        "create": "Buat fase",
+        "update": "Simpan fase"
+      },
+      "delete": {
+        "title": "Hapus fase",
+        "content": "Hapus fase {name}? Modulnya tetap ada di proyek tanpa fase. Tindakan ini tidak dapat dibatalkan."
+      },
+      "empty_state": {
+        "title": "Belum ada fase",
+        "description": "Fase membagi proyek menjadi tahapan berurutan. Setiap modul dapat masuk ke satu fase."
+      },
+      "toast": {
+        "created": "Fase dibuat.",
+        "updated": "Fase diperbarui.",
+        "deleted": "Fase dihapus.",
+        "create_error": "Tidak dapat membuat fase. Coba lagi.",
+        "update_error": "Tidak dapat memperbarui fase. Coba lagi.",
+        "delete_error": "Tidak dapat menghapus fase. Coba lagi.",
+        "reorder_error": "Tidak dapat mengurutkan ulang fase. Coba lagi.",
+        "keyword_moved": "{name} dipindahkan ke sini dari fase {from}."
+      },
+      "move_up": "Pindahkan ke atas",
+      "move_down": "Pindahkan ke bawah"
     }
   }
 }

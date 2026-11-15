@@ -10,5 +10,46 @@
         "empty": "Aggiunga elementi di lavoro al modulo per monitorare l’avanzamento."
       }
     }
+  },
+  "phase": {
+    "label": "Fase",
+    "label_plural": "Fasi",
+    "no_phase": "Nessuna fase",
+    "search": "Cerca fasi...",
+    "missing": "Fase sconosciuta",
+    "empty_options": "Ancora nessuna fase. Aggiungile nelle impostazioni del progetto.",
+    "toast": {
+      "keyword_error": "Impossibile cambiare la fase del modulo. Riprova."
+    },
+    "activity": {
+      "moved": "ha spostato questo elemento di lavoro dalla fase {from} alla fase {to}",
+      "added": "ha aggiunto questo elemento di lavoro alla fase {to}",
+      "removed": "ha rimosso questo elemento di lavoro dalla fase {from}",
+      "updated": "ha cambiato la fase di questo elemento di lavoro",
+      "moved_feed": "ha spostato {item} dalla fase {from} alla fase {to}",
+      "added_feed": "ha aggiunto {item} alla fase {to}",
+      "removed_feed": "ha rimosso {item} dalla fase {from}",
+      "updated_feed": "ha cambiato la fase di {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Mappa",
+    "canvas_label": "Mappa dei moduli",
+    "no_phase": "Nessuna fase",
+    "node_meta": "{completed}/{total} elementi di lavoro completati",
+    "add_label": "Aggiungi etichetta",
+    "edit_label": "Modifica etichetta",
+    "label_input": "Etichetta della relazione",
+    "delete_relation": "Elimina relazione",
+    "zoom_in": "Ingrandisci",
+    "zoom_out": "Riduci",
+    "fit_view": "Adatta alla vista",
+    "controls": "Controlli della mappa",
+    "errors": {
+      "load": "Impossibile caricare le relazioni tra i moduli.",
+      "create": "Impossibile collegare i moduli. Riprova.",
+      "update": "Impossibile salvare l'etichetta della relazione. Riprova.",
+      "delete": "Impossibile eliminare la relazione. Riprova."
+    }
   }
 }

@@ -27,6 +27,7 @@ import {
   PriorityMedium,
   RelatesToOutline,
   TimeTrackingOutline,
+  MilestoneOutline,
   WorkItemsOutline,
 } from "@makeplane/propel/icons";
 import { BlockedIcon, BlockerIcon } from "@plane/blocks/icons";
@@ -35,6 +36,7 @@ import type { IIssueActivity } from "@plane/types";
 import { renderFormattedDate, generateWorkItemLink, capitalizeFirstLetter } from "@plane/utils";
 // helpers
 import { WorkLogActivityMessage } from "@/components/issues/issue-detail-widgets/time/activity-message";
+import { PhaseActivityMessage } from "@/components/phases/activity-message";
 import { useLabel } from "@/hooks/store/use-label";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // types
@@ -760,6 +762,13 @@ const activityDetails: {
       </>
     ),
     icon: <TimeTrackingOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
+  },
+  // Neuric: phase rows (a keyword of the work item changed phase); feeds name the work item (`phase.activity.*_feed`)
+  phase: {
+    message: (activity, showIssue) => (
+      <PhaseActivityMessage activity={activity} item={showIssue ? <IssueLink activity={activity} /> : undefined} />
+    ),
+    icon: <MilestoneOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
 };
 

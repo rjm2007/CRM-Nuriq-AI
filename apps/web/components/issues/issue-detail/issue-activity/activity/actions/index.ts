@@ -24,6 +24,7 @@ export * from "./archived-at";
 export * from "./inbox";
 export * from "./label-activity-chip";
 export * from "./worklog";
+export * from "./phase";
 
 // helpers
 export * from "./helpers/activity-block";

@@ -24,6 +24,7 @@ import {
   LabelsOutline,
   LinkOutline,
   MembersOutline,
+  MilestoneOutline,
   ModuleOutline,
   PriorityOutline,
   RefreshOutline,
@@ -70,6 +71,8 @@ export const iconsMap: ActivityIconMap = {
   is_time_tracking_enabled: TimeTrackingOutline,
   // Neuric: time tracking activity rows
   worklog: TimeTrackingOutline,
+  // Neuric: phase activity rows (Step 2)
+  phase: MilestoneOutline,
   is_issue_type_enabled: ToDoOutline,
   default: HierarchyOutline,
   module_view: ModuleOutline,

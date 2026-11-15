@@ -36,6 +36,7 @@ import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useProjectView } from "@/hooks/store/use-project-view";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
+import { useProjectPhases } from "@/hooks/use-project-phases";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 
 interface IProjectAuthWrapper {
@@ -135,6 +136,9 @@ export const ProjectAuthWrapper = observer(function ProjectAuthWrapper(props: IP
     revalidateIfStale: false,
     revalidateOnFocus: false,
   });
+
+  // Neuric: fetching project phases (keyword phase badges, task sidebar Phase row, phases settings)
+  useProjectPhases(workspaceSlug, projectId);
 
   // handle join project
   const handleJoinProject = () => {

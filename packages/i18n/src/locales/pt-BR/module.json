@@ -10,5 +10,46 @@
         "empty": "Adicione itens de trabalho ao módulo para acompanhar o progresso."
       }
     }
+  },
+  "phase": {
+    "label": "Fase",
+    "label_plural": "Fases",
+    "no_phase": "Sem fase",
+    "search": "Pesquisar fases...",
+    "missing": "Fase desconhecida",
+    "empty_options": "Ainda não há fases. Adicione-as nas configurações do projeto.",
+    "toast": {
+      "keyword_error": "Não foi possível alterar a fase do módulo. Tente novamente."
+    },
+    "activity": {
+      "moved": "moveu este item de trabalho da fase {from} para a fase {to}",
+      "added": "adicionou este item de trabalho à fase {to}",
+      "removed": "removeu este item de trabalho da fase {from}",
+      "updated": "alterou a fase deste item de trabalho",
+      "moved_feed": "moveu {item} da fase {from} para a fase {to}",
+      "added_feed": "adicionou {item} à fase {to}",
+      "removed_feed": "removeu {item} da fase {from}",
+      "updated_feed": "alterou a fase de {item}"
+    }
+  },
+  "keyword_map": {
+    "layout": "Mapa",
+    "canvas_label": "Mapa de módulos",
+    "no_phase": "Sem fase",
+    "node_meta": "{completed}/{total} itens de trabalho concluídos",
+    "add_label": "Adicionar rótulo",
+    "edit_label": "Editar rótulo",
+    "label_input": "Rótulo da relação",
+    "delete_relation": "Excluir relação",
+    "zoom_in": "Ampliar",
+    "zoom_out": "Reduzir",
+    "fit_view": "Ajustar à visualização",
+    "controls": "Controles do mapa",
+    "errors": {
+      "load": "Não foi possível carregar as relações entre módulos.",
+      "create": "Não foi possível vincular os módulos. Tente novamente.",
+      "update": "Não foi possível salvar o rótulo da relação. Tente novamente.",
+      "delete": "Não foi possível excluir a relação. Tente novamente."
+    }
   }
 }

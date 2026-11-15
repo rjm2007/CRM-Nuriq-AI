@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fases",
+      "short_title": "Fases",
+      "heading": "Fases",
+      "description": "Divide el proyecto en fases ordenadas y coloca sus módulos en ellas. Arrastra las fases para reordenarlas.",
+      "count": "Fases: {count}",
+      "add": "Agregar fase",
+      "admin_only": "Solo los administradores del proyecto pueden crear, editar o reordenar fases.",
+      "load_error": "No se pudieron cargar las fases. Inténtalo más tarde.",
+      "no_dates": "Sin fechas",
+      "no_keywords": "Aún no hay módulos en esta fase.",
+      "add_keywords": "Agregar módulos",
+      "remove_keyword": "Quitar {name} de esta fase",
+      "keyword_outside_dates": "{name} tiene fechas fuera de las fechas de esta fase.",
+      "keyword_span": "Fechas de los módulos: {dates}",
+      "keyword_span_empty": "Fechas de los módulos: ninguna",
+      "form": {
+        "name": "Nombre de la fase",
+        "name_required": "El nombre de la fase es obligatorio.",
+        "description_placeholder": "Describe esta fase para tus miembros.",
+        "create": "Crear fase",
+        "update": "Guardar fase"
+      },
+      "delete": {
+        "title": "Eliminar fase",
+        "content": "¿Eliminar la fase {name}? Sus módulos quedan en el proyecto sin fase. Esta acción no se puede deshacer."
+      },
+      "empty_state": {
+        "title": "Aún no hay fases",
+        "description": "Las fases dividen el proyecto en etapas ordenadas. Cada módulo puede pertenecer a una fase."
+      },
+      "toast": {
+        "created": "Fase creada.",
+        "updated": "Fase actualizada.",
+        "deleted": "Fase eliminada.",
+        "create_error": "No se pudo crear la fase. Inténtalo de nuevo.",
+        "update_error": "No se pudo actualizar la fase. Inténtalo de nuevo.",
+        "delete_error": "No se pudo eliminar la fase. Inténtalo de nuevo.",
+        "reorder_error": "No se pudieron reordenar las fases. Inténtalo de nuevo.",
+        "keyword_moved": "{name} se movió aquí desde la fase {from}."
+      },
+      "move_up": "Subir",
+      "move_down": "Bajar"
     }
   }
 }

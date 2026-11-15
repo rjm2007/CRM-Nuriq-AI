@@ -34,3 +34,4 @@ Parent: `../CLAUDE.md`.
 
 - Our changes (Neuric) 2026-11-15, subtask rules: `use-parent-issue.ts` (`useParentIssue(workspaceSlug, projectId, parentId)`): parent from the issue map, fetched once per id if missing (`issues.getIssues`), plus `parentTargetDate` for `DateSelect` `maxDate`.
 - Our changes (Neuric) 2026-11-15, subtask rules review fixes: `use-issue-update-error-toast.ts` (`useIssueUpdateErrorToast()`): one error toast for inline work item edits, `getSubtaskRuleError` or the generic `entity.update.failed`. Used by `all-properties.tsx` and the spreadsheet `issue-column.tsx`. Not in `use-issues-actions.tsx` because calendar/kanban drag-drop already toast there.
+- Our changes (Neuric) 2026-11-16, Step 2: `use-project-phases.ts` (`useProjectPhases(workspaceSlug, projectId)`): SWR fetch on `PROJECT_PHASES_SWR_KEY` (one request app-wide) + `getProjectPhases` from the phase store. Store hooks `store/use-phase.ts` (`usePhase`, `useModuleRelation`).

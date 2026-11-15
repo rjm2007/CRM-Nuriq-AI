@@ -10,5 +10,46 @@
         "empty": "向模块添加工作项以跟踪进度。"
       }
     }
+  },
+  "phase": {
+    "label": "阶段",
+    "label_plural": "阶段",
+    "no_phase": "无阶段",
+    "search": "搜索阶段...",
+    "missing": "未知阶段",
+    "empty_options": "还没有阶段。请在项目设置中添加。",
+    "toast": {
+      "keyword_error": "无法更改模块的阶段，请重试。"
+    },
+    "activity": {
+      "moved": "将此工作项从阶段 {from} 移到阶段 {to}",
+      "added": "将此工作项添加到阶段 {to}",
+      "removed": "将此工作项从阶段 {from} 移除",
+      "updated": "更改了此工作项的阶段",
+      "moved_feed": "将 {item} 从阶段 {from} 移到阶段 {to}",
+      "added_feed": "将 {item} 添加到阶段 {to}",
+      "removed_feed": "将 {item} 从阶段 {from} 移除",
+      "updated_feed": "更改了 {item} 的阶段"
+    }
+  },
+  "keyword_map": {
+    "layout": "图谱",
+    "canvas_label": "模块图谱",
+    "no_phase": "无阶段",
+    "node_meta": "已完成 {completed}/{total} 个工作项",
+    "add_label": "添加标签",
+    "edit_label": "编辑标签",
+    "label_input": "关系标签",
+    "delete_relation": "删除关系",
+    "zoom_in": "放大",
+    "zoom_out": "缩小",
+    "fit_view": "适应视图",
+    "controls": "图谱控件",
+    "errors": {
+      "load": "无法加载模块关系。",
+      "create": "无法关联模块，请重试。",
+      "update": "无法保存关系标签，请重试。",
+      "delete": "无法删除关系，请重试。"
+    }
   }
 }

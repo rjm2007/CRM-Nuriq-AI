@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fazy",
+      "short_title": "Fazy",
+      "heading": "Fazy",
+      "description": "Podziel projekt na uporządkowane fazy i przypisz do nich moduły. Przeciągaj fazy, aby zmienić ich kolejność.",
+      "count": "Fazy: {count}",
+      "add": "Dodaj fazę",
+      "admin_only": "Tylko administratorzy projektu mogą tworzyć, edytować i zmieniać kolejność faz.",
+      "load_error": "Nie udało się wczytać faz. Spróbuj ponownie później.",
+      "no_dates": "Brak dat",
+      "no_keywords": "W tej fazie nie ma jeszcze modułów.",
+      "add_keywords": "Dodaj moduły",
+      "remove_keyword": "Usuń {name} z tej fazy",
+      "keyword_outside_dates": "{name} ma daty poza datami tej fazy.",
+      "keyword_span": "Daty modułów: {dates}",
+      "keyword_span_empty": "Daty modułów: nie ustawiono",
+      "form": {
+        "name": "Nazwa fazy",
+        "name_required": "Nazwa fazy jest wymagana.",
+        "description_placeholder": "Opisz tę fazę dla członków zespołu.",
+        "create": "Utwórz fazę",
+        "update": "Zapisz fazę"
+      },
+      "delete": {
+        "title": "Usuń fazę",
+        "content": "Usunąć fazę {name}? Jej moduły pozostaną w projekcie bez fazy. Tej operacji nie można cofnąć."
+      },
+      "empty_state": {
+        "title": "Nie ma jeszcze faz",
+        "description": "Fazy dzielą projekt na uporządkowane etapy. Każdy moduł może należeć do jednej fazy."
+      },
+      "toast": {
+        "created": "Utworzono fazę.",
+        "updated": "Zaktualizowano fazę.",
+        "deleted": "Usunięto fazę.",
+        "create_error": "Nie udało się utworzyć fazy. Spróbuj ponownie.",
+        "update_error": "Nie udało się zaktualizować fazy. Spróbuj ponownie.",
+        "delete_error": "Nie udało się usunąć fazy. Spróbuj ponownie.",
+        "reorder_error": "Nie udało się zmienić kolejności faz. Spróbuj ponownie.",
+        "keyword_moved": "{name} przeniesiono tutaj z fazy {from}."
+      },
+      "move_up": "Przenieś w górę",
+      "move_down": "Przenieś w dół"
     }
   }
 }

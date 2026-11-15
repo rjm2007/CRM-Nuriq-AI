@@ -13,6 +13,7 @@ import {
   CloseOutline,
   LeadOutline,
   MembersOutline,
+  MilestoneOutline,
   StartDateOutline,
   StateOutline,
   WorkItemsOutline,
@@ -36,9 +37,11 @@ import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { CreateUpdateModuleLinkModal, ModuleAnalyticsProgress, ModuleLinksList } from "@/components/modules";
 import { ModuleStatusDropdown } from "@/components/modules/module-status-dropdown";
 import { ModuleQuickActions } from "@/components/modules/quick-actions";
+import { ModulePhaseSelect } from "@/components/phases/phase-select";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useModule } from "@/hooks/store/use-module";
+import { usePhase } from "@/hooks/store/use-phase";
 import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
 // local imports
 import { ModuleSidebarDescription } from "./description";
@@ -144,13 +147,14 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
   const { data: userProfile } = useUserProfile();
 
   const { getModuleById, updateModuleDetails, createModuleLink, updateModuleLink, deleteModuleLink } = useModule();
+  const { isPhasesForbidden } = usePhase();
   const { areEstimateEnabledByProjectId, currentActiveEstimateId, estimateById } = useProjectEstimates();
 
   // derived values
   const moduleDetails = getModuleById(moduleId);
   const areEstimateEnabled = projectId && areEstimateEnabledByProjectId(projectId.toString());
   const estimateType = areEstimateEnabled && currentActiveEstimateId && estimateById(currentActiveEstimateId);
-  const isEstimatePointValid = estimateType && estimateType?.type == EEstimateSystem.POINTS ? true : false;
+  const isEstimatePointValid = !!estimateType && estimateType?.type == EEstimateSystem.POINTS;
 
   const { reset, control } = useForm({
     defaultValues,
@@ -318,6 +322,19 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
                 )}
               />
             </SidebarPropertyListItem>
+            {/* Neuric: the keyword's phase (Step 2); admins and members may change it; hidden on a phases 403 (guests) */}
+            {workspaceSlug && projectId && !isPhasesForbidden(projectId.toString()) && (
+              <SidebarPropertyListItem icon={MilestoneOutline} label={t("phase.label")}>
+                <ModulePhaseSelect
+                  workspaceSlug={workspaceSlug.toString()}
+                  projectId={projectId.toString()}
+                  moduleId={moduleId}
+                  variant="select-ghost-md"
+                  disabled={!isEditingAllowed || !!isArchived}
+                  testId="module-sidebar-phase-select"
+                />
+              </SidebarPropertyListItem>
+            )}
             <SidebarPropertyListItem icon={StartDateOutline} label={t("date_range")}>
               <Controller
                 control={control}

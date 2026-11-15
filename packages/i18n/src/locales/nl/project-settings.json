@@ -527,6 +527,50 @@
           }
         }
       }
+    },
+    "phases": {
+      "title": "Fasen",
+      "short_title": "Fasen",
+      "heading": "Fasen",
+      "description": "Verdeel het project in geordende fasen en plaats de modules erin. Sleep fasen om ze te herschikken.",
+      "count": "Fasen: {count}",
+      "add": "Fase toevoegen",
+      "admin_only": "Alleen projectbeheerders kunnen fasen maken, bewerken of herschikken.",
+      "load_error": "Kan fasen niet laden. Probeer het later opnieuw.",
+      "no_dates": "Geen datums",
+      "no_keywords": "Nog geen modules in deze fase.",
+      "add_keywords": "Modules toevoegen",
+      "remove_keyword": "{name} uit deze fase verwijderen",
+      "keyword_outside_dates": "{name} heeft datums buiten de datums van deze fase.",
+      "keyword_span": "Moduledatums: {dates}",
+      "keyword_span_empty": "Moduledatums: niet ingesteld",
+      "form": {
+        "name": "Fasenaam",
+        "name_required": "Fasenaam is verplicht.",
+        "description_placeholder": "Beschrijf deze fase voor je leden.",
+        "create": "Fase maken",
+        "update": "Fase opslaan"
+      },
+      "delete": {
+        "title": "Fase verwijderen",
+        "content": "Fase {name} verwijderen? De modules blijven zonder fase in het project. Dit kan niet ongedaan worden gemaakt."
+      },
+      "empty_state": {
+        "title": "Nog geen fasen",
+        "description": "Fasen verdelen het project in geordende stappen. Elke module kan bij één fase horen."
+      },
+      "toast": {
+        "created": "Fase gemaakt.",
+        "updated": "Fase bijgewerkt.",
+        "deleted": "Fase verwijderd.",
+        "create_error": "Kan de fase niet maken. Probeer het opnieuw.",
+        "update_error": "Kan de fase niet bijwerken. Probeer het opnieuw.",
+        "delete_error": "Kan de fase niet verwijderen. Probeer het opnieuw.",
+        "reorder_error": "Kan de fasen niet herschikken. Probeer het opnieuw.",
+        "keyword_moved": "{name} is hierheen verplaatst vanuit fase {from}."
+      },
+      "move_up": "Omhoog verplaatsen",
+      "move_down": "Omlaag verplaatsen"
     }
   }
 }

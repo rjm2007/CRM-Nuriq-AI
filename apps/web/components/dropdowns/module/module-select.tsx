@@ -26,6 +26,8 @@ type ModuleSelectWebBaseProps = {
   tooltip?: SelectTooltip;
   /** Tab order of the trigger, for forms that sequence focus explicitly (`ETabIndices`). */
   tabIndex?: number;
+  /** Neuric: muted second line per option (e.g. the keyword's current phase); `undefined` = single line. */
+  getOptionDescription?: (module: IModule) => string | undefined;
 };
 
 type ModuleSelectWebProps = ModuleSelectWebBaseProps &
@@ -44,7 +46,11 @@ type ModuleSelectWebProps = ModuleSelectWebBaseProps &
       }
   );
 
-const toOption = (module: IModule): ModuleOption => ({ id: module.id, name: module.name });
+const toOption = (module: IModule, getDescription?: (module: IModule) => string | undefined): ModuleOption => ({
+  id: module.id,
+  name: module.name,
+  description: getDescription?.(module),
+});
 
 /**
  * Web binding for the `ModuleSelect` block. Pass `multiple` for multi-select (issue sidebar, table
@@ -56,7 +62,7 @@ const toOption = (module: IModule): ModuleOption => ({ id: module.id, name: modu
  * the store's list as one page. EE keeps this binding in `issues/issue-detail/module-select.tsx`.
  */
 export const ModuleSelect = observer(function ModuleSelect(props: ModuleSelectWebProps) {
-  const { projectId, disabled, placeholder, onClose, className, tooltip, tabIndex } = props;
+  const { projectId, disabled, placeholder, onClose, className, tooltip, tabIndex, getOptionDescription } = props;
   // router params
   const { workspaceSlug } = useParams();
   // store hooks
@@ -85,10 +91,10 @@ export const ModuleSelect = observer(function ModuleSelect(props: ModuleSelectWe
         .map((moduleId) => getModuleById(moduleId))
         .filter((module): module is IModule => !!module)
         .filter((module) => !query || module.name.toLowerCase().includes(query))
-        .map(toOption);
+        .map((module) => toOption(module, getOptionDescription));
       return { results, next_page_results: false };
     },
-    [workspaceSlug, projectId, getProjectModuleIds, fetchModules, getModuleById]
+    [workspaceSlug, projectId, getProjectModuleIds, fetchModules, getModuleById, getOptionDescription]
   );
 
   if (!props.multiple) {
@@ -129,6 +135,7 @@ export const ModuleSelect = observer(function ModuleSelect(props: ModuleSelectWe
       className={className}
       tooltip={resolvedTooltip}
       tabIndex={tabIndex}
+      showDescription={!!getOptionDescription}
     />
   );
 });
