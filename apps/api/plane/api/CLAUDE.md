@@ -18,3 +18,4 @@ External API with `X-Api-Key` auth (`middleware/api_authentication.py`), rate-li
 
 - 2026-11-15: v1 projects: `target_date` on create+update, `prd_page` on update only (field-level `validate_prd_page` on `ProjectUpdateSerializer`, so errors are 400; the patch view turns ValidationErrors raised in `save()` into 409). OpenAPI project examples updated.
 - 2026-11-15 (time tracking): v1 time entries (`views/worklog.py`, `serializers/worklog.py`, `urls/worklog.py`); the work item detail returns `logged_minutes` / `total_logged_minutes`.
+- 2026-11-16 (Step 2): v1 keyword map (`views/phase.py`, `serializers/phase.py`, `urls/phase.py`): phases, phase keywords, keyword relations.

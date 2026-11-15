@@ -26,3 +26,4 @@ All backend modules.
 ## Our changes (Neuric)
 
 - 2026-11-15 (time tracking): IssueWorkLog time entries across `db/`, `utils/worklog.py`, `app/`, `api/`, `bgtasks/worklog_activity.py`; see those folders' notes and docs/API.md.
+- 2026-11-16 (Step 2 keyword map): Phase / PhaseModule / ModuleRelation across `db/`, `utils/keyword_map.py`, `app/views/phase/`, `api/views/phase.py`, `bgtasks/phase_activity.py`; see docs/API.md.

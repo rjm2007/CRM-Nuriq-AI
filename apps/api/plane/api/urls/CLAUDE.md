@@ -8,3 +8,4 @@
 ## Our changes (Neuric)
 
 - 2026-11-15 (time tracking): `worklog.py` — worklog routes under `issues/` and `work-items/`, plus `projects/<id>/worklogs/` and `.../summary/`; included from `__init__.py`.
+- 2026-11-16 (Step 2): `phase.py` — `phases/`, `phases/<pk>/`, `phases/<phase_id>/modules/` (+ `<module_id>/`), `module-relations/` (+ `<pk>/`); included from `__init__.py`.

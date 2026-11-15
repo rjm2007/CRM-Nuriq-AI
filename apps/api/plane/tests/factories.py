@@ -6,7 +6,19 @@ import factory
 from uuid import uuid4
 from django.utils import timezone
 
-from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember, Page, ProjectPage, State, Issue
+from plane.db.models import (
+    Issue,
+    Module,
+    Page,
+    Phase,
+    Project,
+    ProjectMember,
+    ProjectPage,
+    State,
+    User,
+    Workspace,
+    WorkspaceMember,
+)
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -148,3 +160,29 @@ class IssueWorkLogFactory(factory.django.DjangoModelFactory):
     started_at = factory.LazyFunction(timezone.now)
     duration_minutes = 60
     note = ""
+
+
+# Neuric: keyword map (Step 2)
+class ModuleFactory(factory.django.DjangoModelFactory):
+    """Factory for Module (a "keyword"). Pass ``project``."""
+
+    class Meta:
+        model = Module
+
+    id = factory.LazyFunction(uuid4)
+    name = factory.Sequence(lambda n: f"Keyword {n}")
+    project = factory.SubFactory(ProjectFactory)
+    workspace = factory.SelfAttribute("project.workspace")
+
+
+# Neuric: keyword map (Step 2)
+class PhaseFactory(factory.django.DjangoModelFactory):
+    """Factory for Phase. Pass ``project``."""
+
+    class Meta:
+        model = Phase
+
+    id = factory.LazyFunction(uuid4)
+    name = factory.Sequence(lambda n: f"Phase {n}")
+    project = factory.SubFactory(ProjectFactory)
+    workspace = factory.SelfAttribute("project.workspace")

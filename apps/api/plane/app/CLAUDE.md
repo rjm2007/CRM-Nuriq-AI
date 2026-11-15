@@ -18,3 +18,4 @@ Endpoints used by apps/web. Session auth with CSRF.
 ## Our changes (Neuric)
 
 - 2026-11-15 (time tracking): worklog endpoints (`views/issue/worklog.py`, `serializers/worklog.py`, routes in `urls/issue.py`).
+- 2026-11-16 (Step 2): keyword map endpoints (`views/phase/`, `serializers/phase.py`, `urls/phase.py`). Activity goes through `utils/keyword_map.py` -> `bgtasks/phase_activity.py`, not `issue_activity`.

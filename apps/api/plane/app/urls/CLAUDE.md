@@ -8,3 +8,4 @@
 ## Our changes (Neuric)
 
 - 2026-11-15 (time tracking): `issue.py` routes `issues/<issue_id>/worklogs/`, `.../worklogs/<pk>/`, `projects/<project_id>/worklogs/` and `.../worklogs/summary/`.
+- 2026-11-16 (Step 2): `phase.py` — `projects/<id>/phases/`, `.../phases/<pk>/`, `.../phases/<phase_id>/modules/` (+ `<module_id>/`), `.../module-relations/` (+ `<pk>/`); registered in `__init__.py`.

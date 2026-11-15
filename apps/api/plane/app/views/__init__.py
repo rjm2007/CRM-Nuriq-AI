@@ -240,3 +240,5 @@ from .notification.base import MarkAllReadNotificationViewSet
 from .user.base import AccountEndpoint, ProfileEndpoint, UserSessionEndpoint
 
 from .timezone.base import TimezoneEndpoint
+from .phase.base import PhaseModuleEndpoint, PhaseViewSet  # Neuric
+from .phase.relation import ModuleRelationViewSet  # Neuric

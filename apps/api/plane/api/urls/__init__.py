@@ -15,6 +15,7 @@ from .work_item import urlpatterns as work_item_patterns
 from .invite import urlpatterns as invite_patterns
 from .sticky import urlpatterns as sticky_patterns
 from .worklog import urlpatterns as worklog_patterns  # Neuric
+from .phase import urlpatterns as phase_patterns  # Neuric
 
 urlpatterns = [
     *asset_patterns,
@@ -30,4 +31,5 @@ urlpatterns = [
     *invite_patterns,
     *sticky_patterns,
     *worklog_patterns,  # Neuric
+    *phase_patterns,  # Neuric
 ]

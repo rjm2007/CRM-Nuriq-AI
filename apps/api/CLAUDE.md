@@ -25,3 +25,4 @@ See root AGENTS.md "Backend tests (Docker)". Lint: `uv run ruff check .`
 ## Our changes (Neuric)
 
 - 2026-11-15 (time tracking): migration `0127_issue_worklog` (made in the container with `docker exec crm-api-1 python manage.py makemigrations db -n issue_worklog`); lockfile updated.
+- 2026-11-16 (Step 2): migration `0128_phase_phasemodule`; lockfile updated.

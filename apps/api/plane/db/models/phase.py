@@ -40,9 +40,7 @@ class Phase(ProjectBaseModel):
             ),
             models.CheckConstraint(
                 condition=(
-                    Q(start_date__isnull=True)
-                    | Q(target_date__isnull=True)
-                    | Q(start_date__lte=F("target_date"))
+                    Q(start_date__isnull=True) | Q(target_date__isnull=True) | Q(start_date__lte=F("target_date"))
                 ),
                 name="phase_start_date_lte_target_date",
             ),

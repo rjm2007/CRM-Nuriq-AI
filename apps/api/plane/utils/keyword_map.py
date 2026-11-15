@@ -33,12 +33,12 @@ from django.utils import timezone
 from rest_framework import serializers
 
 # Module imports
-from plane.db.models import Module, ModuleRelation, Phase, PhaseModule
+from plane.app.permissions.base import ROLE
+from plane.db.models import Module, ModuleRelation, Phase, PhaseModule, Project, ProjectMember
 
 INVALID_PHASE = "INVALID_PHASE"
 PHASE_NAME_TAKEN = "PHASE_NAME_TAKEN"
 INVALID_PHASE_DATES = "INVALID_PHASE_DATES"
-INVALID_PHASE_ORDER = "INVALID_PHASE_ORDER"
 INVALID_KEYWORD = "INVALID_KEYWORD"
 KEYWORD_ARCHIVED = "KEYWORD_ARCHIVED"
 KEYWORD_NOT_IN_PHASE = "KEYWORD_NOT_IN_PHASE"
@@ -108,6 +108,40 @@ def relation_queryset(project_id):
     ).order_by("created_at")
 
 
+def get_live_project(slug, project_id):
+    """The URL project if it is in the URL workspace and not archived (``Project.DoesNotExist`` otherwise)."""
+    return Project.objects.get(pk=project_id, workspace__slug=slug, archived_at__isnull=True)
+
+
+def get_project_phase(slug, project_id, phase_id):
+    """A live phase of the URL project (keywords prefetched); ``Phase.DoesNotExist`` otherwise."""
+    return phase_queryset(project_id).filter(workspace__slug=slug, project__archived_at__isnull=True).get(pk=phase_id)
+
+
+def get_project_relation(slug, project_id, relation_id):
+    """A live edge of the URL project (ends may be archived); ``ModuleRelation.DoesNotExist`` otherwise."""
+    return ModuleRelation.objects.get(
+        pk=relation_id, project_id=project_id, workspace__slug=slug, project__archived_at__isnull=True
+    )
+
+
+def keyword_map_hidden_from_guest(user_id, slug, project_id):
+    """True for a project GUEST when the project's ``guest_view_all_features`` is off.
+
+    Such guests may not read phases or keyword relations (views answer 403); admins, members and
+    guests of projects that share all features read as usual. Same membership check as Plane's
+    ``issue_hidden_from_guest`` / ``is_restricted_guest``.
+    """
+    return ProjectMember.objects.filter(
+        workspace__slug=slug,
+        project_id=project_id,
+        member_id=user_id,
+        role=ROLE.GUEST.value,
+        is_active=True,
+        project__guest_view_all_features=False,
+    ).exists()
+
+
 # --------------------------------------------------------------------------- side effects
 
 
@@ -165,18 +199,33 @@ def _send_webhook(event, instance, requested, current, actor, origin, deleted=Fa
 
 
 def _send_phase_moves(project_id, actor, moves):
-    """Enqueue the per-work-item ``phase`` activity rows for keyword moves once the transaction commits."""
+    """Enqueue the per-work-item ``phase`` activity rows for keyword moves once the transaction commits.
+
+    One task per ``MOVES_PER_TASK`` moves. ``epoch`` (the task's idempotency key with actor and phases)
+    is a float timestamp with microseconds taken while the caller holds the PhaseModule/Phase row locks,
+    so batches touching the same keyword are serialized and never share it (an int-seconds epoch let
+    A->B, B->A, A->B within one second drop the third batch's rows).
+    """
     if not moves:
         return
-    from plane.bgtasks.phase_activity import phase_module_activity
+    from plane.bgtasks.phase_activity import chunk_moves, phase_module_activity
 
-    payload = {
-        "project_id": str(project_id),
-        "actor_id": str(actor.id) if actor else None,
-        "moves": moves,
-        "epoch": int(timezone.now().timestamp()),
-    }
-    transaction.on_commit(lambda: phase_module_activity.delay(**payload))
+    epoch = timezone.now().timestamp()
+    payloads = [
+        {
+            "project_id": str(project_id),
+            "actor_id": str(actor.id) if actor else None,
+            "moves": chunk,
+            "epoch": epoch,
+        }
+        for chunk in chunk_moves(moves)
+    ]
+
+    def send():
+        for payload in payloads:
+            phase_module_activity.delay(**payload)
+
+    transaction.on_commit(send)
 
 
 def _move(module_id, old_phase, new_phase):
@@ -277,8 +326,14 @@ def update_phase(phase, data, actor, origin=None):
 
 
 def delete_phase(phase, actor, origin=None):
-    """Soft-delete a phase and its keyword assignments. Its keywords leave the phase (activity rows)."""
+    """Soft-delete a phase and its keyword assignments. Its keywords leave the phase (activity rows).
+
+    Locks the phase row first (same order as ``assign_modules_to_phase``); ``Phase.DoesNotExist`` (404)
+    when another request deleted it meanwhile.
+    """
     with transaction.atomic():
+        if Phase.objects.select_for_update().filter(pk=phase.pk).first() is None:
+            raise Phase.DoesNotExist("Phase not found.")
         links = list(PhaseModule.objects.filter(phase=phase).select_for_update().values_list("module_id", flat=True))
         now = timezone.now()
         PhaseModule.objects.filter(phase=phase).update(deleted_at=now, updated_by=actor, updated_at=now)
@@ -288,24 +343,6 @@ def delete_phase(phase, actor, origin=None):
         _send_webhook("phase", phase, None, None, actor, origin, deleted=True)
         _send_phase_moves(phase.project_id, actor, [_move(module_id, phase, None) for module_id in links])
     return links
-
-
-def reorder_phases(project, phase_ids, actor, origin=None):
-    """Set phase order to ``phase_ids`` (every live phase of the project, each once)."""
-    phase_ids = [str(pk) for pk in phase_ids]
-    with transaction.atomic():
-        phases = {str(p.id): p for p in Phase.objects.filter(project_id=project.id).select_for_update()}
-        if len(phase_ids) != len(set(phase_ids)) or set(phase_ids) != set(phases):
-            raise _error("phase_ids", "List every phase of the project exactly once.", INVALID_PHASE_ORDER)
-        for index, pk in enumerate(phase_ids):
-            phase = phases[pk]
-            sequence = float((index + 1) * SEQUENCE_STEP)
-            if phase.sequence != sequence:
-                before = _phase_snapshot(phase)
-                phase.sequence = sequence
-                _save_changed(phase, actor, ["sequence"])
-                _send_webhook("phase", phase, {"sequence": sequence}, before, actor, origin)
-    return [phases[pk] for pk in phase_ids]
 
 
 # --------------------------------------------------------------------------- keywords in phases
@@ -335,8 +372,10 @@ def assign_modules_to_phase(phase, module_ids, actor):
         raise _error("module_ids", f"At most {MAX_MODULES_PER_ASSIGN} keywords at once.", INVALID_KEYWORD)
     moves = []
     with transaction.atomic():
-        # Lock the phase so concurrent assigns into it get distinct sequences.
-        Phase.objects.select_for_update().filter(pk=phase.pk).first()
+        # Lock the phase so concurrent assigns into it get distinct sequences, and so a concurrent
+        # delete_phase cannot leave keywords linked to a deleted phase.
+        if Phase.objects.select_for_update().filter(pk=phase.pk).first() is None:
+            raise _error("phase", "This phase no longer exists.", INVALID_PHASE)
         _project_modules(phase.project_id, ordered, "module_ids")
         current = {
             str(link.module_id): link
@@ -344,25 +383,39 @@ def assign_modules_to_phase(phase, module_ids, actor):
         }
         largest = PhaseModule.objects.filter(phase=phase).aggregate(largest=Max("sequence"))["largest"]
         sequence = largest if largest is not None else 0.0
+        moved_out = []
+        new_links = []
+        for module_id in ordered:
+            link = current.get(module_id)
+            if link is not None and link.phase_id == phase.id:
+                continue
+            if link is not None:
+                moved_out.append(link.pk)
+            sequence += SEQUENCE_STEP
+            new_links.append(
+                PhaseModule(
+                    project_id=phase.project_id,
+                    workspace_id=phase.workspace_id,
+                    phase=phase,
+                    module_id=module_id,
+                    sequence=sequence,
+                    created_by=actor,
+                    updated_by=None,
+                )
+            )
+            moves.append(_move(module_id, link.phase if link is not None else None, phase))
         now = timezone.now()
         try:
             with transaction.atomic():
-                for module_id in ordered:
-                    link = current.get(module_id)
-                    if link is not None and link.phase_id == phase.id:
-                        continue
-                    old_phase = link.phase if link is not None else None
-                    if link is not None:
-                        PhaseModule.objects.filter(pk=link.pk).update(
-                            deleted_at=now, updated_by=actor, updated_at=now
-                        )
-                    sequence += SEQUENCE_STEP
-                    _save_new(PhaseModule(project_id=phase.project_id, phase=phase, module_id=module_id,
-                                          sequence=sequence, workspace_id=phase.workspace_id), actor)
-                    moves.append(_move(module_id, old_phase, phase))
+                if moved_out:
+                    PhaseModule.objects.filter(pk__in=moved_out).update(
+                        deleted_at=now, updated_by=actor, updated_at=now
+                    )
+                PhaseModule.objects.bulk_create(new_links)
         except IntegrityError:
-            raise _error("module_ids", "Another change to these keywords happened first. Try again.",
-                             KEYWORD_MAP_CONFLICT)
+            raise _error(
+                "module_ids", "Another change to these keywords happened first. Try again.", KEYWORD_MAP_CONFLICT
+            )
         _send_phase_moves(phase.project_id, actor, moves)
     return list(PhaseModule.objects.filter(phase=phase).order_by("sequence", "created_at"))
 
@@ -406,8 +459,7 @@ def create_module_relation(project, source_module_id, target_module_id, actor, l
             with transaction.atomic():
                 _save_new(relation, actor)
         except IntegrityError:
-            raise _error("target_module", "These keywords are already linked in this direction.",
-                             DUPLICATE_RELATION)
+            raise _error("target_module", "These keywords are already linked in this direction.", DUPLICATE_RELATION)
         _send_webhook("module_relation", relation, _relation_snapshot(relation), None, actor, origin)
     return relation
 
@@ -431,8 +483,7 @@ def update_module_relation(relation, data, actor, origin=None):
             with transaction.atomic():
                 _save_changed(relation, actor, [f.removesuffix("_id") for f in changes])
         except IntegrityError:
-            raise _error("target_module", "These keywords are already linked in this direction.",
-                             DUPLICATE_RELATION)
+            raise _error("target_module", "These keywords are already linked in this direction.", DUPLICATE_RELATION)
         _send_webhook("module_relation", relation, _relation_snapshot(relation), before, actor, origin)
     return relation
 

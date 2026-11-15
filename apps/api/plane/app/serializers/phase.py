@@ -5,6 +5,9 @@
 """Neuric: web-app serializers for the keyword map (Phase, ModuleRelation). Rules live in
 plane/utils/keyword_map.py; the views validate input here and write through that service."""
 
+# Python imports
+import math
+
 # Third party imports
 from rest_framework import serializers
 
@@ -51,6 +54,12 @@ class PhaseSerializer(BaseSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_by", "updated_by", "created_at", "updated_at"]
+
+    def validate_sequence(self, value):
+        # FloatField accepts "NaN" / "Infinity", which would break ordering.
+        if value is not None and not math.isfinite(value):
+            raise serializers.ValidationError("Sequence must be a finite number.")
+        return value
 
     def get_module_ids(self, phase):
         return [str(pk) for pk in phase_module_ids(phase)]
