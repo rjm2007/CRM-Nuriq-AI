@@ -56,6 +56,7 @@ from plane.bgtasks.page_version_task import track_page_version
 from plane.bgtasks.recent_visited_task import recent_visited_task
 from plane.bgtasks.copy_s3_object import copy_s3_objects_of_description_and_assets
 from plane.app.permissions import ProjectPagePermission
+from plane.utils.neuric_project import clear_prd_page_links
 
 
 def unarchive_archive_page_and_descendants(page_id, archived_at):
@@ -66,12 +67,13 @@ def unarchive_archive_page_and_descendants(page_id, archived_at):
         UNION ALL
         SELECT pages.id FROM pages, descendants WHERE pages.parent_id = descendants.id
     )
-    UPDATE pages SET archived_at = %s WHERE id IN (SELECT id FROM descendants);
+    UPDATE pages SET archived_at = %s WHERE id IN (SELECT id FROM descendants) RETURNING id;
     """
 
     # Execute the SQL query
     with connection.cursor() as cursor:
         cursor.execute(sql, [page_id, archived_at])
+        return [row[0] for row in cursor.fetchall()]  # Neuric: affected page ids
 
 
 class PageViewSet(BaseViewSet):
@@ -199,6 +201,8 @@ class PageViewSet(BaseViewSet):
             page_description = page.description_html
             if serializer.is_valid():
                 serializer.save()
+                if page.access == Page.PRIVATE_ACCESS or page.archived_at:  # Neuric: no longer a valid PRD
+                    clear_prd_page_links([page.id])
                 # capture the page transaction
                 if request.data.get("description_html"):
                     page_transaction.delay(
@@ -281,6 +285,8 @@ class PageViewSet(BaseViewSet):
 
         page.access = access
         page.save()
+        if int(access) == Page.PRIVATE_ACCESS:  # Neuric: a private page cannot stay a PRD
+            clear_prd_page_links([page.id])
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def list(self, request, slug, project_id):
@@ -327,7 +333,7 @@ class PageViewSet(BaseViewSet):
             workspace__slug=slug,
         ).delete()
 
-        unarchive_archive_page_and_descendants(page_id, datetime.now())
+        clear_prd_page_links(unarchive_archive_page_and_descendants(page_id, datetime.now()))  # Neuric
 
         return Response({"archived_at": str(datetime.now())}, status=status.HTTP_200_OK)
 
@@ -397,6 +403,7 @@ class PageViewSet(BaseViewSet):
         ).update(parent=None)
 
         page.delete()
+        clear_prd_page_links([page.id])  # Neuric
         # Delete the user favorite page
         UserFavorite.objects.filter(
             project=project_id,

@@ -26,7 +26,7 @@ from plane.db.models import (
 from plane.utils.content_validator import (
     validate_html_content,
 )
-from plane.app.serializers.neuric_project import validate_prd_page
+from plane.utils.neuric_project import is_unchanged_prd_page, scope_prd_page_field, validate_prd_page
 
 
 class ProjectSerializer(BaseSerializer):
@@ -38,6 +38,10 @@ class ProjectSerializer(BaseSerializer):
         fields = "__all__"
         # Audit fields are set server-side by BaseModel.save().
         read_only_fields = ["workspace", "deleted_at", "created_by", "updated_by"]
+
+    def get_fields(self):
+        # Neuric: prd_page only resolves pages in this workspace
+        return scope_prd_page_field(self, super().get_fields())
 
     def validate_name(self, name):
         project_id = self.instance.id if self.instance else None
@@ -104,7 +108,7 @@ class ProjectSerializer(BaseSerializer):
             if self.instance is None:
                 if data["prd_page"] is not None:
                     raise serializers.ValidationError({"prd_page": "PRD page can only be set on an existing project."})
-            else:
+            elif not is_unchanged_prd_page(data["prd_page"], self.instance):
                 validate_prd_page(data["prd_page"], self.instance)
 
         return data

@@ -11,6 +11,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Neuric: fail fast instead of queueing behind long transactions on the projects table
+        migrations.RunSQL("SET LOCAL lock_timeout = '5s'", migrations.RunSQL.noop),
         migrations.AddField(
             model_name='project',
             name='prd_page',

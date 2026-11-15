@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-"""Neuric: unit tests for ``validate_prd_page`` (app/serializers/neuric_project.py)."""
+"""Neuric: unit tests for the prd_page helpers in utils/neuric_project.py."""
 
 import pytest
 from django.utils import timezone
 from rest_framework import serializers
 
-from plane.app.serializers.neuric_project import validate_prd_page
+from plane.utils.neuric_project import clear_prd_page_links, is_unchanged_prd_page, validate_prd_page
 from plane.db.models import Page, Project, ProjectPage, Workspace
 from plane.tests.factories import PageFactory, link_page_to_project
 
@@ -77,3 +77,39 @@ class TestValidatePrdPage:
         linked_page.archived_at = timezone.now().date()
         linked_page.save()
         assert_rejected(linked_page, project)
+
+
+@pytest.mark.unit
+class TestPrdPageHelpers:
+    @pytest.mark.django_db
+    def test_is_unchanged(self, project, linked_page):
+        assert not is_unchanged_prd_page(linked_page, project)
+        project.prd_page = linked_page
+        assert is_unchanged_prd_page(linked_page, project)
+        assert not is_unchanged_prd_page(None, project)
+
+    @pytest.mark.django_db
+    def test_clear_all_projects(self, project, linked_page):
+        other = Project.objects.create(name="Other", identifier="OTH", workspace=project.workspace)
+        link_page_to_project(linked_page, other)
+        Project.objects.filter(pk__in=[project.pk, other.pk]).update(prd_page=linked_page)
+
+        assert clear_prd_page_links([linked_page.id]) == 2
+        assert not Project.objects.filter(prd_page=linked_page).exists()
+
+    @pytest.mark.django_db
+    def test_unlink_or_move_clears_only_old_project(self, project, linked_page):
+        # Plane CE has no unlink/move endpoint; this is the call such a view makes for the old project.
+        other = Project.objects.create(name="Other", identifier="OTH", workspace=project.workspace)
+        link_page_to_project(linked_page, other)
+        Project.objects.filter(pk__in=[project.pk, other.pk]).update(prd_page=linked_page)
+        ProjectPage.objects.filter(project=project, page=linked_page).delete()
+
+        assert clear_prd_page_links([linked_page.id], project_id=project.id) == 1
+        assert Project.objects.get(pk=project.pk).prd_page_id is None
+        assert Project.objects.get(pk=other.pk).prd_page_id == linked_page.id
+
+    @pytest.mark.django_db
+    def test_empty_ids_noop(self):
+        assert clear_prd_page_links([]) == 0
+        assert clear_prd_page_links([None]) == 0

@@ -16,7 +16,8 @@ from plane.db.models import Project, ProjectIdentifier, WorkspaceMember, State, 
 from plane.utils.content_validator import (
     validate_html_content,
 )
-from plane.app.serializers.neuric_project import validate_prd_page as check_prd_page
+from plane.utils.neuric_project import is_unchanged_prd_page, scope_prd_page_field
+from plane.utils.neuric_project import validate_prd_page as check_prd_page
 from .base import BaseSerializer
 
 
@@ -95,6 +96,7 @@ class ProjectCreateSerializer(BaseSerializer):
             "is_time_tracking_enabled",
             # Neuric
             "target_date",
+            "prd_page",
         ]
 
         read_only_fields = [
@@ -106,6 +108,24 @@ class ProjectCreateSerializer(BaseSerializer):
             "updated_by",
             "logo_props",
         ]
+
+    def get_fields(self):
+        # Neuric: prd_page only resolves pages in this workspace
+        return scope_prd_page_field(self, super().get_fields())
+
+    def validate_prd_page(self, page):
+        # Neuric: checked at field level (not in create()/update()) so a bad page is a 400;
+        # the v1 views map ValidationErrors raised during save() to a 409.
+        if self.instance is None:
+            if page is not None:
+                raise serializers.ValidationError("PRD page can only be set on an existing project.")
+            return page
+        if is_unchanged_prd_page(page, self.instance):
+            return page
+        try:
+            return check_prd_page(page, self.instance)
+        except serializers.ValidationError as exc:
+            raise serializers.ValidationError(exc.detail["prd_page"])
 
     def validate(self, data):
         project_name = data.get("name", None)
@@ -179,19 +199,9 @@ class ProjectUpdateSerializer(ProjectCreateSerializer):
         fields = ProjectCreateSerializer.Meta.fields + [
             "default_state",
             "estimate",
-            # Neuric
-            "prd_page",
         ]
 
         read_only_fields = ProjectCreateSerializer.Meta.read_only_fields
-
-    def validate_prd_page(self, page):
-        # Neuric: checked at field level (not in update()) so a bad page is a 400;
-        # the v1 patch view maps ValidationErrors raised during save() to a 409.
-        try:
-            return check_prd_page(page, self.instance)
-        except serializers.ValidationError as exc:
-            raise serializers.ValidationError(exc.detail["prd_page"])
 
     def update(self, instance, validated_data):
         project_name = validated_data.get("name", None)

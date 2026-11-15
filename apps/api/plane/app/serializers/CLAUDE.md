@@ -12,4 +12,4 @@ DRF serializers for the web-app API, one file per domain.
 
 ## Our changes (Neuric)
 
-- 2026-11-15: `neuric_project.py` adds `validate_prd_page(page, project)` (same workspace, live ProjectPage link, public, not archived). `ProjectSerializer.validate` rejects `prd_page` on create and checks it on update.
+- 2026-11-15: `ProjectSerializer` validates `prd_page` with `plane/utils/neuric_project.py` (same workspace, live ProjectPage link, public, not archived; unchanged value skipped; field scoped to the workspace). Rejected on create.
