@@ -85,6 +85,11 @@ export const MODULE_VIEW_LAYOUTS: {
     key: "gantt",
     i18n_title: "project_modules.layout.timeline",
   },
+  // Neuric: keyword map (Step 2)
+  {
+    key: "map",
+    i18n_title: "keyword_map.layout",
+  },
 ];
 
 export const MODULE_ORDER_BY_OPTIONS: {

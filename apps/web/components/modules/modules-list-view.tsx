@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { lazy, Suspense } from "react";
 import { observer } from "mobx-react";
 import { useParams, useSearchParams } from "next/navigation";
 // components
@@ -12,6 +13,7 @@ import { useTranslation } from "@plane/i18n";
 import { EmptyStateDetailed } from "@plane/blocks/empty-state";
 import { EUserProjectRoles } from "@plane/types";
 import { ContentWrapper, Row, ERowVariant } from "@plane/blocks/layout";
+import { Spinner } from "@plane/blocks/spinner";
 // components
 import { ListLayout } from "@/components/core/list";
 import { ModuleCardItem, ModuleListItem, ModulePeekOverview, ModulesListGanttChartView } from "@/components/modules";
@@ -23,6 +25,19 @@ import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useModule } from "@/hooks/store/use-module";
 import { useModuleFilter } from "@/hooks/store/use-module-filter";
 import { useUserPermissions } from "@/hooks/store/user";
+
+// Neuric: the keyword map (Step 2) and React Flow load only when the Map layout is open
+const ModulesMapView = lazy(function ModulesMapView() {
+  return import("@/components/modules/map").then((mod) => ({ default: mod.ModulesMapView }));
+});
+
+function MapLayoutLoader() {
+  return (
+    <div className="flex size-full items-center justify-center">
+      <Spinner />
+    </div>
+  );
+}
 
 export const ModulesListView = observer(function ModulesListView() {
   // router
@@ -50,6 +65,7 @@ export const ModulesListView = observer(function ModulesListView() {
         {displayFilters?.layout === "list" && <CycleModuleListLayoutLoader />}
         {displayFilters?.layout === "board" && <CycleModuleBoardLayoutLoader />}
         {displayFilters?.layout === "gantt" && <GanttLayoutLoader />}
+        {displayFilters?.layout === "map" && <MapLayoutLoader />}
       </>
     );
 
@@ -106,6 +122,12 @@ export const ModulesListView = observer(function ModulesListView() {
           <div className="size-full overflow-hidden">
             <ModulesListGanttChartView />
           </div>
+        )}
+        {/* Neuric: keyword map (Step 2) */}
+        {displayFilters?.layout === "map" && (
+          <Suspense fallback={<MapLayoutLoader />}>
+            <ModulesMapView moduleIds={filteredModuleIds} />
+          </Suspense>
         )}
         <div className="flex-shrink-0">
           <ModulePeekOverview projectId={projectId?.toString() ?? ""} workspaceSlug={workspaceSlug?.toString() ?? ""} />

@@ -17,7 +17,8 @@ export type TModuleOrderByOptions =
   | "-created_at"
   | "sort_order";
 
-export type TModuleLayoutOptions = "list" | "board" | "gantt";
+/** Neuric: `map` = keyword map (phase swimlanes + keyword relations). */
+export type TModuleLayoutOptions = "list" | "board" | "gantt" | "map";
 
 export type TModuleDisplayFilters = {
   favorites?: boolean;
