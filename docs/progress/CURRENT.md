@@ -18,7 +18,7 @@ _Last updated: 2026-11-16 by step1 chat (docs/sessions/2026-11-16-step1-projects
 
 ## In progress
 
-- Step 2 research (keywords + map + phases) — branch `feat/step2-keywords-phases`, started 2026-11-16 by step1 chat.
+- Step 2 (keywords + phases + map) on branch `feat/step2-keywords-phases` — PARTIAL (commit 44d3a6ccd6, stopped by usage limit). Done: models + migration 0128, serializers, keyword_map services, phase activity task; web types/store/service/PhaseSelect. TODO: views+URLs+tests (api), phases settings page, Keywords relabel, phase on keyword UI + task sidebar row, activity renderer. Map needs OK to install `@xyflow/react` 12.12.1 (MIT).
 
 ## Blocked / waiting
 
