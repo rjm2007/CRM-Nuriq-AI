@@ -16,3 +16,4 @@ Request handlers by domain (issue, cycle, module, page, project, state, search, 
 
 - 2026-11-15: `project/base.py` `list()` `.values(...)` also returns `target_date` and `prd_page`. Retrieve/list_detail use `__all__` serializers, so they include them automatically.
 - 2026-11-15 (subtask rules): `search/issue.py` uses `filter_parent_candidates` (`parent=true`) and `filter_child_candidates` (`sub_issue=true`) from `plane/utils/subtask_rules.py`. Issue view changes: see `issue/CLAUDE.md`.
+- 2026-11-15 (time tracking): `project/base.py` `list()` `.values(...)` also returns `is_time_tracking_enabled`. Worklog views: see `issue/CLAUDE.md`.

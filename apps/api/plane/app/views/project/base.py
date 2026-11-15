@@ -198,6 +198,7 @@ class ProjectViewSet(BaseViewSet):
             # Neuric
             "target_date",
             "prd_page",
+            "is_time_tracking_enabled",
         )
 
         if WorkspaceMember.objects.filter(

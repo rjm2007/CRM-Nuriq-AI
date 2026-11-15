@@ -75,6 +75,7 @@ from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.utils.subtask_rules import SubtaskRuleError, completed_sub_issues_count_expr, validate_bulk_target_dates
+from plane.utils.worklog import logged_minutes_expr, total_logged_minutes_expr  # Neuric
 
 from .. import BaseAPIView, BaseViewSet
 
@@ -193,6 +194,7 @@ class IssueListEndpoint(BaseAPIView):
                 "assignee_ids",
                 "sub_issues_count",
                 "completed_sub_issues_count",
+                "total_logged_minutes",  # Neuric
                 "created_at",
                 "updated_at",
                 "created_by",
@@ -459,6 +461,7 @@ class IssueViewSet(BaseViewSet):
                     "assignee_ids",
                     "sub_issues_count",
                     "completed_sub_issues_count",
+                    "total_logged_minutes",  # Neuric
                     "created_at",
                     "updated_at",
                     "created_by",
@@ -504,6 +507,7 @@ class IssueViewSet(BaseViewSet):
                 pk=pk,
             )
             .select_related("state")
+            .annotate(logged_minutes=logged_minutes_expr(), total_logged_minutes=total_logged_minutes_expr())  # Neuric
             .annotate(cycle_id=Subquery(CycleIssue.objects.filter(issue=OuterRef("id")).values("cycle_id")[:1]))
             .annotate(
                 link_count=Subquery(
@@ -856,6 +860,7 @@ class IssuePaginatedViewSet(BaseViewSet):
                 )
             )
             .annotate(completed_sub_issues_count=completed_sub_issues_count_expr())  # Neuric
+            .annotate(total_logged_minutes=total_logged_minutes_expr())  # Neuric
         )
 
     def process_paginated_result(self, fields, results, timezone):
@@ -902,6 +907,7 @@ class IssuePaginatedViewSet(BaseViewSet):
             "attachment_count",
             "sub_issues_count",
             "completed_sub_issues_count",
+            "total_logged_minutes",  # Neuric
         ]
 
         if str(is_description_required).lower() == "true":
@@ -1269,6 +1275,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
                 .values("count")
             )
             .filter(sequence_id=issue_identifier)
+            .annotate(logged_minutes=logged_minutes_expr(), total_logged_minutes=total_logged_minutes_expr())  # Neuric
             .annotate(
                 label_ids=Coalesce(
                     ArrayAgg(

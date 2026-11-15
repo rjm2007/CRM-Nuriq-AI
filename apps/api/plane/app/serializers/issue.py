@@ -950,12 +950,17 @@ class IssueDetailSerializer(IssueSerializer):
     description_html = serializers.CharField()
     is_subscribed = serializers.BooleanField(read_only=True)
     is_intake = serializers.BooleanField(read_only=True)
+    # Neuric: time tracking totals; skipped when the queryset is not annotated
+    logged_minutes = serializers.IntegerField(read_only=True)
+    total_logged_minutes = serializers.IntegerField(read_only=True)
 
     class Meta(IssueSerializer.Meta):
         fields = IssueSerializer.Meta.fields + [
             "description_html",
             "is_subscribed",
             "is_intake",
+            "logged_minutes",  # Neuric
+            "total_logged_minutes",  # Neuric
         ]
         read_only_fields = fields
 

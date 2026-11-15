@@ -68,3 +68,5 @@ from .member import (
     ProjectMemberLiteAPISerializer,
 )
 from .sticky import StickySerializer
+
+from .worklog import IssueWorkLogSerializer, WorkLogSummarySerializer  # Neuric

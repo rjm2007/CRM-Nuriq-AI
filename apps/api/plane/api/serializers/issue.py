@@ -67,6 +67,8 @@ class IssueSerializer(BaseSerializer):
     type_id = serializers.PrimaryKeyRelatedField(
         source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
     )
+    logged_minutes = serializers.IntegerField(read_only=True)  # Neuric: time tracking, only when annotated
+    total_logged_minutes = serializers.IntegerField(read_only=True)  # Neuric
 
     class Meta:
         model = Issue

@@ -24,12 +24,14 @@ from plane.db.models import (
 )
 from typing import Optional, Dict, Tuple, Any, Union, List
 from plane.utils.subtask_rules import completed_sub_issues_count_expr
+from plane.utils.worklog import total_logged_minutes_expr  # Neuric
 
 
 def issue_queryset_grouper(
     queryset: QuerySet[Issue],
     group_by: Optional[str],
     sub_group_by: Optional[str],
+    with_time_totals: bool = True,  # Neuric: False on public share links (space)
 ) -> QuerySet[Issue]:
     FIELD_MAPPER: Dict[str, str] = {
         "label_ids": "labels__id",
@@ -88,6 +90,8 @@ def issue_queryset_grouper(
             continue
         default_annotations[key] = expression
     default_annotations["completed_sub_issues_count"] = completed_sub_issues_count_expr()  # Neuric
+    if with_time_totals:  # Neuric
+        default_annotations["total_logged_minutes"] = total_logged_minutes_expr()
 
     return queryset.annotate(**default_annotations)
 
@@ -141,6 +145,8 @@ def issue_on_results(
         original_list.append(sub_group_by)
 
     required_fields.extend(original_list)
+    if "total_logged_minutes" in issues.query.annotations:  # Neuric: time tracking total when annotated
+        required_fields.append("total_logged_minutes")
     return list(issues.values(*required_fields))
 
 

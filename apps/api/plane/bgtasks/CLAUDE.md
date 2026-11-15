@@ -17,3 +17,4 @@
 ## Our changes (Neuric)
 
 - 2026-11-15: `subtask_rollup_task.py` — parent auto-done. `issue_activity` calls `enqueue_parent_rollup` after `bulk_create` (child `state` activity only; the rollup's own activity is skipped). `subtask_rollup` locks the parent, moves it to the lowest-sequence `completed` state when every live child is completed/cancelled and one is completed, then logs a `state` activity via the `subtask_rollup` key in `ISSUE_ACTIVITY_MAPPER` (`track_subtask_rollup`). Registered in `CELERY_IMPORTS`.
+- 2026-11-15 (time tracking): `worklog_activity.py` — `create/update/delete_worklog_activity` (link-activity signature), field `worklog`, values = minutes, identifier = entry id; a no-op update writes no row. Registered as `worklog.activity.*` in `issue_activity`'s `ACTIVITY_MAPPER`.

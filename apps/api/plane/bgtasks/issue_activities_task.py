@@ -18,6 +18,11 @@ from django.utils import timezone
 from plane.app.serializers import IssueActivitySerializer
 from plane.bgtasks.notification_task import notifications
 from plane.bgtasks.subtask_rollup_task import enqueue_parent_rollup, track_subtask_rollup
+from plane.bgtasks.worklog_activity import (  # Neuric
+    create_worklog_activity,
+    delete_worklog_activity,
+    update_worklog_activity,
+)
 from plane.db.models import (
     CommentReaction,
     Cycle,
@@ -1613,6 +1618,9 @@ def issue_activity(
             "issue_draft.activity.updated": update_draft_issue_activity,
             "issue_draft.activity.deleted": delete_draft_issue_activity,
             "intake.activity.created": create_intake_activity,
+            "worklog.activity.created": create_worklog_activity,  # Neuric
+            "worklog.activity.updated": update_worklog_activity,  # Neuric
+            "worklog.activity.deleted": delete_worklog_activity,  # Neuric
         }
 
         func = ACTIVITY_MAPPER.get(type)

@@ -25,3 +25,4 @@ Every table. One file per domain; all exported from `__init__.py`.
 ## Our changes (Neuric)
 
 - 2026-11-15: `Project.target_date` (DateField, nullable) and `Project.prd_page` (FK Page, SET_NULL, related_name `prd_projects`), under `# Neuric` in project.py. Migration `0126_project_target_date_prd_page`.
+- 2026-11-15 (time tracking): `worklog.py` — `IssueWorkLog(ProjectBaseModel)`: issue FK (CASCADE, `issue_worklogs`), user FK (CASCADE, `issue_worklogs`), `started_at`, `duration_minutes` (CheckConstraint `issue_worklog_duration_range` 1..1440), `note`. Indexes (project, started_at), (user, started_at). `user` = whose time, `created_by` = who logged it. Soft-deleted with the issue via `soft_delete_related_objects`. Exported in `__init__.py`.

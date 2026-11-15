@@ -67,6 +67,7 @@ from plane.app.permissions import (
     ProjectMemberPermission,
 )
 from plane.bgtasks.issue_activities_task import issue_activity
+from plane.utils.worklog import logged_minutes_expr, total_logged_minutes_expr  # Neuric
 from plane.db.models import (
     Issue,
     IssueActivity,
@@ -663,7 +664,9 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             sub_issues_count=Issue.issue_objects.filter(parent=OuterRef("id"))
             .order_by()
             .annotate(count=Func(F("id"), function="Count"))
-            .values("count")
+            .values("count"),
+            logged_minutes=logged_minutes_expr(),  # Neuric: time tracking totals
+            total_logged_minutes=total_logged_minutes_expr(),  # Neuric
         ).get(workspace__slug=slug, project_id=project_id, pk=pk)
         if guest_cannot_view_issue(request.user.id, issue, slug):
             raise Issue.DoesNotExist()

@@ -131,3 +131,20 @@ class IssueFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: f"Issue {n}")
     project = factory.SubFactory(ProjectFactory)
     workspace = factory.SelfAttribute("project.workspace")
+
+
+# Neuric: time tracking
+class IssueWorkLogFactory(factory.django.DjangoModelFactory):
+    """Factory for IssueWorkLog. Pass ``issue`` (project/workspace follow it) and ``user``."""
+
+    class Meta:
+        model = "db.IssueWorkLog"
+
+    id = factory.LazyFunction(uuid4)
+    issue = factory.SubFactory(IssueFactory)
+    project = factory.SelfAttribute("issue.project")
+    workspace = factory.SelfAttribute("issue.workspace")
+    user = factory.SubFactory(UserFactory)
+    started_at = factory.LazyFunction(timezone.now)
+    duration_minutes = 60
+    note = ""

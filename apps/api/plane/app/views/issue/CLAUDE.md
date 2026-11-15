@@ -18,3 +18,4 @@
 ## Our changes (Neuric)
 
 - 2026-11-15 (subtask rules): `sub_issue.py` POST runs `validate_bulk_attach` before `bulk_update` (all or nothing, 400 `{error, error_code, issue_ids}`). `base.py`: `IssueBulkUpdateDateEndpoint` runs `validate_bulk_target_dates` before any update/activity; `completed_sub_issues_count` added to the list/create `.values()` lists and `IssuePaginatedViewSet` (annotation + field). Rules live in `plane/utils/subtask_rules.py`.
+- 2026-11-15 (time tracking): `worklog.py` — `IssueWorkLogViewSet` (list/create/partial_update/destroy), `ProjectWorkLogEndpoint` (paginated), `ProjectWorkLogSummaryEndpoint`. `allow_permission([ADMIN, MEMBER])`; the flag gates writes only; members edit their own entries, project admins any. Activity `worklog.activity.*`, `notification=False`. `base.py`: retrieve + `IssueDetailIdentifierEndpoint` annotate `logged_minutes`/`total_logged_minutes`; `total_logged_minutes` in the list `.values()` and `IssuePaginatedViewSet`.
