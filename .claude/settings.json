@@ -1,0 +1,21 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '=== Team progress (docs/progress/CURRENT.md) ==='; cat docs/progress/CURRENT.md 2>/dev/null; echo; echo '=== Latest session notes ==='; ls -t docs/sessions/*.md 2>/dev/null | head -3 | while read f; do echo \"--- $f\"; head -40 \"$f\"; done"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Read(./**/*.pem)"
+    ]
+  }
+}
