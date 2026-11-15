@@ -17,6 +17,7 @@ from django.utils import timezone
 # Module imports
 from plane.app.serializers import IssueActivitySerializer
 from plane.bgtasks.notification_task import notifications
+from plane.bgtasks.subtask_rollup_task import enqueue_parent_rollup, track_subtask_rollup
 from plane.db.models import (
     CommentReaction,
     Cycle,
@@ -646,6 +647,7 @@ def update_issue_activity(
         "estimate_point": track_estimate_points,
         "archived_at": track_archive_at,
         "closed_to": track_closed_to,
+        "subtask_rollup": track_subtask_rollup,  # Neuric
         # External endpoint keys
         "parent": track_parent,
         "state": track_state,
@@ -1628,6 +1630,7 @@ def issue_activity(
 
         # Save all the values to database
         issue_activities_created = IssueActivity.objects.bulk_create(issue_activities)
+        enqueue_parent_rollup(issue if issue_id is not None else None, issue_activities_created, actor_id)  # Neuric
 
         if notification:
             notifications.delay(

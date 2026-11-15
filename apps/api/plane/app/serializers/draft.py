@@ -29,6 +29,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.subtask_rules import SubtaskRuleError, validate_issue_hierarchy
 from plane.app.permissions import ROLE
 
 
@@ -151,6 +152,10 @@ class DraftIssueCreateSerializer(BaseSerializer):
             self.initial_data.get("cycle_id"), self.initial_data.get("module_ids"), project_id, workspace_id
         )
 
+        try:  # Neuric: subtask rules
+            validate_issue_hierarchy(self.instance, attrs, "parent_id", attr_key="parent")
+        except SubtaskRuleError as err:
+            raise serializers.ValidationError(err.to_drf_error())
         return attrs
 
     @staticmethod

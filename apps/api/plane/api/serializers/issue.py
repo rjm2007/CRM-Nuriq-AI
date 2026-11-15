@@ -31,6 +31,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.subtask_rules import SubtaskRuleError, validate_issue_hierarchy
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -179,6 +180,10 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
 
+        try:  # Neuric: subtask rules
+            validate_issue_hierarchy(self.instance, data, "parent")
+        except SubtaskRuleError as err:
+            raise serializers.ValidationError(err.to_drf_error())
         return data
 
     def create(self, validated_data):

@@ -14,6 +14,7 @@ from .base import BaseAPIView
 from plane.app.permissions import ROLE
 from plane.db.models import Issue, IssueRelation
 from plane.utils.issue_search import search_issues
+from plane.utils.subtask_rules import filter_child_candidates, filter_parent_candidates
 
 
 class IssueSearchEndpoint(BaseAPIView):
@@ -127,13 +128,13 @@ class IssueSearchEndpoint(BaseAPIView):
             issues = self.search_issues_by_query(query, issues)
 
         if parent == "true" and issue_id:
-            issues = self.search_issues_and_excluding_parent(issues, issue_id)
+            issues = filter_parent_candidates(issues, issue_id)  # Neuric: one-level subtask rule
 
         if issue_relation == "true" and issue_id:
             issues = self.filter_issues_excluding_related_issues(issue_id, issues)
 
         if sub_issue == "true" and issue_id:
-            issues = self.filter_root_issues_only(issue_id, issues)
+            issues = filter_child_candidates(issues, issue_id)  # Neuric: one-level subtask rule
 
         if cycle == "true":
             issues = self.exclude_issues_in_cycles(issues)

@@ -74,6 +74,7 @@ from plane.utils.issue_filters import issue_filters
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
+from plane.utils.subtask_rules import SubtaskRuleError, completed_sub_issues_count_expr, validate_bulk_target_dates
 
 from .. import BaseAPIView, BaseViewSet
 
@@ -191,6 +192,7 @@ class IssueListEndpoint(BaseAPIView):
                 "label_ids",
                 "assignee_ids",
                 "sub_issues_count",
+                "completed_sub_issues_count",
                 "created_at",
                 "updated_at",
                 "created_by",
@@ -456,6 +458,7 @@ class IssueViewSet(BaseViewSet):
                     "label_ids",
                     "assignee_ids",
                     "sub_issues_count",
+                    "completed_sub_issues_count",
                     "created_at",
                     "updated_at",
                     "created_by",
@@ -852,6 +855,7 @@ class IssuePaginatedViewSet(BaseViewSet):
                     .values("count")
                 )
             )
+            .annotate(completed_sub_issues_count=completed_sub_issues_count_expr())  # Neuric
         )
 
     def process_paginated_result(self, fields, results, timezone):
@@ -897,6 +901,7 @@ class IssuePaginatedViewSet(BaseViewSet):
             "link_count",
             "attachment_count",
             "sub_issues_count",
+            "completed_sub_issues_count",
         ]
 
         if str(is_description_required).lower() == "true":
@@ -1136,6 +1141,10 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         issues = list(Issue.objects.filter(id__in=issue_ids, workspace__slug=slug, project_id=project_id))
         issues_dict = {str(issue.id): issue for issue in issues}
         issues_to_update = []
+        try:  # Neuric: subtask date rules for every row, before any update or activity
+            validate_bulk_target_dates(issues_dict, updates)
+        except SubtaskRuleError as err:
+            return Response(err.to_bulk_error(), status=status.HTTP_400_BAD_REQUEST)
 
         for update in updates:
             issue_id = update["id"]

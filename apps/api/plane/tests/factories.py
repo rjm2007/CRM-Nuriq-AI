@@ -6,7 +6,7 @@ import factory
 from uuid import uuid4
 from django.utils import timezone
 
-from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember, Page, ProjectPage
+from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember, Page, ProjectPage, State, Issue
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -103,3 +103,31 @@ class PageFactory(factory.django.DjangoModelFactory):
 def link_page_to_project(page, project):
     """Create the ProjectPage row linking ``page`` to ``project``."""
     return ProjectPage.objects.create(project=project, page=page, workspace_id=project.workspace_id)
+
+
+# Neuric
+class StateFactory(factory.django.DjangoModelFactory):
+    """Factory for creating State instances (``unstarted`` group by default)"""
+
+    class Meta:
+        model = State
+
+    id = factory.LazyFunction(uuid4)
+    name = factory.Sequence(lambda n: f"State {n}")
+    color = "#000000"
+    group = "unstarted"
+    project = factory.SubFactory(ProjectFactory)
+    workspace = factory.SelfAttribute("project.workspace")
+
+
+# Neuric
+class IssueFactory(factory.django.DjangoModelFactory):
+    """Factory for creating Issue instances. Pass ``state`` to pin the state."""
+
+    class Meta:
+        model = Issue
+
+    id = factory.LazyFunction(uuid4)
+    name = factory.Sequence(lambda n: f"Issue {n}")
+    project = factory.SubFactory(ProjectFactory)
+    workspace = factory.SelfAttribute("project.workspace")

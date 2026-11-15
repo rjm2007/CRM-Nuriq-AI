@@ -15,3 +15,4 @@ Request handlers by domain (issue, cycle, module, page, project, state, search, 
 ## Our changes (Neuric)
 
 - 2026-11-15: `project/base.py` `list()` `.values(...)` also returns `target_date` and `prd_page`. Retrieve/list_detail use `__all__` serializers, so they include them automatically.
+- 2026-11-15 (subtask rules): `search/issue.py` uses `filter_parent_candidates` (`parent=true`) and `filter_child_candidates` (`sub_issue=true`) from `plane/utils/subtask_rules.py`. Issue view changes: see `issue/CLAUDE.md`.

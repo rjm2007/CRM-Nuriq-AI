@@ -13,3 +13,4 @@ DRF serializers for the web-app API, one file per domain.
 ## Our changes (Neuric)
 
 - 2026-11-15: `ProjectSerializer` validates `prd_page` with `plane/utils/neuric_project.py` (same workspace, live ProjectPage link, public, not archived; unchanged value skipped; field scoped to the workspace). Rejected on create.
+- 2026-11-15 (subtask rules): `IssueCreateSerializer.validate` and `DraftIssueCreateSerializer.validate` call `validate_issue_hierarchy(..., "parent_id", attr_key="parent")`; errors are 400 with `error_code`. `completed_sub_issues_count` is not on `IssueSerializer` (list endpoints add it via `utils/grouper`).

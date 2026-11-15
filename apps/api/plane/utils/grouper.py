@@ -23,6 +23,7 @@ from plane.db.models import (
     IssueLabel,
 )
 from typing import Optional, Dict, Tuple, Any, Union, List
+from plane.utils.subtask_rules import completed_sub_issues_count_expr
 
 
 def issue_queryset_grouper(
@@ -86,6 +87,7 @@ def issue_queryset_grouper(
         if FIELD_MAPPER.get(key) in {group_by, sub_group_by}:
             continue
         default_annotations[key] = expression
+    default_annotations["completed_sub_issues_count"] = completed_sub_issues_count_expr()  # Neuric
 
     return queryset.annotate(**default_annotations)
 
@@ -118,6 +120,7 @@ def issue_on_results(
         "parent_id",
         "cycle_id",
         "sub_issues_count",
+        "completed_sub_issues_count",
         "created_at",
         "updated_at",
         "created_by",

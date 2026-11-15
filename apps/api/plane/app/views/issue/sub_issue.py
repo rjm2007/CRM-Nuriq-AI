@@ -28,6 +28,7 @@ from plane.utils.timezone_converter import user_timezone_converter
 from collections import defaultdict
 from plane.utils.host import base_host
 from plane.utils.order_queryset import order_issue_queryset
+from plane.utils.subtask_rules import SubtaskRuleError, validate_bulk_attach
 
 
 class SubIssuesEndpoint(BaseAPIView):
@@ -231,6 +232,11 @@ class SubIssuesEndpoint(BaseAPIView):
         sub_issues = Issue.issue_objects.filter(
             id__in=sub_issue_ids, workspace__slug=slug, project_id=project_id
         )
+
+        try:  # Neuric: subtask rules, all or nothing
+            validate_bulk_attach(parent_issue, sub_issues)
+        except SubtaskRuleError as err:
+            return Response(err.to_bulk_error(), status=status.HTTP_400_BAD_REQUEST)
 
         for sub_issue in sub_issues:
             sub_issue.parent = parent_issue

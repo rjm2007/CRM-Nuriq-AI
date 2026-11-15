@@ -19,3 +19,4 @@
 ## Our changes (Neuric)
 
 - 2026-11-15: `neuric_project.py` — `validate_prd_page`, `clear_prd_page_links` (called from page views when a page goes private, is archived or deleted).
+- 2026-11-15: `subtask_rules.py` — one-level subtask + due-date rules (`validate_issue_hierarchy`, `validate_bulk_attach`, `validate_bulk_target_dates`, `SubtaskRuleError` codes), search filters, and `completed_sub_issues_count_expr()` (added in `grouper.issue_queryset_grouper` + `issue_on_results`).
