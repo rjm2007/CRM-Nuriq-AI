@@ -75,7 +75,7 @@ from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.utils.subtask_rules import SubtaskRuleError, completed_sub_issues_count_expr, validate_bulk_target_dates
-from plane.utils.worklog import logged_minutes_expr, total_logged_minutes_expr  # Neuric
+from plane.utils.worklog import can_view_time, time_annotations, total_logged_minutes_expr  # Neuric
 
 from .. import BaseAPIView, BaseViewSet
 
@@ -162,7 +162,10 @@ class IssueListEndpoint(BaseAPIView):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        show_time = can_view_time(request.user, project_id, slug)  # Neuric: guests get no time data
+        issue_queryset = issue_queryset_grouper(
+            queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by, with_time_totals=show_time
+        )
 
         recent_visited_task.delay(
             slug=slug,
@@ -194,7 +197,7 @@ class IssueListEndpoint(BaseAPIView):
                 "assignee_ids",
                 "sub_issues_count",
                 "completed_sub_issues_count",
-                "total_logged_minutes",  # Neuric
+                *(("total_logged_minutes",) if show_time else ()),  # Neuric
                 "created_at",
                 "updated_at",
                 "created_by",
@@ -303,7 +306,10 @@ class IssueViewSet(BaseViewSet):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        show_time = can_view_time(request.user, project_id, slug)  # Neuric: guests get no time data
+        issue_queryset = issue_queryset_grouper(
+            queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by, with_time_totals=show_time
+        )
 
         recent_visited_task.delay(
             slug=slug,
@@ -436,11 +442,13 @@ class IssueViewSet(BaseViewSet):
             )
             queryset = self.get_queryset()
             queryset = self.apply_annotations(queryset)
+            show_time = can_view_time(request.user, project_id, slug)  # Neuric
             issue = (
                 issue_queryset_grouper(
                     queryset=queryset.filter(pk=serializer.data["id"]),
                     group_by=None,
                     sub_group_by=None,
+                    with_time_totals=show_time,  # Neuric
                 )
                 .values(
                     "id",
@@ -461,7 +469,7 @@ class IssueViewSet(BaseViewSet):
                     "assignee_ids",
                     "sub_issues_count",
                     "completed_sub_issues_count",
-                    "total_logged_minutes",  # Neuric
+                    *(("total_logged_minutes",) if show_time else ()),  # Neuric
                     "created_at",
                     "updated_at",
                     "created_by",
@@ -507,7 +515,7 @@ class IssueViewSet(BaseViewSet):
                 pk=pk,
             )
             .select_related("state")
-            .annotate(logged_minutes=logged_minutes_expr(), total_logged_minutes=total_logged_minutes_expr())  # Neuric
+            .annotate(**time_annotations(can_view_time(request.user, project_id, slug)))  # Neuric: not for guests
             .annotate(cycle_id=Subquery(CycleIssue.objects.filter(issue=OuterRef("id")).values("cycle_id")[:1]))
             .annotate(
                 link_count=Subquery(
@@ -860,7 +868,6 @@ class IssuePaginatedViewSet(BaseViewSet):
                 )
             )
             .annotate(completed_sub_issues_count=completed_sub_issues_count_expr())  # Neuric
-            .annotate(total_logged_minutes=total_logged_minutes_expr())  # Neuric
         )
 
     def process_paginated_result(self, fields, results, timezone):
@@ -907,7 +914,6 @@ class IssuePaginatedViewSet(BaseViewSet):
             "attachment_count",
             "sub_issues_count",
             "completed_sub_issues_count",
-            "total_logged_minutes",  # Neuric
         ]
 
         if str(is_description_required).lower() == "true":
@@ -931,6 +937,10 @@ class IssuePaginatedViewSet(BaseViewSet):
         if project_member.exists() and not project.guest_view_all_features:
             base_queryset = base_queryset.filter(created_by=request.user)
             queryset = queryset.filter(created_by=request.user)
+
+        if can_view_time(request.user, project_id, slug):  # Neuric: time totals for admins/members only
+            queryset = queryset.annotate(total_logged_minutes=total_logged_minutes_expr())
+            required_fields.append("total_logged_minutes")
 
         # filtering issues by greater then updated_at given by the user
         if updated_at:
@@ -1275,7 +1285,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
                 .values("count")
             )
             .filter(sequence_id=issue_identifier)
-            .annotate(logged_minutes=logged_minutes_expr(), total_logged_minutes=total_logged_minutes_expr())  # Neuric
+            .annotate(**time_annotations(can_view_time(request.user, project.id, slug)))  # Neuric: not for guests
             .annotate(
                 label_ids=Coalesce(
                     ArrayAgg(

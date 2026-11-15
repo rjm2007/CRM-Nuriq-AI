@@ -53,6 +53,7 @@ from plane.db.models import (
     WorkspaceMember,
     WorkspaceUserProperties,
 )
+from plane.utils.worklog import total_logged_minutes_for_viewer_expr, worklog_activity_visible_q  # Neuric
 from plane.utils.grouper import (
     issue_group_values,
     issue_on_results,
@@ -185,6 +186,10 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
 
         # issue queryset
         issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        # Neuric: cross-project list, so the time total is per row (NULL in projects where the viewer is a guest)
+        issue_queryset = issue_queryset.annotate(
+            total_logged_minutes=total_logged_minutes_for_viewer_expr(request.user)
+        )
 
         if group_by:
             if sub_group_by:
@@ -419,6 +424,7 @@ class WorkspaceUserActivityEndpoint(BaseAPIView):
             project__archived_at__isnull=True,
             actor=user_id,
         ).select_related("actor", "workspace", "issue", "project")
+        queryset = queryset.filter(worklog_activity_visible_q(request.user))  # Neuric: no time activity for guests
 
         if projects:
             queryset = queryset.filter(project__in=projects)

@@ -67,7 +67,7 @@ from plane.app.permissions import (
     ProjectMemberPermission,
 )
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.utils.worklog import logged_minutes_expr, total_logged_minutes_expr  # Neuric
+from plane.utils.worklog import can_view_time, time_annotations, worklog_activity_visible_q  # Neuric
 from plane.db.models import (
     Issue,
     IssueActivity,
@@ -665,8 +665,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             .order_by()
             .annotate(count=Func(F("id"), function="Count"))
             .values("count"),
-            logged_minutes=logged_minutes_expr(),  # Neuric: time tracking totals
-            total_logged_minutes=total_logged_minutes_expr(),  # Neuric
+            **time_annotations(can_view_time(request.user, project_id, slug)),  # Neuric: not for guests
         ).get(workspace__slug=slug, project_id=project_id, pk=pk)
         if guest_cannot_view_issue(request.user.id, issue, slug):
             raise Issue.DoesNotExist()
@@ -1869,6 +1868,7 @@ class IssueActivityListAPIEndpoint(BaseAPIView):
                 project__project_projectmember__is_active=True,
             )
             .filter(project__archived_at__isnull=True)
+            .filter(worklog_activity_visible_q(request.user))  # Neuric: guests see no time-entry activity
             .select_related("actor", "workspace", "issue", "project")
         ).order_by(
             sanitize_order_by(request.GET.get("order_by", "created_at"), ACTIVITY_ORDER_BY_ALLOWLIST, "created_at")
@@ -1931,6 +1931,7 @@ class IssueActivityDetailAPIEndpoint(BaseAPIView):
                     project__project_projectmember__is_active=True,
                 )
                 .filter(project__archived_at__isnull=True)
+                .filter(worklog_activity_visible_q(request.user))  # Neuric: guests see no time-entry activity
                 .select_related("actor", "workspace", "issue", "project")
             )
             .order_by(

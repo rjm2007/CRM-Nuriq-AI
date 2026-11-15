@@ -49,6 +49,7 @@ from plane.license.utils.instance_value import get_configuration_value
 from plane.bgtasks.workspace_seed_task import workspace_seed
 from plane.utils.url import contains_url
 from plane.utils.csv_utils import sanitize_csv_row
+from plane.utils.worklog import worklog_activity_visible_q  # Neuric
 
 
 class WorkSpaceViewSet(BaseViewSet):
@@ -358,7 +359,8 @@ class ExportWorkspaceUserActivityEndpoint(BaseAPIView):
             workspace__slug=slug,
             created_at__date=request.data.get("date"),
             actor_id=user_id,
-        ).select_related("actor", "workspace", "issue", "project")[:10000]
+        ).select_related("actor", "workspace", "issue", "project")
+        user_activities = user_activities.filter(worklog_activity_visible_q(request.user))[:10000]  # Neuric
 
         header = [
             "Actor name",

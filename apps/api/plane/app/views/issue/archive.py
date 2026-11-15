@@ -32,6 +32,7 @@ from plane.db.models import (
     IssueReaction,
     CycleIssue,
 )
+from plane.utils.worklog import can_view_time  # Neuric
 from plane.utils.grouper import (
     issue_group_values,
     issue_on_results,
@@ -135,7 +136,12 @@ class IssueArchiveViewSet(BaseViewSet):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        issue_queryset = issue_queryset_grouper(
+            queryset=issue_queryset,
+            group_by=group_by,
+            sub_group_by=sub_group_by,
+            with_time_totals=can_view_time(request.user, project_id, slug),  # Neuric: not for guests
+        )
 
         if group_by:
             # Check group and sub group value paginate

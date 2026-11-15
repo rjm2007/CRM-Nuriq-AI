@@ -37,6 +37,7 @@ from plane.utils.openapi import (
     create_paginated_response,
 )
 from plane.utils.worklog import (
+    NO_TIME_ACCESS,
     apply_worklog_filters,
     can_access_time_tracking,
     can_manage_worklog,
@@ -63,8 +64,6 @@ WORKLOG_FILTER_PARAMETERS = [
     OpenApiParameter(name="started_at__lt", type=OpenApiTypes.STR, description="ISO date/datetime (naive = UTC)"),
 ]
 
-NO_ACCESS = {"error": "Only project admins and members can use time tracking."}
-
 
 def worklog_docs(**kwargs):
     defaults = {
@@ -89,7 +88,7 @@ class _WorkLogBase(BaseAPIView):
     def _deny(self, request, slug, project_id):
         if can_access_time_tracking(request.user.id, slug, project_id):
             return None
-        return Response(NO_ACCESS, status=status.HTTP_403_FORBIDDEN)
+        return Response(NO_TIME_ACCESS, status=status.HTTP_403_FORBIDDEN)
 
     def _get_issue(self, slug, project_id, issue_id):
         return Issue.issue_objects.select_related("project").get(

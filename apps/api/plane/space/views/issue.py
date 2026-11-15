@@ -168,12 +168,7 @@ class ProjectIssuesPublicEndpoint(BaseAPIView):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(
-            queryset=issue_queryset,
-            group_by=group_by,
-            sub_group_by=sub_group_by,
-            with_time_totals=False,  # Neuric
-        )
+        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
 
         if group_by:
             if sub_group_by:

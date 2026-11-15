@@ -23,11 +23,13 @@ from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import Issue, IssueWorkLog
 from plane.utils.host import base_host
 from plane.utils.worklog import (
+    WORKLOG_ISSUE_LIST_CAP,
     apply_worklog_filters,
     can_manage_worklog,
     ensure_time_tracking_enabled,
     is_project_admin,
     project_worklog_queryset,
+    require_time_access,
     worklog_errors,
     worklog_summary,
 )
@@ -40,7 +42,8 @@ def _dump(data):
 class IssueWorkLogViewSet(BaseViewSet):
     """List/create time entries on one issue; edit/delete one entry.
 
-    Project ADMIN/MEMBER only (guests get 403, even on reads). Writes need
+    Project ADMIN/MEMBER only (guests get 403, even on reads; so does a workspace admin whose project
+    role is GUEST). The issue list returns at most ``WORKLOG_ISSUE_LIST_CAP`` (1000) newest entries. Writes need
     ``Project.is_time_tracking_enabled`` (403 ``TIME_TRACKING_DISABLED``); reads don't.
     """
 
@@ -59,7 +62,7 @@ class IssueWorkLogViewSet(BaseViewSet):
                 project__archived_at__isnull=True,
             )
             .select_related("user", "created_by")
-            .order_by("-started_at", "-created_at")
+            .order_by("-started_at", "-created_at", "-id")
             .distinct()
         )
 
@@ -90,12 +93,14 @@ class IssueWorkLogViewSet(BaseViewSet):
         )
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def list(self, request, slug, project_id, issue_id):
         self._get_issue(slug, project_id, issue_id)
-        serializer = IssueWorkLogSerializer(self.get_queryset(), many=True)
+        serializer = IssueWorkLogSerializer(self.get_queryset()[:WORKLOG_ISSUE_LIST_CAP], many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def create(self, request, slug, project_id, issue_id):
         issue = self._get_issue(slug, project_id, issue_id)
         ensure_time_tracking_enabled(issue.project)
@@ -112,6 +117,7 @@ class IssueWorkLogViewSet(BaseViewSet):
         return Response(data, status=status.HTTP_201_CREATED)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def partial_update(self, request, slug, project_id, issue_id, pk):
         issue = self._get_issue(slug, project_id, issue_id)
         worklog = self.get_queryset().get(pk=pk)
@@ -135,6 +141,7 @@ class IssueWorkLogViewSet(BaseViewSet):
         return Response(data, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def destroy(self, request, slug, project_id, issue_id, pk):
         issue = self._get_issue(slug, project_id, issue_id)
         worklog = self.get_queryset().get(pk=pk)
@@ -161,6 +168,7 @@ class ProjectWorkLogEndpoint(BaseAPIView):
     permission_classes = [ProjectEntityPermission]
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def get(self, request, slug, project_id):
         queryset = apply_worklog_filters(project_worklog_queryset(slug, project_id), request.GET).select_related(
             "user", "created_by"
@@ -179,6 +187,7 @@ class ProjectWorkLogSummaryEndpoint(BaseAPIView):
     permission_classes = [ProjectEntityPermission]
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @require_time_access
     def get(self, request, slug, project_id):
         queryset = apply_worklog_filters(project_worklog_queryset(slug, project_id), request.GET)
         return Response(worklog_summary(queryset), status=status.HTTP_200_OK)

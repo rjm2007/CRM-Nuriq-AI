@@ -211,3 +211,84 @@ def test_activity_rows(env):
         ("updated", "90", "100"),
         ("deleted", "100", ""),
     ]
+
+
+# --- Neuric: time data is hidden from project guests, including workspace admins with project role GUEST ---
+
+
+@pytest.fixture
+def seen(env):
+    Project.objects.filter(pk=env["project"].pk).update(guest_view_all_features=True)
+    child = IssueFactory(project=env["project"], workspace=env["workspace"], parent=env["issue"])
+    entry(env, env["member"], 30)
+    entry(env, env["member"], 45, issue=child)
+    ws_admin_guest = UserFactory()
+    WorkspaceMember.objects.create(workspace=env["workspace"], member=ws_admin_guest, role=20)
+    ProjectMember.objects.create(project=env["project"], member=ws_admin_guest, workspace=env["workspace"], role=5)
+    return {**env, "child": child, "ws_admin_guest": ws_admin_guest}
+
+
+@pytest.mark.parametrize("who", ["guest", "ws_admin_guest"])
+def test_guest_issue_detail_and_list_hide_time(seen, who):
+    client = _client(seen[who])
+    res = client.get(f"{seen['base']}/work-items/{seen['issue'].id}/")
+    assert res.status_code == status.HTTP_200_OK, res.data
+    assert "logged_minutes" not in res.data
+    assert "total_logged_minutes" not in res.data
+    res = client.get(f"{seen['base']}/work-items/")
+    assert res.status_code == status.HTTP_200_OK, res.data
+    assert res.data["results"]
+    for row in res.data["results"]:
+        assert "logged_minutes" not in row
+        assert "total_logged_minutes" not in row
+
+
+def test_member_still_sees_totals(seen):
+    client = _client(seen["member"])
+    res = client.get(f"{seen['base']}/work-items/{seen['issue'].id}/")
+    assert (res.data["logged_minutes"], res.data["total_logged_minutes"]) == (30, 75)
+
+
+def test_ws_admin_guest_worklogs_forbidden(seen):
+    own = entry(seen, seen["ws_admin_guest"])
+    client = _client(seen["ws_admin_guest"])
+    assert client.get(seen["url"]).status_code == status.HTTP_403_FORBIDDEN
+    assert client.post(seen["url"], body(), format="json").status_code == status.HTTP_403_FORBIDDEN
+    res = client.patch(f"{seen['url']}{own.id}/", {"duration_minutes": 5}, format="json")
+    assert res.status_code == status.HTTP_403_FORBIDDEN
+    assert client.delete(f"{seen['url']}{own.id}/").status_code == status.HTTP_403_FORBIDDEN
+    assert client.get(f"{seen['base']}/worklogs/").status_code == status.HTTP_403_FORBIDDEN
+    assert client.get(f"{seen['base']}/worklogs/summary/").status_code == status.HTTP_403_FORBIDDEN
+
+
+def test_guest_activity_has_no_worklog_rows(seen):
+    res = _client(seen["member"]).post(seen["url"], body(duration_minutes=20), format="json")
+    assert res.status_code == status.HTTP_201_CREATED
+    row = IssueActivity.objects.get(issue=seen["issue"], field="worklog")
+    url = f"{seen['base']}/work-items/{seen['issue'].id}/activities/"
+
+    res = _client(seen["member"]).get(url)
+    assert res.status_code == status.HTTP_200_OK
+    assert "worklog" in [r["field"] for r in res.data["results"]]
+    assert _client(seen["member"]).get(f"{url}{row.id}/").status_code == status.HTTP_200_OK
+
+    for who in ("guest", "ws_admin_guest"):
+        client = _client(seen[who])
+        res = client.get(url)
+        assert res.status_code == status.HTTP_200_OK, res.data
+        assert "worklog" not in [r["field"] for r in res.data["results"]]
+        assert client.get(f"{url}{row.id}/").status_code == status.HTTP_404_NOT_FOUND
+
+
+def test_filter_limits(env):
+    client = _client(env["member"])
+    ids = ",".join(str(uuid4()) for _ in range(101))
+    res = client.get(f"{env['base']}/worklogs/?user={ids}")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    assert res.data["error_code"] == "INVALID_WORKLOG_FILTER"
+    res = client.get(f"{env['base']}/worklogs/summary/?started_at__gte=2026-03-02&started_at__lt=2026-03-01")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    assert res.data["error_code"] == "INVALID_WORKLOG_FILTER"
+    res = client.post(env["url"], body(started_at="1999-06-01T00:00:00Z"), format="json")
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    assert "started_at" in res.data

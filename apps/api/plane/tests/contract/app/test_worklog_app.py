@@ -346,3 +346,205 @@ class TestActivity:
         assert rows[2].old_value == "120"
         assert all(row.actor_id == env["member"].id for row in rows)
         assert all(str(row.new_identifier or row.old_identifier) == str(worklog_id) for row in rows)
+
+
+# --- Neuric: time data is hidden from project guests (docs/DECISIONS.md, "Time tracking choices") ---
+
+TIME_FIELDS = ("logged_minutes", "total_logged_minutes")
+
+
+@pytest.fixture
+def seen(env):
+    """Guests may see every issue; a parent with a subtask and 30 + 45 logged minutes.
+
+    ``ws_admin_guest`` is a workspace admin whose project role is GUEST: treated as a guest.
+    """
+    Project.objects.filter(pk=env["project"].pk).update(guest_view_all_features=True)
+    child = IssueFactory(project=env["project"], workspace=env["workspace"], state=env["state"], parent=env["issue"])
+    entry(env, env["member"], 30)
+    entry(env, env["member"], 45, issue=child)
+    ws_admin_guest = UserFactory()
+    WorkspaceMember.objects.create(workspace=env["workspace"], member=ws_admin_guest, role=20)
+    ProjectMember.objects.create(project=env["project"], member=ws_admin_guest, workspace=env["workspace"], role=5)
+    return {**env, "child": child, "ws_admin_guest": ws_admin_guest}
+
+
+class TestGuestTimeHidden:
+    @pytest.mark.parametrize("who", ["guest", "ws_admin_guest"])
+    def test_detail_and_identifier(self, seen, who):
+        client = _client(seen[who])
+        for url in (
+            f"{seen['base']}/issues/{seen['issue'].id}/",
+            f"/api/workspaces/{seen['workspace'].slug}/work-items/TIME-{seen['issue'].sequence_id}/",
+        ):
+            res = client.get(url)
+            assert res.status_code == status.HTTP_200_OK, (url, res.data)
+            for field in TIME_FIELDS:
+                assert field not in res.data, (url, field)
+
+    @pytest.mark.parametrize("who", ["guest", "ws_admin_guest"])
+    @pytest.mark.parametrize("path", ["issues/", "issues/?group_by=state_id", "v2/issues/", "issues/list/"])
+    def test_issue_lists(self, seen, who, path):
+        url = f"{seen['base']}/{path}"
+        if path == "issues/list/":
+            url = f"{url}?issues={seen['issue'].id},{seen['child'].id}"
+        res = _client(seen[who]).get(url)
+        assert res.status_code == status.HTTP_200_OK, res.data
+        rows = _flatten(res.data)
+        assert {str(row["id"]) for row in rows} >= {str(seen["issue"].id), str(seen["child"].id)}
+        for row in rows:
+            assert "total_logged_minutes" not in row
+
+    def _project_lists(self, seen):
+        from plane.db.models import Cycle, CycleIssue, Module, ModuleIssue
+
+        project, workspace = seen["project"], seen["workspace"]
+        cycle = Cycle.objects.create(name="C", project=project, workspace=workspace, owned_by=seen["admin"])
+        CycleIssue.objects.create(cycle=cycle, issue=seen["issue"], project=project, workspace=workspace)
+        module = Module.objects.create(name="M", project=project, workspace=workspace)
+        ModuleIssue.objects.create(module=module, issue=seen["issue"], project=project, workspace=workspace)
+        archived = IssueFactory(project=project, workspace=workspace, state=seen["state"])
+        entry(seen, seen["member"], 15, issue=archived)
+        archived.archived_at = timezone.now()
+        archived.save()
+        return {
+            f"{seen['base']}/cycles/{cycle.id}/cycle-issues/": (seen["issue"], 75),
+            f"{seen['base']}/modules/{module.id}/issues/": (seen["issue"], 75),
+            f"{seen['base']}/archived-issues/": (archived, 15),
+        }
+
+    def test_cycle_module_archive_lists(self, seen):
+        # These lists allow project ADMIN/MEMBER (and Plane's workspace-admin bypass), so the
+        # workspace admin with project role GUEST gets the rows but no time totals.
+        for url, (issue, minutes) in self._project_lists(seen).items():
+            member_rows = {str(r["id"]): r for r in _flatten(_client(seen["member"]).get(url).data)}
+            assert member_rows[str(issue.id)]["total_logged_minutes"] == minutes, url
+            res = _client(seen["ws_admin_guest"]).get(url)
+            assert res.status_code == status.HTTP_200_OK, (url, res.data)
+            rows = _flatten(res.data)
+            assert rows, url
+            assert all("total_logged_minutes" not in row for row in rows), url
+
+    def test_workspace_profile_issues_null_for_guest_projects(self, seen):
+        from plane.db.models import Issue
+
+        Issue.objects.filter(pk=seen["issue"].pk).update(created_by=seen["member"])
+        url = f"/api/workspaces/{seen['workspace'].slug}/user-issues/{seen['member'].id}/"
+
+        def total(user):
+            res = _client(user).get(url)
+            assert res.status_code == status.HTTP_200_OK, res.data
+            return {str(r["id"]): r for r in _flatten(res.data)}[str(seen["issue"].id)]["total_logged_minutes"]
+
+        assert total(seen["member"]) == 75
+        assert total(seen["guest"]) is None
+        assert total(seen["ws_admin_guest"]) is None
+
+    def test_ws_admin_guest_has_no_worklog_access(self, seen):
+        own = entry(seen, seen["ws_admin_guest"])
+        client = _client(seen["ws_admin_guest"])
+        assert client.get(seen["url"]).status_code == status.HTTP_403_FORBIDDEN
+        assert client.post(seen["url"], body(), format="json").status_code == status.HTTP_403_FORBIDDEN
+        res = client.patch(f"{seen['url']}{own.id}/", {"duration_minutes": 5}, format="json")
+        assert res.status_code == status.HTTP_403_FORBIDDEN
+        assert client.delete(f"{seen['url']}{own.id}/").status_code == status.HTTP_403_FORBIDDEN
+        assert client.get(f"{seen['base']}/worklogs/").status_code == status.HTTP_403_FORBIDDEN
+        assert client.get(f"{seen['base']}/worklogs/summary/").status_code == status.HTTP_403_FORBIDDEN
+
+
+class TestGuestActivityHidden:
+    def _log(self, env):
+        client = _client(env["member"])
+        res = client.post(env["url"], body(duration_minutes=20), format="json")
+        assert res.status_code == status.HTTP_201_CREATED
+        assert IssueActivity.objects.filter(issue=env["issue"], field="worklog").exists()
+
+    @pytest.mark.parametrize("activity_type", ["", "?activity_type=issue-property"])
+    def test_issue_history(self, seen, activity_type):
+        self._log(seen)
+        url = f"{seen['base']}/issues/{seen['issue'].id}/history/{activity_type}"
+
+        def fields(user):
+            res = _client(user).get(url)
+            assert res.status_code == status.HTTP_200_OK, res.data
+            return [row.get("field") for row in res.data]
+
+        assert "worklog" in fields(seen["member"])
+        assert "worklog" not in fields(seen["guest"])
+        assert "worklog" not in fields(seen["ws_admin_guest"])
+
+    def test_workspace_user_activity(self, seen):
+        self._log(seen)
+        url = f"/api/workspaces/{seen['workspace'].slug}/user-activity/{seen['member'].id}/"
+
+        def fields(user):
+            res = _client(user).get(url)
+            assert res.status_code == status.HTTP_200_OK, res.data
+            return [row["field"] for row in res.data["results"]]
+
+        assert "worklog" in fields(seen["member"])
+        assert "worklog" not in fields(seen["guest"])
+
+
+class TestLimits:
+    def test_user_filter_capped_at_100(self, env):
+        from uuid import uuid4
+
+        url = f"{env['base']}/worklogs/"
+        ids = ",".join(str(uuid4()) for _ in range(101))
+        res = _client(env["member"]).get(f"{url}?user={ids}")
+        assert res.status_code == status.HTTP_400_BAD_REQUEST
+        assert res.data["error_code"] == "INVALID_WORKLOG_FILTER"
+        ids = ",".join(str(uuid4()) for _ in range(100))
+        assert _client(env["member"]).get(f"{url}?user={ids}").status_code == status.HTTP_200_OK
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "started_at__gte=2026-03-02&started_at__lt=2026-03-02",
+            "started_at__gte=2026-03-03&started_at__lt=2026-03-02",
+        ],
+    )
+    def test_empty_range_rejected(self, env, query):
+        for suffix in ("worklogs/", "worklogs/summary/"):
+            res = _client(env["member"]).get(f"{env['base']}/{suffix}?{query}")
+            assert res.status_code == status.HTTP_400_BAD_REQUEST
+            assert res.data["error_code"] == "INVALID_WORKLOG_FILTER"
+
+    def test_started_at_before_2000_rejected(self, env):
+        res = _client(env["member"]).post(env["url"], body(started_at="1999-12-31T23:59:59Z"), format="json")
+        assert res.status_code == status.HTTP_400_BAD_REQUEST
+        assert "started_at" in res.data
+        res = _client(env["member"]).post(env["url"], body(started_at="2000-01-01T00:00:00Z"), format="json")
+        assert res.status_code == status.HTTP_201_CREATED, res.data
+
+    def test_issue_list_capped(self, env, monkeypatch):
+        monkeypatch.setattr("plane.app.views.issue.worklog.WORKLOG_ISSUE_LIST_CAP", 2)
+        for _ in range(3):
+            entry(env, env["member"])
+        res = _client(env["member"]).get(env["url"])
+        assert res.status_code == status.HTTP_200_OK
+        assert len(res.data) == 2
+
+    def test_archived_project_lists_empty(self, env):
+        entry(env, env["member"], 30)
+        Project.objects.filter(pk=env["project"].pk).update(archived_at=timezone.now())
+        client = _client(env["member"])
+        res = client.get(f"{env['base']}/worklogs/")
+        assert res.status_code == status.HTTP_200_OK
+        assert res.data["results"] == []
+        res = client.get(f"{env['base']}/worklogs/summary/")
+        assert res.status_code == status.HTTP_200_OK
+        assert res.data["total_minutes"] == 0
+
+    def test_totals_skip_deleted_subtasks(self, env):
+        child = IssueFactory(
+            project=env["project"], workspace=env["workspace"], state=env["state"], parent=env["issue"]
+        )
+        entry(env, env["member"], 30)
+        entry(env, env["member"], 45, issue=child)
+        child.delete()
+        res = _client(env["member"]).get(f"{env['base']}/issues/{env['issue'].id}/")
+        assert res.data["total_logged_minutes"] == 30
+        res = _client(env["member"]).get(f"{env['base']}/worklogs/?issue={env['issue'].id}&include_subtasks=true")
+        assert len(res.data["results"]) == 1

@@ -28,7 +28,9 @@ class IssueWorkLogSerializer(BaseSerializer):
     project = serializers.UUIDField(source="project_id", read_only=True)
     workspace = serializers.UUIDField(source="workspace_id", read_only=True)
     user = serializers.UUIDField(source="user_id", required=False, help_text="Whose time this is (defaults to you)")
-    started_at = serializers.DateTimeField(validators=[validate_started_at], help_text="At most 24h in the future")
+    started_at = serializers.DateTimeField(
+        validators=[validate_started_at], help_text="Not before 2000-01-01; at most 24h in the future"
+    )
     duration_minutes = serializers.IntegerField(min_value=WORKLOG_MIN_MINUTES, max_value=WORKLOG_MAX_MINUTES)
     note = serializers.CharField(
         max_length=WORKLOG_MAX_NOTE_LENGTH, allow_blank=True, required=False, trim_whitespace=True

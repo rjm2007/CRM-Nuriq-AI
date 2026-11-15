@@ -19,6 +19,7 @@ from .. import BaseAPIView
 from .relation import issue_in_project
 from plane.app.serializers import IssueActivitySerializer, IssueCommentSerializer
 from plane.app.permissions import ProjectEntityPermission, allow_permission, issue_hidden_from_guest, ROLE
+from plane.utils.worklog import can_view_time  # Neuric
 from plane.db.models import IssueActivity, IssueComment, CommentReaction, IntakeIssue
 
 
@@ -58,6 +59,8 @@ class IssueActivityEndpoint(BaseAPIView):
             .filter(**filters)
             .select_related("actor", "workspace", "issue", "project")
         ).order_by("created_at")
+        if not can_view_time(request.user, project_id, slug):  # Neuric: guests see no time-entry activity
+            issue_activities = issue_activities.exclude(field="worklog")
         issue_comments = (
             IssueComment.objects.filter(issue_id=issue_id)
             .filter(

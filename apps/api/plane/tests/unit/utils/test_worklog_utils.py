@@ -160,14 +160,55 @@ def test_no_extra_query_per_issue(env, django_assert_num_queries):
         list(Issue.issue_objects.filter(project=env["project"]).annotate(total=total_logged_minutes_expr()))
 
 
-def test_grouper_time_totals_opt_out_for_share_links(env):
+def test_grouper_time_totals_are_opt_in(env):
     from plane.utils.grouper import issue_queryset_grouper
 
     log(env, env["parent"], 10)
     qs = Issue.issue_objects.filter(pk=env["parent"].pk)
-    grouped = issue_queryset_grouper(qs, None, None)
+    # Off by default (guests, new callers); views pass with_time_totals=can_view_time(...)
+    assert "total_logged_minutes" not in issue_queryset_grouper(qs, None, None).query.annotations
+    grouped = issue_queryset_grouper(qs, None, None, with_time_totals=True)
     assert grouped.values_list("total_logged_minutes", flat=True).get() == 10
-    # space (public share links) passes with_time_totals=False; issue_on_results then omits the field
-    assert (
-        "total_logged_minutes" not in issue_queryset_grouper(qs, None, None, with_time_totals=False).query.annotations
+
+
+@pytest.mark.parametrize(
+    ("workspace_role", "project_role", "active", "expected"),
+    [
+        (20, 20, True, True),
+        (15, 15, True, True),
+        (15, 5, True, False),
+        (20, 5, True, False),  # workspace admin who is a project guest: no time data
+        (15, 15, False, False),
+    ],
+)
+def test_can_view_time(env, workspace_role, project_role, active, expected):
+    from plane.db.models import WorkspaceMember
+    from plane.utils.worklog import can_access_time_tracking, can_view_time
+
+    user = UserFactory()
+    WorkspaceMember.objects.create(workspace=env["workspace"], member=user, role=workspace_role)
+    ProjectMember.objects.create(
+        project=env["project"], member=user, workspace=env["workspace"], role=project_role, is_active=active
     )
+    slug = env["workspace"].slug
+    assert can_view_time(user, env["project"].id, slug) is expected
+    assert can_view_time(user.id, env["project"].id, slug) is expected
+    assert can_access_time_tracking(user.id, slug, env["project"].id) is expected
+
+
+def test_can_view_time_non_member(env):
+    from plane.utils.worklog import can_view_time
+
+    assert can_view_time(UserFactory(), env["project"].id, env["workspace"].slug) is False
+
+
+def test_viewer_total_is_null_outside_member_projects(env):
+    from plane.utils.worklog import total_logged_minutes_for_viewer_expr
+
+    log(env, env["parent"], 10)
+    guest = UserFactory()
+    ProjectMember.objects.create(project=env["project"], member=guest, workspace=env["workspace"], role=5)
+    qs = Issue.issue_objects.filter(pk=env["parent"].pk)
+    for user, expected in ((env["user"], 10), (guest, None)):
+        value = qs.annotate(t=total_logged_minutes_for_viewer_expr(user)).values_list("t", flat=True).get()
+        assert value == expected

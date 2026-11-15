@@ -31,7 +31,7 @@ def issue_queryset_grouper(
     queryset: QuerySet[Issue],
     group_by: Optional[str],
     sub_group_by: Optional[str],
-    with_time_totals: bool = True,  # Neuric: False on public share links (space)
+    with_time_totals: bool = False,  # Neuric: True only when the viewer may see time (utils.worklog.can_view_time)
 ) -> QuerySet[Issue]:
     FIELD_MAPPER: Dict[str, str] = {
         "label_ids": "labels__id",
