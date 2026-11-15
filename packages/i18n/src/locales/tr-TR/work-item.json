@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Bu projede süre takibi kapalı.",
       "invalid_worklog_user": "Süre yalnızca aktif proje yöneticileri veya üyeleri için kaydedilebilir.",
-      "forbidden": "Yalnızca kendi süre kayıtlarınızı değiştirebilirsiniz."
+      "forbidden": "Yalnızca kendi süre kayıtlarınızı değiştirebilirsiniz.",
+      "not_found": "Bu zaman kaydı artık mevcut değil. Liste yenilendi.",
+      "load_failed": "Zaman kayıtları yüklenemedi."
     },
     "activity": {
       "created": "{duration} süre kaydetti",
+      "created_for": "{name} için {duration} zaman kaydetti",
       "updated": "bir süre kaydını {from} değerinden {to} değerine değiştirdi",
       "updated_same": "{duration} süresindeki bir kaydı güncelledi",
       "deleted": "{duration} süresindeki bir kaydı kaldırdı"

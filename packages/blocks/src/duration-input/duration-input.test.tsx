@@ -52,18 +52,40 @@ describe("DurationInput", () => {
     expect((input() as HTMLInputElement).value).toBe("1h 30m");
   });
 
-  it("commits on Enter without submitting the surrounding form", async () => {
-    const onValue = vi.fn();
+  it("commits on Enter and then submits the surrounding form with the new value", async () => {
+    const onSubmitValue = vi.fn();
+    function FormHarness() {
+      const [value, setValue] = useState<number | undefined>(undefined);
+      return (
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            onSubmitValue(value);
+          }}
+        >
+          <DurationInput id="duration" label="Duration" invalidMessage={INVALID} value={value} onChange={setValue} />
+        </form>
+      );
+    }
+    render(<FormHarness />);
+    const user = userEvent.setup();
+    await user.type(input(), "1.5h{Enter}");
+    await vi.waitFor(() => expect(onSubmitValue).toHaveBeenCalledTimes(1));
+    expect(onSubmitValue).toHaveBeenLastCalledWith(90);
+  });
+
+  it("does not submit the form on Enter when the text is invalid", async () => {
     const onSubmit = vi.fn((event: React.FormEvent) => event.preventDefault());
     render(
       <form onSubmit={onSubmit}>
-        <Controlled onValue={onValue} />
+        <Controlled />
       </form>
     );
     const user = userEvent.setup();
-    await user.type(input(), "1.5h{Enter}");
-    expect(onValue).toHaveBeenLastCalledWith(90);
+    await user.type(input(), "abc{Enter}");
+    await Promise.resolve();
     expect(onSubmit).not.toHaveBeenCalled();
+    expect(input().getAttribute("aria-invalid")).toBe("true");
   });
 
   it("shows an inline error with aria-invalid for text it can't parse, and emits undefined", async () => {

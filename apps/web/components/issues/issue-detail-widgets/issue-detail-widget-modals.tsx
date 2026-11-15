@@ -53,7 +53,7 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
   const subIssueOperations = useSubIssueOperations(issueServiceType);
   const handleLinkOperations = useLinkOperations(workspaceSlug, projectId, issueId, issueServiceType);
   const workLogOperations = useWorkLogOperations(workspaceSlug, projectId, issueId);
-  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType, issueId);
   const shouldRenderWorkLogModals =
     !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 

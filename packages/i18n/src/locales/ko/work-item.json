@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "이 프로젝트에서는 시간 추적이 꺼져 있습니다.",
       "invalid_worklog_user": "활성 프로젝트 관리자 또는 멤버에 대해서만 시간을 기록할 수 있습니다.",
-      "forbidden": "본인의 시간 항목만 변경할 수 있습니다."
+      "forbidden": "본인의 시간 항목만 변경할 수 있습니다.",
+      "not_found": "이 시간 기록은 더 이상 존재하지 않습니다. 목록을 새로 고쳤습니다.",
+      "load_failed": "시간 기록을 불러올 수 없습니다."
     },
     "activity": {
       "created": "{duration} 시간 항목을 기록했습니다",
+      "created_for": "{name}님의 시간 {duration}을(를) 기록했습니다",
       "updated": "시간 항목을 {from}에서 {to}(으)로 변경했습니다",
       "updated_same": "{duration} 시간 항목을 업데이트했습니다",
       "deleted": "{duration} 시간 항목을 삭제했습니다"

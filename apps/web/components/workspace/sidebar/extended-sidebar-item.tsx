@@ -139,12 +139,11 @@ export const ExtendedSidebarItem = observer(function ExtendedSidebarItem(props: 
     );
   }, [isLastChild, handleOnNavigationItemDrop, disableDrag, disableDrop, item.key]);
 
-  // Neuric: "My Tasks" opens the assigned tab
-  const itemHref =
-    item.key === "your_work"
-      ? `/${workspaceSlug.toString()}${item.href}${data?.id}/assigned`
-      : `/${workspaceSlug.toString()}${item.href}`;
-  const isActive = itemHref === pathname;
+  // Neuric: "My Tasks" opens the assigned tab and stays active on every tab of the user's profile
+  const isYourWork = item.key === "your_work";
+  const profileHref = isYourWork && data?.id ? `/${workspaceSlug.toString()}${item.href}${data.id}/` : undefined;
+  const itemHref = profileHref ? `${profileHref}assigned` : `/${workspaceSlug.toString()}${item.href}`;
+  const isActive = profileHref ? pathname.startsWith(profileHref) : itemHref === pathname;
 
   const pinNavigationItem = (key: string) => {
     toggleWorkspaceItem(key, true);
@@ -159,6 +158,8 @@ export const ExtendedSidebarItem = observer(function ExtendedSidebarItem(props: 
   if (!allowPermissions(item.access as any, EUserPermissionsLevel.WORKSPACE, workspaceSlug.toString())) {
     return null;
   }
+  // Neuric: no "/profile/undefined/assigned" link while the user is still loading
+  if (isYourWork && !profileHref) return null;
 
   return (
     <div

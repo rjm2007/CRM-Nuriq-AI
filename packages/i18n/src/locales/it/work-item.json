@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Il monitoraggio del tempo è disattivato per questo progetto.",
       "invalid_worklog_user": "Il tempo può essere registrato solo per amministratori o membri attivi del progetto.",
-      "forbidden": "Può modificare solo le proprie registrazioni del tempo."
+      "forbidden": "Può modificare solo le proprie registrazioni del tempo.",
+      "not_found": "Questa voce di tempo non esiste più. L'elenco è stato aggiornato.",
+      "load_failed": "Impossibile caricare le voci di tempo."
     },
     "activity": {
       "created": "ha registrato {duration} di tempo",
+      "created_for": "ha registrato una voce di tempo di {duration} per {name}",
       "updated": "ha modificato una registrazione del tempo da {from} a {to}",
       "updated_same": "ha aggiornato una registrazione di {duration}",
       "deleted": "ha rimosso una registrazione di {duration}"

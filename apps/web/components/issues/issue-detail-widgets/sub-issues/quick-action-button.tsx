@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import React from "react";
+import React, { cloneElement } from "react";
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
@@ -92,7 +92,11 @@ export const SubIssuesActionButton = observer(function SubIssuesActionButton(pro
       {customButton ? (
         <MenuTrigger
           disabled={isTriggerDisabled}
-          render={customButton}
+          // Base UI lets the render element's own props win, so the toolbar button's `disabled` must
+          // be set on the element itself or it keeps its enabled look (data-disabled styling).
+          render={cloneElement(customButton as React.ReactElement<{ disabled?: boolean }>, {
+            disabled: isTriggerDisabled,
+          })}
           onClick={handleTriggerClick}
           onKeyDown={handleTriggerKeyDown}
         />

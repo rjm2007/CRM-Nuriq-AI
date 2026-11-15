@@ -60,7 +60,8 @@ const IssueWorkLogItem = observer(function IssueWorkLogItem(props: ItemProps) {
         <div className="flex min-w-0 items-center gap-2 text-body-xs-medium text-primary">
           <span className="truncate">{name}</span>
           <span className="shrink-0 text-caption-sm-regular text-tertiary">
-            {renderFormattedDate(entry.started_at)}
+            {/* a Date, not the ISO string, so this is the same local day the modal shows */}
+            {renderFormattedDate(new Date(entry.started_at))}
           </span>
         </div>
         {entry.note && (

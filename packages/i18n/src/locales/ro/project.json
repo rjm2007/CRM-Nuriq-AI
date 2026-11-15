@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Alegeți membrii spațiului de lucru pentru acest proiect. Puteți sări peste acest pas și îi puteți adăuga mai târziu din setările proiectului.",
       "skip": "Omite",
+      "members_added": "Membrii au fost adăugați la proiect."
+    },
+    "member_form": {
       "select_role": "Selectați rolul",
       "member_required": "Selectați un membru",
-      "role_required": "Selectați un rol",
-      "members_added": "Membrii au fost adăugați la proiect."
+      "role_required": "Selectați un rol"
     }
   }
 }

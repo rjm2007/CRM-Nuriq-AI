@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Kies werkruimteleden voor dit project. Je kunt deze stap overslaan en ze later toevoegen in de projectinstellingen.",
       "skip": "Overslaan",
+      "members_added": "Leden toegevoegd aan het project."
+    },
+    "member_form": {
       "select_role": "Rol selecteren",
       "member_required": "Selecteer een lid",
-      "role_required": "Selecteer een rol",
-      "members_added": "Leden toegevoegd aan het project."
+      "role_required": "Selecteer een rol"
     }
   }
 }

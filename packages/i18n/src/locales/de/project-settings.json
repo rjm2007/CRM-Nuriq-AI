@@ -419,9 +419,9 @@
       "time_tracking": {
         "title": "Zeiterfassung",
         "short_title": "Zeiterfassung",
-        "description": "Erfassen Sie die für Arbeitselemente und Projekte aufgewendete Zeit.",
+        "description": "Erfassen Sie die auf Arbeitselemente und Projekte verwendete Zeit.",
         "toggle_title": "Zeiterfassung aktivieren",
-        "toggle_description": "Projektmitglieder können die geleistete Arbeit protokollieren."
+        "toggle_description": "Projektadmins und -mitglieder können Zeit auf Arbeitselementen erfassen."
       },
       "milestones": {
         "title": "Meilensteine",

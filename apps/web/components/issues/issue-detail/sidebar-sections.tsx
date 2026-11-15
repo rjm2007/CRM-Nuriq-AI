@@ -23,6 +23,7 @@ import { calculateTimeAgo, cn, renderFormattedDate } from "@plane/utils";
 // components
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
+import { useWorkLogPermissions } from "@/components/issues/issue-detail-widgets/time/helper";
 import { IssueWorkLogTotal } from "@/components/issues/issue-detail-widgets/time/title";
 import { IssueParentSelectRoot } from "@/components/issues/parent-select-root";
 // hooks
@@ -66,6 +67,8 @@ export const IssueDetailSidebarSections = observer(function IssueDetailSidebarSe
     issue: { getIssueById },
   } = useIssueDetail();
   const { getUserDetails } = useMember();
+  // Neuric: time tracking total for project ADMIN/MEMBER only (guests get no totals from the API)
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId);
   // derived values
   const issue = getIssueById(issueId);
   if (!issue) return null;
@@ -145,8 +148,8 @@ export const IssueDetailSidebarSections = observer(function IssueDetailSidebarSe
             </SidebarPropertyListItem>
           )}
 
-          {/* Neuric: time tracking total (own + sub-work items), behind the project flag */}
-          {projectDetails?.is_time_tracking_enabled && (
+          {/* Neuric: time tracking total (own + sub-work items), behind the project flag, hidden from guests */}
+          {projectDetails?.is_time_tracking_enabled && workLogPermissions.canLog && (
             <SidebarPropertyListItem icon={TimeTrackingOutline} label={t("work_log.title")}>
               <div className="flex h-8 w-full grow items-center px-2">
                 <IssueWorkLogTotal issueId={issueId} testId="sidebar-work-log-total" />

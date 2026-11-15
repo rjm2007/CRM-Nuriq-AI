@@ -37,10 +37,14 @@ export const formatWorkLogDuration = (minutes: number | null | undefined): strin
 };
 
 const NUMBER = String.raw`(\d+(?:[.,]\d+)?)`;
+// Minutes are whole numbers ("1h 30m"); a decimal belongs on the hours ("1.5h").
+const WHOLE_NUMBER = String.raw`(\d+)`;
 const HOURS_UNIT = String.raw`h(?:ours?|rs?)?`;
 const MINUTES_UNIT = String.raw`m(?:in(?:ute)?s?)?`;
 // "1h 30m", "1h30", "1.5h", "90m", "2 hours 5 mins"
-const UNIT_PATTERN = new RegExp(String.raw`^(?:${NUMBER}\s*${HOURS_UNIT})?\s*(?:${NUMBER}\s*(?:${MINUTES_UNIT})?)?$`);
+const UNIT_PATTERN = new RegExp(
+  String.raw`^(?:${NUMBER}\s*${HOURS_UNIT})?\s*(?:${WHOLE_NUMBER}\s*(?:${MINUTES_UNIT})?)?$`
+);
 const CLOCK_PATTERN = /^(\d+):([0-5]\d)$/;
 const PLAIN_MINUTES_PATTERN = /^\d+$/;
 
@@ -49,7 +53,8 @@ const toNumber = (value: string) => Number(value.replace(",", "."));
 /**
  * Parses what people type into a duration field, in minutes (rounded to the nearest minute).
  * Accepts "1h 30m", "1h30", "1:30", "90m", "1.5h", "1,5h" and a bare whole number of minutes ("90").
- * Returns `undefined` for anything else (empty, "abc", "1:75", "1.5" without a unit...).
+ * Returns `undefined` for anything else (empty, "abc", "1:75", "1.5" without a unit, decimal minutes
+ * like "90.5m", or 60+ minutes next to hours like "1h 90m").
  * The range (1..1440) is checked by the caller, see `isValidWorkLogDuration`.
  */
 export const parseWorkLogDuration = (input: string | null | undefined): number | undefined => {
@@ -69,7 +74,9 @@ export const parseWorkLogDuration = (input: string | null | undefined): number |
   // lone decimal without a unit ("1.5") lands here with no hours part and is rejected.
   if (hoursText === undefined && !/m/.test(text)) return undefined;
   const hours = hoursText ? toNumber(hoursText) : 0;
-  const minutes = minutesText ? toNumber(minutesText) : 0;
+  const minutes = minutesText ? Number(minutesText) : 0;
+  // "1h 90m" is a typo, not 2h 30m: next to hours, minutes stay below 60.
+  if (hoursText !== undefined && minutes >= 60) return undefined;
   const total = Math.round(hours * 60 + minutes);
   return Number.isFinite(total) ? total : undefined;
 };

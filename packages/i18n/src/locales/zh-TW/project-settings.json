@@ -419,9 +419,9 @@
       "time_tracking": {
         "title": "時間追蹤",
         "short_title": "時間追蹤",
-        "description": "記錄在工作項目和專案上花費的時間。",
+        "description": "記錄在工作事項和專案上花費的時間。",
         "toggle_title": "啟用時間追蹤",
-        "toggle_description": "專案成員將能夠記錄工作時間。"
+        "toggle_description": "專案管理員和成員可以在工作事項上記錄時間。"
       },
       "milestones": {
         "title": "里程碑",

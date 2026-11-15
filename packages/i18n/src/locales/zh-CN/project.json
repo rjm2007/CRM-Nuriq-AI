@@ -427,10 +427,12 @@
     "members_step": {
       "description": "为此项目选择工作区成员。您可以跳过此步骤，稍后在项目设置中添加。",
       "skip": "跳过",
+      "members_added": "已将成员添加到项目。"
+    },
+    "member_form": {
       "select_role": "选择角色",
       "member_required": "请选择成员",
-      "role_required": "请选择角色",
-      "members_added": "已将成员添加到项目。"
+      "role_required": "请选择角色"
     }
   }
 }

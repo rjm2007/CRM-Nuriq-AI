@@ -427,10 +427,12 @@
     "members_step": {
       "description": "為此專案選擇工作區成員。您可以跳過此步驟，稍後在專案設定中新增。",
       "skip": "略過",
+      "members_added": "已將成員新增至專案。"
+    },
+    "member_form": {
       "select_role": "選擇角色",
       "member_required": "請選擇成員",
-      "role_required": "請選擇角色",
-      "members_added": "已將成員新增至專案。"
+      "role_required": "請選擇角色"
     }
   }
 }

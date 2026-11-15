@@ -35,3 +35,4 @@ Parent: `../CLAUDE.md`.
 ## Our changes (Neuric)
 
 - Our changes (Neuric) 2026-11-15, time tracking: `issue/issue_worklog.service.ts` (`IssueWorkLogService`: issue list/create/update/remove under `.../issues/<id>/worklogs/`, `listProjectWorkLogs` (paginated) and `getProjectSummary` under `.../projects/<id>/worklogs/`), exported from `issue/index.ts`.
+- Our changes (Neuric) 2026-11-16: `issue/issue_worklog.service.ts` errors are `{ ...body, status }` (HTTP status passed through for the toast mapping).

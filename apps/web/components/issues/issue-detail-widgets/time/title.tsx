@@ -38,19 +38,23 @@ export const IssueWorkLogTotal = observer(function IssueWorkLogTotal(props: Prop
     t("work_log.including_sub_work_items", { duration: formatWorkLogDuration(total) }),
   ].join(" · ");
 
+  const shown = formatWorkLogDuration(total);
+
+  // A real button is the tooltip trigger, so keyboard users reach it; the sr-only text gives the
+  // full split as its name (the visible "1h 30m" alone would be ambiguous).
   return (
     <Tooltip label={tooltip} layout="stacked">
-      <span
-        tabIndex={0}
-        aria-label={tooltip}
+      <button
+        type="button"
         className={cn(
-          "rounded-sm text-caption-md-medium text-secondary outline-none focus-visible:ring-2 focus-visible:ring-accent-strong",
+          "cursor-default rounded-sm text-caption-md-medium text-secondary outline-none focus-visible:ring-2 focus-visible:ring-accent-strong",
           className
         )}
         data-testid={testId}
       >
-        {formatWorkLogDuration(total)}
-      </span>
+        <span aria-hidden="true">{shown}</span>
+        <span className="sr-only">{`${t("work_log.title")}: ${shown}. ${tooltip}`}</span>
+      </button>
     </Tooltip>
   );
 });

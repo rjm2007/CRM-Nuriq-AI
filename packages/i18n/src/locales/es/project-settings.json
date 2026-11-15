@@ -420,8 +420,8 @@
         "title": "Seguimiento de tiempo",
         "short_title": "Seguimiento de tiempo",
         "description": "Registra el tiempo dedicado a elementos de trabajo y proyectos.",
-        "toggle_title": "Habilitar seguimiento de tiempo",
-        "toggle_description": "Los miembros del proyecto podrán registrar el tiempo trabajado."
+        "toggle_title": "Activar seguimiento de tiempo",
+        "toggle_description": "Los administradores y miembros del proyecto pueden registrar tiempo en los elementos de trabajo."
       },
       "milestones": {
         "title": "Hitos",

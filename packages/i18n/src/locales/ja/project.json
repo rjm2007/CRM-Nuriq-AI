@@ -427,10 +427,12 @@
     "members_step": {
       "description": "このプロジェクトに参加するワークスペースのメンバーを選択してください。この手順はスキップして、後でプロジェクト設定から追加することもできます。",
       "skip": "スキップ",
+      "members_added": "メンバーをプロジェクトに追加しました。"
+    },
+    "member_form": {
       "select_role": "役割を選択",
       "member_required": "メンバーを選択してください",
-      "role_required": "役割を選択してください",
-      "members_added": "メンバーをプロジェクトに追加しました。"
+      "role_required": "役割を選択してください"
     }
   }
 }

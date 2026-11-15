@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Time tracking is turned off for this project.",
       "invalid_worklog_user": "Time can only be logged for active project admins or members.",
-      "forbidden": "You can only change your own time entries."
+      "forbidden": "You can only change your own time entries.",
+      "not_found": "This time entry no longer exists. The list has been refreshed.",
+      "load_failed": "Couldn't load time entries."
     },
     "activity": {
       "created": "logged a time entry of {duration}",
+      "created_for": "logged a time entry of {duration} for {name}",
       "updated": "updated a time entry from {from} to {to}",
       "updated_same": "updated a time entry of {duration}",
       "deleted": "removed a time entry of {duration}"

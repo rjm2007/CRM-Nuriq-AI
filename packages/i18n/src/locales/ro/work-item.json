@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Urmărirea timpului este dezactivată pentru acest proiect.",
       "invalid_worklog_user": "Timpul poate fi înregistrat doar pentru administratori sau membri activi ai proiectului.",
-      "forbidden": "Puteți modifica doar propriile înregistrări de timp."
+      "forbidden": "Puteți modifica doar propriile înregistrări de timp.",
+      "not_found": "Această înregistrare de timp nu mai există. Lista a fost actualizată.",
+      "load_failed": "Înregistrările de timp nu au putut fi încărcate."
     },
     "activity": {
       "created": "a înregistrat {duration} de timp",
+      "created_for": "a înregistrat {duration} de timp pentru {name}",
       "updated": "a modificat o înregistrare de timp de la {from} la {to}",
       "updated_same": "a actualizat o înregistrare de timp de {duration}",
       "deleted": "a eliminat o înregistrare de timp de {duration}"

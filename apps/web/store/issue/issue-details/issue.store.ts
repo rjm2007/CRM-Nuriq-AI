@@ -103,6 +103,7 @@ export class IssueStore implements IIssueStore {
     if (issue && issue?.parent && issue?.parent?.id && issue?.parent?.project_id) {
       this.issueService.retrieve(workspaceSlug, issue.parent.project_id, issue?.parent?.id).then((res) => {
         this.rootIssueDetailStore.rootIssueStore.issues.addIssue([res]);
+        return res;
       });
     }
     // assignees
@@ -171,6 +172,10 @@ export class IssueStore implements IIssueStore {
       is_subscribed: issue?.is_subscribed,
       is_epic: issue?.is_epic,
     };
+    // Neuric: time tracking totals. Copied only when the API sent them (guests and lists without the
+    // annotation get none), so a fresh detail fetch replaces older values and never blanks them.
+    if (typeof issue?.logged_minutes === "number") issuePayload.logged_minutes = issue.logged_minutes;
+    if (typeof issue?.total_logged_minutes === "number") issuePayload.total_logged_minutes = issue.total_logged_minutes;
 
     this.rootIssueDetailStore.rootIssueStore.issues.addIssue([issuePayload]);
     this.fetchingIssueDetails = undefined;
@@ -288,6 +293,7 @@ export class IssueStore implements IIssueStore {
     if (issue?.parent && issue?.parent?.id && issue?.parent?.project_id) {
       this.issueService.retrieve(workspaceSlug, issue.parent.project_id, issue.parent.id).then((res) => {
         this.rootIssueDetailStore.rootIssueStore.issues.addIssue([res]);
+        return res;
       });
     }
 

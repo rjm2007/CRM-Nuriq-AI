@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "Urmărire timp",
-        "short_title": "Urmărire timp",
-        "description": "Înregistrați timpul petrecut pe elemente de lucru și proiecte.",
-        "toggle_title": "Activați urmărirea timpului",
-        "toggle_description": "Membrii proiectului vor putea înregistra timpul lucrat."
+        "title": "Monitorizare timp",
+        "short_title": "Monitorizare timp",
+        "description": "Înregistrează timpul petrecut pe activități și proiecte.",
+        "toggle_title": "Activează monitorizarea timpului",
+        "toggle_description": "Administratorii și membrii proiectului pot înregistra timp pe activități."
       },
       "milestones": {
         "title": "Etape importante",

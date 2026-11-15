@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Pick workspace members for this project. You can skip this step and add them later in project settings.",
       "skip": "Skip",
+      "members_added": "Members added to the project."
+    },
+    "member_form": {
       "select_role": "Select role",
       "member_required": "Select a member",
-      "role_required": "Select a role",
-      "members_added": "Members added to the project."
+      "role_required": "Select a role"
     }
   }
 }

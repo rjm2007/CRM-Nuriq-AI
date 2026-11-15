@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Wählen Sie Mitglieder des Arbeitsbereichs für dieses Projekt aus. Sie können diesen Schritt überspringen und sie später in den Projekteinstellungen hinzufügen.",
       "skip": "Überspringen",
+      "members_added": "Mitglieder wurden dem Projekt hinzugefügt."
+    },
+    "member_form": {
       "select_role": "Rolle auswählen",
       "member_required": "Mitglied auswählen",
-      "role_required": "Rolle auswählen",
-      "members_added": "Mitglieder wurden dem Projekt hinzugefügt."
+      "role_required": "Rolle auswählen"
     }
   }
 }

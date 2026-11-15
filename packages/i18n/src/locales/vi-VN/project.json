@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Chọn thành viên không gian làm việc cho dự án này. Bạn có thể bỏ qua bước này và thêm họ sau trong cài đặt dự án.",
       "skip": "Bỏ qua",
+      "members_added": "Đã thêm thành viên vào dự án."
+    },
+    "member_form": {
       "select_role": "Chọn vai trò",
       "member_required": "Chọn một thành viên",
-      "role_required": "Chọn một vai trò",
-      "members_added": "Đã thêm thành viên vào dự án."
+      "role_required": "Chọn một vai trò"
     }
   }
 }

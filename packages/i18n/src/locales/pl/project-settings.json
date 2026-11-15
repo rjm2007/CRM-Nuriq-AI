@@ -419,9 +419,9 @@
       "time_tracking": {
         "title": "Śledzenie czasu",
         "short_title": "Śledzenie czasu",
-        "description": "Rejestruj czas spędzony nad elementami pracy i projektami.",
+        "description": "Rejestruj czas spędzony na elementach pracy i projektach.",
         "toggle_title": "Włącz śledzenie czasu",
-        "toggle_description": "Członkowie projektu będą mogli rejestrować przepracowany czas."
+        "toggle_description": "Administratorzy i członkowie projektu mogą rejestrować czas w elementach pracy."
       },
       "milestones": {
         "title": "Kamienie milowe",

@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Pelacakan waktu dinonaktifkan untuk proyek ini.",
       "invalid_worklog_user": "Waktu hanya dapat dicatat untuk admin atau anggota proyek yang aktif.",
-      "forbidden": "Anda hanya dapat mengubah entri waktu Anda sendiri."
+      "forbidden": "Anda hanya dapat mengubah entri waktu Anda sendiri.",
+      "not_found": "Entri waktu ini sudah tidak ada. Daftar telah diperbarui.",
+      "load_failed": "Tidak dapat memuat entri waktu."
     },
     "activity": {
       "created": "mencatat entri waktu {duration}",
+      "created_for": "mencatat entri waktu {duration} untuk {name}",
       "updated": "mengubah entri waktu dari {from} menjadi {to}",
       "updated_same": "memperbarui entri waktu {duration}",
       "deleted": "menghapus entri waktu {duration}"

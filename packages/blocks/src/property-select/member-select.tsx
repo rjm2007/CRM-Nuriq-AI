@@ -112,6 +112,8 @@ type MemberSelectCommonProps = {
   testId?: string;
   /** Tab order of the trigger, for forms that sequence focus explicitly (e.g. the work item create modal). */
   tabIndex?: number;
+  /** DOM id of the trigger, so a form `<label htmlFor>` names and focuses it. */
+  id?: string;
   /** Re-filters the rendered list every render — unlike `getValues`, also catches an already-fetched, still-open list. */
   filterOption?: (member: MemberOption) => boolean;
   /** Badge text on a {@link MemberOption.suspended} row. Defaults to "Suspended". */
@@ -174,6 +176,7 @@ export function MemberSelect(props: MemberSelectProps) {
     filterOption,
     testId,
     tabIndex,
+    id,
     suspendedLabel = "Suspended",
     multipleLabel,
   } = props;
@@ -270,6 +273,7 @@ export function MemberSelect(props: MemberSelectProps) {
       disabled={disabled}
       variant={triggerVariant}
       tabIndex={tabIndex}
+      id={id}
       data-testid={testId}
       className={cn(isAvatarGroup && AVATAR_GROUP_TRIGGER_CLASSNAME, className)}
       prependIcon={(members) =>

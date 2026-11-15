@@ -17,6 +17,15 @@ import type {
 // services
 import { APIService } from "@/services/api.service";
 
+type TAxiosLikeError = { response?: { status?: number; data?: unknown } };
+
+/** The API error body plus the HTTP `status`, so callers can tell 400/403/404 apart. */
+const toWorkLogError = (error: unknown) => {
+  const response = (error as TAxiosLikeError | undefined)?.response;
+  const data = response?.data;
+  return { ...(data && typeof data === "object" ? data : {}), status: response?.status };
+};
+
 export class IssueWorkLogService extends APIService {
   constructor() {
     super(API_BASE_URL);
@@ -27,7 +36,7 @@ export class IssueWorkLogService extends APIService {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/worklogs/`)
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 
@@ -40,7 +49,7 @@ export class IssueWorkLogService extends APIService {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/worklogs/`, data)
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 
@@ -57,7 +66,7 @@ export class IssueWorkLogService extends APIService {
     )
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 
@@ -67,7 +76,7 @@ export class IssueWorkLogService extends APIService {
     )
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 
@@ -80,7 +89,7 @@ export class IssueWorkLogService extends APIService {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/worklogs/`, { params })
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 
@@ -93,7 +102,7 @@ export class IssueWorkLogService extends APIService {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/worklogs/summary/`, { params })
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        throw toWorkLogError(error);
       });
   }
 }

@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Tijdregistratie is uitgeschakeld voor dit project.",
       "invalid_worklog_user": "Tijd kan alleen worden geregistreerd voor actieve projectbeheerders of -leden.",
-      "forbidden": "U kunt alleen uw eigen tijdregistraties wijzigen."
+      "forbidden": "U kunt alleen uw eigen tijdregistraties wijzigen.",
+      "not_found": "Deze tijdregistratie bestaat niet meer. De lijst is vernieuwd.",
+      "load_failed": "Tijdregistraties konden niet worden geladen."
     },
     "activity": {
       "created": "heeft {duration} tijd geregistreerd",
+      "created_for": "heeft {duration} tijd geregistreerd voor {name}",
       "updated": "heeft een tijdregistratie gewijzigd van {from} naar {to}",
       "updated_same": "heeft een tijdregistratie van {duration} bijgewerkt",
       "deleted": "heeft een tijdregistratie van {duration} verwijderd"

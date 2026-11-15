@@ -40,8 +40,9 @@ const toText = (minutes: number | undefined) => (minutes === undefined ? "" : fo
 
 /**
  * Text field for a duration ("1h 30m", "1:30", "90m", "1.5h", "90"). Free typing; the text is
- * parsed on blur or Enter and normalised to "1h 30m". Invalid text keeps what the user typed,
- * shows `invalidMessage` inline (`aria-invalid`) and emits `undefined`.
+ * parsed on blur or Enter and normalised to "1h 30m". Enter with a valid value also submits the
+ * surrounding form. Invalid text keeps what the user typed, shows `invalidMessage` inline
+ * (`aria-invalid`) and emits `undefined`.
  */
 export function DurationInput(props: DurationInputProps) {
   const {
@@ -81,31 +82,35 @@ export function DurationInput(props: DurationInputProps) {
     if (minutes !== value) onChange(minutes);
   };
 
-  const commit = () => {
+  /** Parses the text and emits the result. Returns true when the text was a valid duration. */
+  const commit = (): boolean => {
     isEditingRef.current = false;
     const trimmed = text.trim();
     if (!trimmed) {
       setParseError(false);
       emit(undefined);
-      return;
+      return false;
     }
     const minutes = parseWorkLogDuration(trimmed);
     if (minutes === undefined || minutes < min || minutes > max) {
       setParseError(true);
       lastEmittedRef.current = undefined;
       onChange(undefined);
-      return;
+      return false;
     }
     setParseError(false);
     setText(formatWorkLogDuration(minutes));
     emit(minutes);
+    return true;
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== "Enter") return;
-    // Commit first; the parent form submits on the next Enter, when its state has the new value.
+    // Commit first, then submit the surrounding form in a microtask, after React has flushed the
+    // parent's state update with the new value. Invalid text keeps the form from submitting.
     event.preventDefault();
-    commit();
+    const form = event.currentTarget.form;
+    if (commit() && form) queueMicrotask(() => form.requestSubmit());
   };
 
   const shownError = parseError ? invalidMessage : error;

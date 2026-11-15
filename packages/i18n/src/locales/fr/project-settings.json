@@ -421,7 +421,7 @@
         "short_title": "Suivi du temps",
         "description": "Enregistrez le temps passé sur les éléments de travail et les projets.",
         "toggle_title": "Activer le suivi du temps",
-        "toggle_description": "Les membres du projet pourront enregistrer le temps travaillé."
+        "toggle_description": "Les administrateurs et membres du projet peuvent enregistrer du temps sur les éléments de travail."
       },
       "milestones": {
         "title": "Jalons",

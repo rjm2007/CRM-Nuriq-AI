@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Escolha membros do workspace para este projeto. Você pode pular esta etapa e adicioná-los depois nas configurações do projeto.",
       "skip": "Pular",
+      "members_added": "Membros adicionados ao projeto."
+    },
+    "member_form": {
       "select_role": "Selecionar cargo",
       "member_required": "Selecione um membro",
-      "role_required": "Selecione um cargo",
-      "members_added": "Membros adicionados ao projeto."
+      "role_required": "Selecione um cargo"
     }
   }
 }

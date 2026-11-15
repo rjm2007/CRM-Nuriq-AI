@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type { FormEvent } from "react";
 import { observer } from "mobx-react";
 // plane imports
@@ -22,6 +22,7 @@ import {
 import { TextAreaField } from "@makeplane/propel/components/text-area-field";
 import { DurationInput } from "@plane/blocks/duration-input";
 import { DateSelect } from "@plane/blocks/property-select";
+import { EUserPermissions } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { TIssueWorkLog, TIssueWorkLogPayload } from "@plane/types";
 import { isValidWorkLogDuration } from "@plane/utils";
@@ -29,6 +30,7 @@ import { isValidWorkLogDuration } from "@plane/utils";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useMember } from "@/hooks/store/use-member";
 import { useUserProfile } from "@/hooks/store/user";
 // local imports
 import type { TWorkLogOperations, TWorkLogPermissions } from "./helper";
@@ -72,9 +74,12 @@ const toStartedAt = (day: Date, entry: TIssueWorkLog | undefined): string => {
 };
 
 const WorkLogForm = observer(function WorkLogForm(props: FormProps) {
-  const { entry, onClose, operations, permissions, projectId } = props;
+  const { entry, onClose, operations, permissions, projectId, workspaceSlug } = props;
   const { t } = useTranslation();
   const { data: userProfile } = useUserProfile();
+  const {
+    project: { getProjectMemberIds, getProjectMemberDetails, fetchProjectMembers },
+  } = useMember();
   const ids = useId();
   // states
   const [day, setDay] = useState<Date>(() => (entry ? new Date(entry.started_at) : new Date()));
@@ -85,8 +90,26 @@ const WorkLogForm = observer(function WorkLogForm(props: FormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // derived values
   const isEdit = !!entry;
-  const dateLabelId = `${ids}-date-label`;
-  const memberLabelId = `${ids}-member-label`;
+  const dateId = `${ids}-date`;
+  const memberId = `${ids}-member`;
+  // The API accepts only project ADMIN/MEMBER (raw project role, no workspace-admin elevation).
+  const projectMemberIds = permissions.isAdmin ? getProjectMemberIds(projectId, false) : [];
+  const loggableMemberIds = permissions.isAdmin
+    ? (projectMemberIds ?? []).filter((id) => {
+        const details = getProjectMemberDetails(id, projectId);
+        const role = details?.original_role ?? details?.role;
+        return role === EUserPermissions.ADMIN || role === EUserPermissions.MEMBER;
+      })
+    : [];
+  const isProjectRosterMissing = projectMemberIds === null;
+
+  // load the project roster once so the member picker can filter by project role
+  useEffect(() => {
+    if (!isProjectRosterMissing || !workspaceSlug) return;
+    fetchProjectMembers(workspaceSlug, projectId).catch((error: unknown) => {
+      console.error("Failed to load project members", error);
+    });
+  }, [isProjectRosterMissing, workspaceSlug, projectId, fetchProjectMembers]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -124,12 +147,11 @@ const WorkLogForm = observer(function WorkLogForm(props: FormProps) {
         <DialogBody render={<div className="flex flex-col gap-4" />}>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <span id={dateLabelId} className="text-body-xs-medium text-secondary">
+              <label htmlFor={dateId} className="text-body-xs-medium text-secondary">
                 {t("work_log.fields.date")}
-              </span>
+              </label>
               <DateSelect
-                id={`${ids}-date`}
-                aria-describedby={dateLabelId}
+                id={dateId}
                 value={day}
                 onChange={(value) => value && setDay(value)}
                 maxDate={new Date()}
@@ -151,12 +173,16 @@ const WorkLogForm = observer(function WorkLogForm(props: FormProps) {
             />
           </div>
           {permissions.isAdmin && (
-            <div role="group" aria-labelledby={memberLabelId} className="flex flex-col gap-1.5">
-              <span id={memberLabelId} className="text-body-xs-medium text-secondary">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor={memberId} className="text-body-xs-medium text-secondary">
                 {t("work_log.fields.member")}
-              </span>
+              </label>
               <MemberSelect
+                id={memberId}
                 projectId={projectId}
+                memberIds={loggableMemberIds}
+                // the trigger's accessible name is "<heading>, <selected member>"
+                tooltip={{ heading: t("work_log.fields.member") }}
                 value={userId}
                 onChange={(id) => setUserId(id)}
                 variant="select-lg"
@@ -179,7 +205,14 @@ const WorkLogForm = observer(function WorkLogForm(props: FormProps) {
         </DialogBody>
       </DialogMain>
       <DialogActions>
-        <Button variant="secondary" size="md" stretch="auto" onClick={onClose} label={t("common.cancel")} />
+        <Button
+          variant="secondary"
+          size="md"
+          stretch="auto"
+          onClick={onClose}
+          disabled={isSubmitting}
+          label={t("common.cancel")}
+        />
         <Button
           variant="primary"
           size="md"
@@ -201,17 +234,23 @@ export const IssueWorkLogModal = observer(function IssueWorkLogModal(props: Prop
   // derived values
   const modal = workLogModal?.issueId === props.issueId ? workLogModal : null;
   const entry = modal?.workLogId ? getWorkLogById(modal.workLogId) : undefined;
+  // The entry being edited was deleted (here or elsewhere): close instead of turning into "Log time".
+  const isEditedEntryGone = !!modal?.workLogId && !entry;
   const handleClose = () => toggleWorkLogModal(null);
+
+  useEffect(() => {
+    if (isEditedEntryGone) toggleWorkLogModal(null);
+  }, [isEditedEntryGone, toggleWorkLogModal]);
 
   return (
     <Dialog
-      open={!!modal}
+      open={!!modal && !isEditedEntryGone}
       onOpenChange={(open) => {
         if (!open) handleClose();
       }}
     >
       <DialogContent size="md">
-        {modal && (
+        {modal && !isEditedEntryGone && (
           <WorkLogForm
             key={`${modal.issueId}-${modal.workLogId ?? "new"}`}
             {...props}

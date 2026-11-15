@@ -65,6 +65,20 @@ describe("parseWorkLogDuration", () => {
     }
   );
 
+  it.each(["1h 90m", "1h60", "2h 60m", "1.5h 75m"])("rejects 60+ minutes next to hours: %j", (input) => {
+    expect(parseWorkLogDuration(input)).toBeUndefined();
+  });
+
+  it.each(["90.5m", "1h 30.5m", "1,5m", "0.5 min"])("rejects decimal minutes: %j", (input) => {
+    expect(parseWorkLogDuration(input)).toBeUndefined();
+  });
+
+  it("keeps decimal hours and 59 minutes next to hours", () => {
+    expect(parseWorkLogDuration("1.5h")).toBe(90);
+    expect(parseWorkLogDuration("1h 59m")).toBe(119);
+    expect(parseWorkLogDuration("120m")).toBe(120);
+  });
+
   it("handles null and undefined", () => {
     expect(parseWorkLogDuration(undefined)).toBeUndefined();
     expect(parseWorkLogDuration(null)).toBeUndefined();

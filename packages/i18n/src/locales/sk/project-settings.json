@@ -419,9 +419,9 @@
       "time_tracking": {
         "title": "Sledovanie času",
         "short_title": "Sledovanie času",
-        "description": "Zaznamenávajte čas strávený na pracovných položkách a projektoch.",
-        "toggle_title": "Povoliť sledovanie času",
-        "toggle_description": "Členovia projektu budú môcť zaznamenávať odpracovaný čas."
+        "description": "Zaznamenajte čas strávený na pracovných položkách a projektoch.",
+        "toggle_title": "Zapnúť sledovanie času",
+        "toggle_description": "Správcovia a členovia projektu môžu zaznamenávať čas na pracovných položkách."
       },
       "milestones": {
         "title": "Míľniky",

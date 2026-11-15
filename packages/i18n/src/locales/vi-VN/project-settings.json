@@ -421,7 +421,7 @@
         "short_title": "Theo dõi thời gian",
         "description": "Ghi lại thời gian dành cho các mục công việc và dự án.",
         "toggle_title": "Bật theo dõi thời gian",
-        "toggle_description": "Thành viên dự án sẽ có thể ghi lại thời gian làm việc."
+        "toggle_description": "Quản trị viên và thành viên dự án có thể ghi thời gian trên các mục công việc."
       },
       "milestones": {
         "title": "Cột mốc",

@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Bu proje için çalışma alanı üyelerini seçin. Bu adımı atlayabilir ve üyeleri daha sonra proje ayarlarından ekleyebilirsiniz.",
       "skip": "Atla",
+      "members_added": "Üyeler projeye eklendi."
+    },
+    "member_form": {
       "select_role": "Rol seçin",
       "member_required": "Bir üye seçin",
-      "role_required": "Bir rol seçin",
-      "members_added": "Üyeler projeye eklendi."
+      "role_required": "Bir rol seçin"
     }
   }
 }

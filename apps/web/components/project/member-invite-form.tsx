@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { observer } from "mobx-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 // plane imports
@@ -146,7 +146,13 @@ export const ProjectMemberInviteFields = observer(function ProjectMemberInviteFi
     getRoleOptions,
     handleMemberChange,
   } = form;
-  const selectedMemberIds = watch("members")?.map((member) => member.member_id) ?? [];
+  // A string key keeps the memo stable while the picked members don't change (watch returns new arrays).
+  const selectedKey = (watch("members") ?? []).map((member) => member.member_id).join(",");
+  // members already picked in other rows, per row; stable arrays so MemberSelect doesn't refilter each render
+  const excludeIdsByRow = useMemo(() => {
+    const selected = selectedKey ? selectedKey.split(",") : [];
+    return fields.map((_, index) => selected.filter((id, rowIndex) => !!id && rowIndex !== index));
+  }, [selectedKey, fields]);
 
   return (
     <div className="space-y-4">
@@ -156,7 +162,7 @@ export const ProjectMemberInviteFields = observer(function ProjectMemberInviteFi
             <Controller
               control={control}
               name={`members.${index}.member_id`}
-              rules={{ required: t("project.members_step.member_required") }}
+              rules={{ required: t("project.member_form.member_required") }}
               render={({ field: { value, onChange } }) => (
                 <MemberSelect
                   testId={`project-member-invite-member-${index}`}
@@ -164,8 +170,7 @@ export const ProjectMemberInviteFields = observer(function ProjectMemberInviteFi
                   onChange={(val: string) => handleMemberChange(index, val, onChange)}
                   variant="select-lg"
                   memberIds={uninvitedPeople}
-                  // members already picked in other rows
-                  excludeIds={selectedMemberIds.filter((id, rowIndex) => !!id && rowIndex !== index)}
+                  excludeIds={excludeIdsByRow[index]}
                   placeholder={t("project_settings.members.invite_members.select_co_worker")}
                 />
               )}
@@ -182,7 +187,7 @@ export const ProjectMemberInviteFields = observer(function ProjectMemberInviteFi
               <Controller
                 name={`members.${index}.role`}
                 control={control}
-                rules={{ required: t("project.members_step.role_required") }}
+                rules={{ required: t("project.member_form.role_required") }}
                 render={({ field: { value, onChange } }) => {
                   const roleOptions = getRoleOptions(watch(`members.${index}.member_id`));
                   return (
@@ -193,17 +198,17 @@ export const ProjectMemberInviteFields = observer(function ProjectMemberInviteFi
                         onChange={(key) => onChange(parseInt(key))}
                         getOptionValue={(role) => String(role.key)}
                         getOptionLabel={(role) => role.label}
-                        placeholder={t("project.members_step.select_role")}
+                        placeholder={t("project.member_form.select_role")}
                         showSearch={false}
                         pinSelected={false}
                       >
                         <Select.Trigger<TRoleOption>
                           variant="pill-md"
                           appendIcon={<ChevronDownOutline />}
-                          tooltip={{ emptyContent: t("project.members_step.select_role") }}
+                          tooltip={{ emptyContent: t("project.member_form.select_role") }}
                         >
                           <span className="min-w-0 grow truncate text-left capitalize">
-                            {value ? ROLE[value] : t("project.members_step.select_role")}
+                            {value ? ROLE[value] : t("project.member_form.select_role")}
                           </span>
                         </Select.Trigger>
                       </Select>

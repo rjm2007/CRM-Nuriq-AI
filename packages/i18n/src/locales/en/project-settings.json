@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "Time tracking",
-        "short_title": "Time tracking",
+        "title": "Time Tracking",
+        "short_title": "Time Tracking",
         "description": "Log time spent on work items and projects.",
         "toggle_title": "Enable time tracking",
-        "toggle_description": "Project members will be able to log time worked."
+        "toggle_description": "Project admins and members can log time on work items."
       },
       "milestones": {
         "title": "Milestones",

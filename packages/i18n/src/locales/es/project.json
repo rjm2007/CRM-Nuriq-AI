@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Elija miembros del espacio de trabajo para este proyecto. Puede omitir este paso y agregarlos más tarde en la configuración del proyecto.",
       "skip": "Omitir",
+      "members_added": "Miembros agregados al proyecto."
+    },
+    "member_form": {
       "select_role": "Seleccionar rol",
       "member_required": "Seleccione un miembro",
-      "role_required": "Seleccione un rol",
-      "members_added": "Miembros agregados al proyecto."
+      "role_required": "Seleccione un rol"
     }
   }
 }

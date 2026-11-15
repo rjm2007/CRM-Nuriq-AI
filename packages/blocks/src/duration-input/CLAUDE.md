@@ -6,8 +6,8 @@
 
 ## Key files
 
-- `duration-input.tsx` — controlled field on propel `InputField`. Parses on blur and on Enter (Enter is `preventDefault`ed so the form submits on the next Enter, with the parsed value), normalises the text to "1h 30m", shows `invalidMessage` inline with `aria-invalid` when the text can't be parsed or is outside `min..max` (default 1..1440) and emits `undefined`. `error` = outside error (e.g. required), the parse error wins. Props: `id`, `value`, `onChange`, `label` or `aria-label`, `placeholder`, `hint`, `required`, `disabled`, `size`, `className`.
-- `duration-input.test.tsx` — DOM tests (label/id, blur + Enter commit, inline error, range, parent value sync).
+- `duration-input.tsx` — controlled field on propel `InputField`. Parses on blur and on Enter (Enter with a valid value then calls `form.requestSubmit()` in a microtask, so the form sees the parsed value; invalid text never submits), normalises the text to "1h 30m", shows `invalidMessage` inline with `aria-invalid` when the text can't be parsed or is outside `min..max` (default 1..1440) and emits `undefined`. `error` = outside error (e.g. required), the parse error wins. Props: `id`, `value`, `onChange`, `label` or `aria-label`, `placeholder`, `hint`, `required`, `disabled`, `size`, `className`.
+- `duration-input.test.tsx` — DOM tests (label/id, blur commit, Enter commit + submit, no submit when invalid, inline error, range, parent value sync).
 - `index.ts` — exports `DurationInput` + `DurationInputProps`.
 
 ## Rules for this folder
@@ -29,3 +29,4 @@
 ## Our changes (Neuric)
 
 - Our changes (Neuric) 2026-11-15, time tracking: new folder, `DurationInput` + tests, `"./duration-input"` export in `package.json`.
+- Our changes (Neuric) 2026-11-16, time tracking review fixes: Enter with a valid duration submits the surrounding form (`requestSubmit` in a microtask); tests updated.

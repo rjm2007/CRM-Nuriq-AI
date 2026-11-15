@@ -26,6 +26,7 @@ import {
   ModuleOutline,
   PriorityMedium,
   RelatesToOutline,
+  TimeTrackingOutline,
   WorkItemsOutline,
 } from "@makeplane/propel/icons";
 import { BlockedIcon, BlockerIcon } from "@plane/blocks/icons";
@@ -33,6 +34,7 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueActivity } from "@plane/types";
 import { renderFormattedDate, generateWorkItemLink, capitalizeFirstLetter } from "@plane/utils";
 // helpers
+import { WorkLogActivityMessage } from "@/components/issues/issue-detail-widgets/time/activity-message";
 import { useLabel } from "@/hooks/store/use-label";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // types
@@ -743,6 +745,21 @@ const activityDetails: {
       </>
     ),
     icon: <IntakeOutline className="size-3 text-secondary" aria-hidden="true" />,
+  },
+  // Neuric: time tracking rows (profile / workspace feeds); same text as the work item Activity tab
+  worklog: {
+    message: (activity, showIssue) => (
+      <>
+        <WorkLogActivityMessage activity={activity} />
+        {showIssue && (
+          <>
+            {" "}
+            on <IssueLink activity={activity} />
+          </>
+        )}
+      </>
+    ),
+    icon: <TimeTrackingOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
 };
 

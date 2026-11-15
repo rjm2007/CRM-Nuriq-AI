@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "此專案已關閉時間追蹤。",
       "invalid_worklog_user": "只能為活躍的專案管理員或成員記錄時間。",
-      "forbidden": "您只能變更自己的時間記錄。"
+      "forbidden": "您只能變更自己的時間記錄。",
+      "not_found": "此時間記錄已不存在，清單已重新整理。",
+      "load_failed": "無法載入時間記錄。"
     },
     "activity": {
       "created": "記錄了一筆 {duration} 的時間記錄",
+      "created_for": "為 {name} 記錄了 {duration} 的時間",
       "updated": "將一筆時間記錄從 {from} 改為 {to}",
       "updated_same": "更新了一筆 {duration} 的時間記錄",
       "deleted": "刪除了一筆 {duration} 的時間記錄"

@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Theo dõi thời gian đang tắt cho dự án này.",
       "invalid_worklog_user": "Chỉ có thể ghi thời gian cho quản trị viên hoặc thành viên đang hoạt động của dự án.",
-      "forbidden": "Bạn chỉ có thể thay đổi các mục thời gian của mình."
+      "forbidden": "Bạn chỉ có thể thay đổi các mục thời gian của mình.",
+      "not_found": "Mục thời gian này không còn tồn tại. Danh sách đã được làm mới.",
+      "load_failed": "Không thể tải các mục thời gian."
     },
     "activity": {
       "created": "đã ghi một mục thời gian {duration}",
+      "created_for": "đã ghi {duration} thời gian cho {name}",
       "updated": "đã đổi một mục thời gian từ {from} thành {to}",
       "updated_same": "đã cập nhật một mục thời gian {duration}",
       "deleted": "đã xóa một mục thời gian {duration}"

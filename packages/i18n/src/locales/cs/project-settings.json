@@ -420,8 +420,8 @@
         "title": "Sledování času",
         "short_title": "Sledování času",
         "description": "Zaznamenávejte čas strávený na pracovních položkách a projektech.",
-        "toggle_title": "Povolit sledování času",
-        "toggle_description": "Členové projektu budou moci zaznamenávat odpracovaný čas."
+        "toggle_title": "Zapnout sledování času",
+        "toggle_description": "Správci a členové projektu mohou zaznamenávat čas u pracovních položek."
       },
       "milestones": {
         "title": "Milníky",

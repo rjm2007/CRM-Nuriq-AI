@@ -421,7 +421,7 @@
         "short_title": "Pelacakan waktu",
         "description": "Catat waktu yang dihabiskan untuk item kerja dan proyek.",
         "toggle_title": "Aktifkan pelacakan waktu",
-        "toggle_description": "Anggota proyek akan dapat mencatat waktu yang dikerjakan."
+        "toggle_description": "Admin dan anggota proyek dapat mencatat waktu pada item kerja."
       },
       "milestones": {
         "title": "Tonggak",

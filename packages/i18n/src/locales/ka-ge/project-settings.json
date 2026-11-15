@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "Time tracking",
-        "short_title": "Time tracking",
-        "description": "Log time spent on work items and projects.",
-        "toggle_title": "Enable time tracking",
-        "toggle_description": "Project members will be able to log time worked."
+        "title": "დროის თვალყურის დევნება",
+        "short_title": "დროის თვალყურის დევნება",
+        "description": "ჩაიწერეთ სამუშაო ელემენტებზე და პროექტებზე დახარჯული დრო.",
+        "toggle_title": "დროის აღრიცხვის ჩართვა",
+        "toggle_description": "პროექტის ადმინისტრატორებს და წევრებს შეუძლიათ სამუშაო ელემენტებზე დროის ჩაწერა."
       },
       "milestones": {
         "title": "Milestones",

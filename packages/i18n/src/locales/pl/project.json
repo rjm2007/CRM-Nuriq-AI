@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Wybierz członków przestrzeni roboczej do tego projektu. Możesz pominąć ten krok i dodać ich później w ustawieniach projektu.",
       "skip": "Pomiń",
+      "members_added": "Członkowie zostali dodani do projektu."
+    },
+    "member_form": {
       "select_role": "Wybierz rolę",
       "member_required": "Wybierz członka",
-      "role_required": "Wybierz rolę",
-      "members_added": "Członkowie zostali dodani do projektu."
+      "role_required": "Wybierz rolę"
     }
   }
 }

@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Vyberte členy pracovního prostoru pro tento projekt. Tento krok můžete přeskočit a přidat je později v nastavení projektu.",
       "skip": "Přeskočit",
+      "members_added": "Členové byli přidáni do projektu."
+    },
+    "member_form": {
       "select_role": "Vyberte roli",
       "member_required": "Vyberte člena",
-      "role_required": "Vyberte roli",
-      "members_added": "Členové byli přidáni do projektu."
+      "role_required": "Vyberte roli"
     }
   }
 }

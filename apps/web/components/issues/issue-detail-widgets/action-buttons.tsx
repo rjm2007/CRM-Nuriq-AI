@@ -49,7 +49,7 @@ export const IssueDetailWidgetActionButtons = observer(function IssueDetailWidge
   const showLinks = !hideWidgets?.includes("links");
   const showAttachments = !hideWidgets?.includes("attachments");
   // Neuric: time tracking, only when the project flag is on and the user is a project admin/member
-  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType, issueId);
   const showTime = !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 
   return (

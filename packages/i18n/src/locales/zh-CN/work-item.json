@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "此项目已关闭时间跟踪。",
       "invalid_worklog_user": "只能为活跃的项目管理员或成员记录时间。",
-      "forbidden": "您只能更改自己的时间记录。"
+      "forbidden": "您只能更改自己的时间记录。",
+      "not_found": "该时间记录已不存在，列表已刷新。",
+      "load_failed": "无法加载时间记录。"
     },
     "activity": {
       "created": "记录了一条 {duration} 的时间记录",
+      "created_for": "为 {name} 记录了 {duration} 的时间",
       "updated": "将一条时间记录从 {from} 改为 {to}",
       "updated_same": "更新了一条 {duration} 的时间记录",
       "deleted": "删除了一条 {duration} 的时间记录"

@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+export * from "./activity-message";
 export * from "./content";
 export * from "./helper";
 export * from "./quick-action-button";

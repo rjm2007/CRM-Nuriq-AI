@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "Monitoraggio del tempo",
-        "short_title": "Monitoraggio del tempo",
+        "title": "Tracciamento del tempo",
+        "short_title": "Tracciamento del tempo",
         "description": "Registra il tempo trascorso su elementi di lavoro e progetti.",
-        "toggle_title": "Abilita monitoraggio del tempo",
-        "toggle_description": "I membri del progetto potranno registrare il tempo lavorato."
+        "toggle_title": "Attiva il tracciamento del tempo",
+        "toggle_description": "Gli amministratori e i membri del progetto possono registrare il tempo sugli elementi di lavoro."
       },
       "milestones": {
         "title": "Traguardi",

@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Śledzenie czasu jest wyłączone w tym projekcie.",
       "invalid_worklog_user": "Czas można rejestrować tylko dla aktywnych administratorów lub członków projektu.",
-      "forbidden": "Możesz zmieniać tylko własne wpisy czasu."
+      "forbidden": "Możesz zmieniać tylko własne wpisy czasu.",
+      "not_found": "Ten wpis czasu już nie istnieje. Lista została odświeżona.",
+      "load_failed": "Nie udało się wczytać wpisów czasu."
     },
     "activity": {
       "created": "zarejestrował(a) wpis czasu: {duration}",
+      "created_for": "zarejestrował(a) wpis czasu {duration} dla {name}",
       "updated": "zmienił(a) wpis czasu z {from} na {to}",
       "updated_same": "zaktualizował(a) wpis czasu: {duration}",
       "deleted": "usunął(-ęła) wpis czasu: {duration}"

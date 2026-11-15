@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Pilih anggota workspace untuk proyek ini. Anda dapat melewati langkah ini dan menambahkannya nanti di pengaturan proyek.",
       "skip": "Lewati",
+      "members_added": "Anggota ditambahkan ke proyek."
+    },
+    "member_form": {
       "select_role": "Pilih peran",
       "member_required": "Pilih anggota",
-      "role_required": "Pilih peran",
-      "members_added": "Anggota ditambahkan ke proyek."
+      "role_required": "Pilih peran"
     }
   }
 }

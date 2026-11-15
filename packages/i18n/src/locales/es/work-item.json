@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "El seguimiento de tiempo está desactivado en este proyecto.",
       "invalid_worklog_user": "Solo se puede registrar tiempo para administradores o miembros activos del proyecto.",
-      "forbidden": "Solo puede cambiar sus propios registros de tiempo."
+      "forbidden": "Solo puede cambiar sus propios registros de tiempo.",
+      "not_found": "Esta entrada de tiempo ya no existe. La lista se ha actualizado.",
+      "load_failed": "No se pudieron cargar las entradas de tiempo."
     },
     "activity": {
       "created": "registró un tiempo de {duration}",
+      "created_for": "registró una entrada de tiempo de {duration} para {name}",
       "updated": "cambió un registro de tiempo de {from} a {to}",
       "updated_same": "actualizó un registro de tiempo de {duration}",
       "deleted": "eliminó un registro de tiempo de {duration}"

@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "Zaman takibi",
-        "short_title": "Zaman takibi",
-        "description": "İş öğelerine ve projelere harcanan zamanı kaydedin.",
+        "title": "Zaman Takibi",
+        "short_title": "Zaman Takibi",
+        "description": "İş öğeleri ve projelerde harcanan zamanı kaydedin.",
         "toggle_title": "Zaman takibini etkinleştir",
-        "toggle_description": "Proje üyeleri çalışılan zamanı kaydedebilecektir."
+        "toggle_description": "Proje yöneticileri ve üyeleri iş öğelerine zaman kaydedebilir."
       },
       "milestones": {
         "title": "Kilometre taşları",

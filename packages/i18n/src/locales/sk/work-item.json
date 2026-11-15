@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Sledovanie času je pre tento projekt vypnuté.",
       "invalid_worklog_user": "Čas je možné zaznamenať len pre aktívnych správcov alebo členov projektu.",
-      "forbidden": "Môžete meniť len svoje vlastné záznamy času."
+      "forbidden": "Môžete meniť len svoje vlastné záznamy času.",
+      "not_found": "Tento časový záznam už neexistuje. Zoznam bol obnovený.",
+      "load_failed": "Časové záznamy sa nepodarilo načítať."
     },
     "activity": {
       "created": "zaznamenal(a) čas {duration}",
+      "created_for": "zaznamenal(a) čas {duration} pre {name}",
       "updated": "zmenil(a) záznam času z {from} na {to}",
       "updated_same": "aktualizoval(a) záznam času {duration}",
       "deleted": "odstránil(a) záznam času {duration}"

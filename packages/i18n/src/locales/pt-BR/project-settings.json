@@ -421,7 +421,7 @@
         "short_title": "Rastreamento de tempo",
         "description": "Registre o tempo gasto em itens de trabalho e projetos.",
         "toggle_title": "Ativar rastreamento de tempo",
-        "toggle_description": "Os membros do projeto poderão registrar o tempo trabalhado."
+        "toggle_description": "Administradores e membros do projeto podem registrar tempo nos itens de trabalho."
       },
       "milestones": {
         "title": "Marcos",

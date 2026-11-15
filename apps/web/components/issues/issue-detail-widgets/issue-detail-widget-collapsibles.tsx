@@ -51,7 +51,7 @@ export const IssueDetailWidgetCollapsibles = observer(function IssueDetailWidget
     attachmentsCount > 0 ||
     (!!attachmentUploads && attachmentUploads.length > 0 && !hideWidgets?.includes("attachments"));
   // Neuric: time tracking widget (flag on + project admin/member), shown even when empty
-  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType, issueId);
   const shouldRenderTime = !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 
   return (

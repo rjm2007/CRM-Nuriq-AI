@@ -8,20 +8,16 @@
 
 import { observer } from "mobx-react";
 import { TimeTrackingOutline } from "@makeplane/propel/icons";
-import { useTranslation } from "@plane/i18n";
-import { formatWorkLogDuration } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // components
+import { WorkLogActivityMessage } from "@/components/issues/issue-detail-widgets/time/activity-message";
 import { IssueActivityBlockComponent, IssueLink } from "./";
 
 type TIssueWorkLogActivity = { activityId: string; showIssue?: boolean; ends: "top" | "bottom" | undefined };
 
-const toDuration = (minutes: string | undefined | null) => formatWorkLogDuration(Number(minutes ?? 0));
-
 export const IssueWorkLogActivity = observer(function IssueWorkLogActivity(props: TIssueWorkLogActivity) {
   const { activityId, showIssue = false, ends } = props;
-  const { t } = useTranslation();
   const {
     activity: { getActivityById },
   } = useIssueDetail();
@@ -30,19 +26,6 @@ export const IssueWorkLogActivity = observer(function IssueWorkLogActivity(props
 
   if (!activity) return <></>;
 
-  const message = (() => {
-    if (activity.verb === "created")
-      return t("work_log.activity.created", { duration: toDuration(activity.new_value) });
-    if (activity.verb === "deleted")
-      return t("work_log.activity.deleted", { duration: toDuration(activity.old_value) });
-    if (activity.old_value && activity.old_value !== activity.new_value)
-      return t("work_log.activity.updated", {
-        from: toDuration(activity.old_value),
-        to: toDuration(activity.new_value),
-      });
-    return t("work_log.activity.updated_same", { duration: toDuration(activity.new_value) });
-  })();
-
   return (
     <IssueActivityBlockComponent
       icon={<TimeTrackingOutline className="h-3.5 w-3.5 text-secondary" aria-hidden="true" />}
@@ -50,7 +33,7 @@ export const IssueWorkLogActivity = observer(function IssueWorkLogActivity(props
       ends={ends}
     >
       <>
-        {message}
+        <WorkLogActivityMessage activity={activity} />
         {showIssue && (
           <>
             {" "}

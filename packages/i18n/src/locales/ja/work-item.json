@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "このプロジェクトでは時間トラッキングがオフになっています。",
       "invalid_worklog_user": "時間はアクティブなプロジェクト管理者またはメンバーにのみ記録できます。",
-      "forbidden": "変更できるのは自分の時間エントリーのみです。"
+      "forbidden": "変更できるのは自分の時間エントリーのみです。",
+      "not_found": "この作業時間の記録は存在しません。一覧を更新しました。",
+      "load_failed": "作業時間の記録を読み込めませんでした。"
     },
     "activity": {
       "created": "{duration}の時間を記録しました",
+      "created_for": "{name} の作業時間 {duration} を記録しました",
       "updated": "時間エントリーを{from}から{to}に変更しました",
       "updated_same": "{duration}の時間エントリーを更新しました",
       "deleted": "{duration}の時間エントリーを削除しました"

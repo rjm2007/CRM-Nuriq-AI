@@ -46,6 +46,8 @@ type MemberSelectWebCommonProps = {
   tooltip?: SelectTooltip;
   /** Tab order of the trigger, for forms that sequence focus explicitly (`ETabIndices`). */
   tabIndex?: number;
+  /** DOM id of the trigger, for a form `<label htmlFor>`. */
+  id?: string;
 };
 
 export type MemberSelectWebProps = MemberSelectWebCommonProps &
@@ -83,6 +85,7 @@ export const MemberSelect = observer(function MemberSelect(props: MemberSelectWe
     tooltip,
     testId,
     tabIndex,
+    id: triggerId,
   } = props;
   // router params
   const { workspaceSlug } = useParams();
@@ -178,6 +181,7 @@ export const MemberSelect = observer(function MemberSelect(props: MemberSelectWe
         tooltip={resolvedTooltip}
         filterOption={excludeSet ? filterOption : undefined}
         tabIndex={tabIndex}
+        id={triggerId}
       />
     );
   }
@@ -199,6 +203,7 @@ export const MemberSelect = observer(function MemberSelect(props: MemberSelectWe
       tooltip={resolvedTooltip}
       filterOption={excludeSet ? filterOption : undefined}
       tabIndex={tabIndex}
+      id={triggerId}
     />
   );
 });

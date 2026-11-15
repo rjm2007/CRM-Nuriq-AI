@@ -44,4 +44,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- Our changes (Neuric) 2026-11-16, time tracking: `routes/extended.ts` now registers Neuric routes (repeat the core layout chain; `routes/helper.ts` `mergeRoutes` deep-merges by layout file). First route: `:workspaceSlug/settings/projects/:projectId/features/time-tracking` -> `(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/time-tracking/{page,header}.tsx` (copy of `features/intake`, project ADMIN only via `allowPermissions`, toggles `is_time_tracking_enabled`).

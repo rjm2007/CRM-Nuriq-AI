@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Die Zeiterfassung ist für dieses Projekt deaktiviert.",
       "invalid_worklog_user": "Zeit kann nur für aktive Projektadministratoren oder -mitglieder erfasst werden.",
-      "forbidden": "Sie können nur Ihre eigenen Zeiteinträge ändern."
+      "forbidden": "Sie können nur Ihre eigenen Zeiteinträge ändern.",
+      "not_found": "Dieser Zeiteintrag existiert nicht mehr. Die Liste wurde aktualisiert.",
+      "load_failed": "Zeiteinträge konnten nicht geladen werden."
     },
     "activity": {
       "created": "hat einen Zeiteintrag über {duration} erfasst",
+      "created_for": "hat einen Zeiteintrag von {duration} für {name} erfasst",
       "updated": "hat einen Zeiteintrag von {from} auf {to} geändert",
       "updated_same": "hat einen Zeiteintrag über {duration} aktualisiert",
       "deleted": "hat einen Zeiteintrag über {duration} entfernt"

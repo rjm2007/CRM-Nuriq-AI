@@ -498,10 +498,13 @@
     "errors": {
       "time_tracking_disabled": "Le suivi du temps est désactivé pour ce projet.",
       "invalid_worklog_user": "Le temps ne peut être enregistré que pour des administrateurs ou membres actifs du projet.",
-      "forbidden": "Vous ne pouvez modifier que vos propres entrées de temps."
+      "forbidden": "Vous ne pouvez modifier que vos propres entrées de temps.",
+      "not_found": "Cette entrée de temps n'existe plus. La liste a été actualisée.",
+      "load_failed": "Impossible de charger les entrées de temps."
     },
     "activity": {
       "created": "a enregistré une entrée de temps de {duration}",
+      "created_for": "a enregistré une entrée de temps de {duration} pour {name}",
       "updated": "a modifié une entrée de temps de {from} à {to}",
       "updated_same": "a mis à jour une entrée de temps de {duration}",
       "deleted": "a supprimé une entrée de temps de {duration}"

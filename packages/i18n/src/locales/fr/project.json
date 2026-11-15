@@ -427,10 +427,12 @@
     "members_step": {
       "description": "Choisissez des membres de l’espace de travail pour ce projet. Vous pouvez ignorer cette étape et les ajouter plus tard dans les paramètres du projet.",
       "skip": "Ignorer",
+      "members_added": "Membres ajoutés au projet."
+    },
+    "member_form": {
       "select_role": "Sélectionner un rôle",
       "member_required": "Sélectionnez un membre",
-      "role_required": "Sélectionnez un rôle",
-      "members_added": "Membres ajoutés au projet."
+      "role_required": "Sélectionnez un rôle"
     }
   }
 }

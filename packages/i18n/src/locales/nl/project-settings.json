@@ -419,9 +419,9 @@
       "time_tracking": {
         "title": "Tijdregistratie",
         "short_title": "Tijdregistratie",
-        "description": "Registreer de tijd die je aan werkitems en projecten besteedt.",
+        "description": "Registreer bestede tijd aan werkitems en projecten.",
         "toggle_title": "Tijdregistratie inschakelen",
-        "toggle_description": "Projectleden kunnen gewerkte tijd registreren."
+        "toggle_description": "Projectbeheerders en -leden kunnen tijd registreren op werkitems."
       },
       "milestones": {
         "title": "Mijlpalen",

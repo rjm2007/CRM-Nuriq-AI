@@ -21,6 +21,8 @@ const getValues = () => Promise.resolve({ results: [ADA, BOB, CY], next_page_res
 
 const popup = () => within(document.body);
 
+const multipleLabel = (count: number) => `${count} assignees`;
+
 async function openMembers(user: ReturnType<typeof userEvent.setup>, name: string) {
   await user.click(screen.getByRole("button", { name: new RegExp(name) }));
   await popup().findByRole("option", { name: /Ada/ });
@@ -133,7 +135,6 @@ describe("MemberSelect suspended members", () => {
   });
 
   it("uses the caller's label for a multi-member selection and keeps names for a single member", () => {
-    const multipleLabel = (count: number) => `${count} assignees`;
     const { rerender } = render(
       <MemberSelect
         multiple
@@ -158,5 +159,28 @@ describe("MemberSelect suspended members", () => {
     );
     expect(screen.queryByText("1 assignees")).toBeNull();
     expect(screen.getByText("Ada")).toBeTruthy();
+  });
+});
+
+describe("MemberSelect labelling", () => {
+  afterEach(() => cleanup());
+
+  it("puts `id` on the trigger so a <label htmlFor> targets it", () => {
+    render(
+      <>
+        <label htmlFor="member-field">Member</label>
+        <MemberSelect
+          id="member-field"
+          getValues={getValues}
+          value={null}
+          onChange={vi.fn()}
+          variant="select-lg"
+          placeholder="Pick"
+        />
+      </>
+    );
+    // the trigger names itself (property + selection); the id lets the label click focus it
+    const trigger = screen.getByRole("button", { name: /Pick/ });
+    expect(trigger.getAttribute("id")).toBe("member-field");
   });
 });

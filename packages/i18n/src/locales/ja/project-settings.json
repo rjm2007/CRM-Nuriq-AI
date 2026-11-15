@@ -417,11 +417,11 @@
         }
       },
       "time_tracking": {
-        "title": "時間追跡",
-        "short_title": "時間追跡",
+        "title": "時間トラッキング",
+        "short_title": "時間トラッキング",
         "description": "作業項目やプロジェクトに費やした時間を記録します。",
-        "toggle_title": "時間追跡を有効にする",
-        "toggle_description": "プロジェクトメンバーは作業時間を記録できるようになります。"
+        "toggle_title": "時間トラッキングを有効にする",
+        "toggle_description": "プロジェクトの管理者とメンバーが作業項目に時間を記録できます。"
       },
       "milestones": {
         "title": "マイルストーン",
