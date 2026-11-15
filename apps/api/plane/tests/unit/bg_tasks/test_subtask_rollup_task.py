@@ -218,3 +218,9 @@ class TestEnqueueParentRollup:
                 epoch=int(timezone.now().timestamp()),
             )
         delay.assert_called_once()
+
+
+def test_rollup_comment_matches_frontend_constant():
+    # Neuric: packages/constants/src/subtask.ts SUBTASK_ROLLUP_COMMENT must stay byte-identical;
+    # the web app compares it exactly to label auto-completed parents in the Activity tab.
+    assert SUBTASK_ROLLUP_COMMENT == "updated the state to (all sub-work items are done)"
