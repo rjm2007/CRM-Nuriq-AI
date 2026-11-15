@@ -9,6 +9,7 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { Pill } from "@makeplane/propel/components/pill";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { Pill as PillElement, PillLabel } from "@makeplane/propel/elements/pill";
+import { cn } from "@plane/utils";
 
 export type WorkItemPropertyCountChipProps = {
   /** The property glyph, e.g. `SubWorkItemsOutline`; rendered at the chip's icon size. */
@@ -16,7 +17,12 @@ export type WorkItemPropertyCountChipProps = {
   count: number;
   /** Text shown instead of `count`, e.g. `"3/5"` for done/total sub-work items. Defaults to `count`. */
   displayValue?: string;
-  /** Translated property name, e.g. "Attachments". Tooltip and accessible name read "<label>: <count>". */
+  /**
+   * Value read out in the accessible name and tooltip instead of the shown text, e.g. "3 of 5 done"
+   * for `"3/5"`. Defaults to the shown text.
+   */
+  accessibleValue?: string;
+  /** Translated property name, e.g. "Attachments". Tooltip and accessible name read "<label>: <value>". */
   label: string;
   /** Makes the chip a button. Omit for a display-only chip (e.g. public boards). */
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -31,9 +37,9 @@ export type WorkItemPropertyCountChipProps = {
  * shown text (e.g. `"3/5"`).
  */
 export function WorkItemPropertyCountChip(props: WorkItemPropertyCountChipProps) {
-  const { icon, count, displayValue, label, onClick, onFocus, tooltipDisabled = false } = props;
+  const { icon, count, displayValue, accessibleValue, label, onClick, onFocus, tooltipDisabled = false } = props;
   const value = displayValue ?? `${count}`;
-  const accessibleName = `${label}: ${value}`;
+  const accessibleName = `${label}: ${accessibleValue ?? value}`;
 
   return (
     <Tooltip label={accessibleName} disabled={tooltipDisabled}>
@@ -54,7 +60,7 @@ export function WorkItemPropertyCountChip(props: WorkItemPropertyCountChipProps)
           render={(pillProps) => {
             // A display-only chip is a span, so it takes no button `type` and no focus.
             const { type: _buttonType, ...spanProps } = pillProps as typeof pillProps & { type?: string };
-            return <span {...spanProps} role="img" className={`${spanProps.className ?? ""} cursor-[inherit]`} />;
+            return <span {...spanProps} role="img" className={cn(spanProps.className, "cursor-[inherit]")} />;
           }}
         >
           <Icon icon={icon} />

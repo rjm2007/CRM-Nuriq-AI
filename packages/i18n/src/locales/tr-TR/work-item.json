@@ -308,6 +308,9 @@
         "action": "Filtreleri temizle"
       }
     },
+    "progress_a11y": "{total} öğeden {done} tanesi tamamlandı",
+    "progress_count": "{progress} {count, plural, one {alt iş öğesi} other {alt iş öğesi}}",
+    "add_disabled": "Alt iş öğelerinin kendi alt iş öğeleri olamaz.",
     "errors": {
       "subtask_self_parent": "Bir iş öğesi kendi üst öğesi olamaz.",
       "subtask_parent_is_subtask": "Seçilen üst öğe zaten bir alt iş öğesi. Yalnızca bir seviye alt iş öğesine izin verilir.",

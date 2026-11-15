@@ -13,6 +13,8 @@ import { SPREADSHEET_COLUMNS } from "../utils";
 // components
 import { shouldRenderColumn } from "@/helpers/issue-filter.helper";
 import { WithDisplayPropertiesHOC } from "../properties/with-display-properties-HOC";
+// hooks
+import { useIssueUpdateErrorToast } from "@/hooks/use-issue-update-error-toast";
 
 type Props = {
   displayProperties: IIssueDisplayProperties;
@@ -27,6 +29,8 @@ export const IssueColumn = observer(function IssueColumn(props: Props) {
   const { displayProperties, issueDetail, disableUserActions, property, updateIssue } = props;
   // router
   const tableCellRef = useRef<HTMLTableCellElement | null>(null);
+  // Neuric: one toast when a cell edit fails (subtask-rule message when the API sent one)
+  const showUpdateError = useIssueUpdateErrorToast();
 
   const shouldRenderProperty = shouldRenderColumn(property);
 
@@ -35,7 +39,12 @@ export const IssueColumn = observer(function IssueColumn(props: Props) {
   if (!Column) return null;
 
   const handleUpdateIssue = async (issue: TIssue, data: Partial<TIssue>) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, data);
+    if (!updateIssue) return;
+    try {
+      await updateIssue(issue.project_id, issue.id, data);
+    } catch (error) {
+      showUpdateError(error);
+    }
   };
 
   return (

@@ -308,6 +308,9 @@
         "action": "清除过滤器"
       }
     },
+    "progress_a11y": "已完成 {done}/{total}",
+    "progress_count": "{progress} {count, plural, one {个子工作项} other {个子工作项}}",
+    "add_disabled": "子工作项不能有自己的子工作项。",
     "errors": {
       "subtask_self_parent": "工作项不能成为自身的父项。",
       "subtask_parent_is_subtask": "所选父项本身是子工作项。子工作项只允许一级。",

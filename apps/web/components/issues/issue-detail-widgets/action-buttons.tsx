@@ -5,7 +5,6 @@
  */
 
 import React from "react";
-import { observer } from "mobx-react";
 import { TooltipProvider } from "@makeplane/propel/components/tooltip";
 import { AttachOutline, LinkOutline, RelationsOutline, SubWorkItemsOutline } from "@makeplane/propel/icons";
 // plane imports
@@ -18,8 +17,6 @@ import {
 } from "@plane/blocks/entity-detail";
 import { useTranslation } from "@plane/i18n";
 import type { TIssueServiceType, TWorkItemWidgets } from "@plane/types";
-// hooks
-import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // local imports
 import { IssueAttachmentActionButton } from "./attachments";
 import { IssueLinksActionButton } from "./links";
@@ -35,24 +32,19 @@ type Props = {
   hideWidgets?: TWorkItemWidgets[];
 };
 
-export const IssueDetailWidgetActionButtons = observer(function IssueDetailWidgetActionButtons(props: Props) {
+export function IssueDetailWidgetActionButtons(props: Props) {
   const { workspaceSlug, projectId, issueId, disabled, issueServiceType, hideWidgets } = props;
   // translation
   const { t } = useTranslation();
-  // store hooks
-  const {
-    issue: { getIssueById },
-  } = useIssueDetail(issueServiceType);
   // derived values
-  // Neuric: one level of sub-work items only, so a sub-work item can't get its own
-  const isSubWorkItem = !!getIssueById(issueId)?.parent_id;
+  // Neuric: on a sub-work item, SubIssuesActionButton renders disabled with a tooltip (one level only)
   const showLinks = !hideWidgets?.includes("links");
   const showAttachments = !hideWidgets?.includes("attachments");
 
   return (
     <TooltipProvider>
       <EntityDetailWidgetToolbar aria-label={t("entity_detail_toolbar")}>
-        {!hideWidgets?.includes("sub-work-items") && !isSubWorkItem && (
+        {!hideWidgets?.includes("sub-work-items") && (
           <EntityDetailWidgetToolbarGroup>
             <SubIssuesActionButton
               issueId={issueId}
@@ -120,4 +112,4 @@ export const IssueDetailWidgetActionButtons = observer(function IssueDetailWidge
       </EntityDetailWidgetToolbar>
     </TooltipProvider>
   );
-});
+}

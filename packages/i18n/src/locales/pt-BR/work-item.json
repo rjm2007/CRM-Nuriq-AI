@@ -308,6 +308,9 @@
         "action": "Limpar filtros"
       }
     },
+    "progress_a11y": "{done} de {total} concluídos",
+    "progress_count": "{progress} {count, plural, one {subitem de trabalho} many {subitens de trabalho} other {subitens de trabalho}}",
+    "add_disabled": "Sub-itens de trabalho não podem ter seus próprios sub-itens.",
     "errors": {
       "subtask_self_parent": "Um item de trabalho não pode ser seu próprio pai.",
       "subtask_parent_is_subtask": "O pai selecionado já é um sub-item de trabalho. Só é permitido um nível de sub-itens de trabalho.",

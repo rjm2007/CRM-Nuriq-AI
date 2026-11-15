@@ -103,13 +103,15 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
             title: t("toast.success"),
             message: t("sub_work_item.update.success"),
           });
-          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         } catch (error) {
           setToast({
             type: "error",
             title: t("toast.error"),
             message: getSubtaskRuleError(error, t) ?? t("sub_work_item.update.error"),
           });
+        } finally {
+          // toggles the loader back off, also when the update failed
+          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         }
       },
       removeSubIssue: async (workspaceSlug, projectId, parentIssueId, issueId) => {
@@ -126,7 +128,6 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
                   : t("issue.label", { count: 1 }),
             }),
           });
-          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         } catch (_error) {
           setToast({
             type: "error",
@@ -138,13 +139,14 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
                   : t("issue.label", { count: 1 }),
             }),
           });
+        } finally {
+          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         }
       },
       deleteSubIssue: async (workspaceSlug, projectId, parentIssueId, issueId) => {
         try {
           setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
           await deleteSubIssue(workspaceSlug, projectId, parentIssueId, issueId);
-          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         } catch (_error) {
           setToast({
             type: "error",
@@ -156,6 +158,8 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
                   : t("issue.label", { count: 1 }),
             }),
           });
+        } finally {
+          setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
         }
       },
     }),

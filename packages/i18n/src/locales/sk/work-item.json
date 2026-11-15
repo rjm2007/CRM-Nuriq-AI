@@ -308,6 +308,9 @@
         "action": "Vymazať filtre"
       }
     },
+    "progress_a11y": "{done} z {total} hotovo",
+    "progress_count": "{progress} {count, plural, one {podriadená pracovná položka} few {podriadené pracovné položky} many {podriadenej pracovnej položky} other {podriadených pracovných položiek}}",
+    "add_disabled": "Podriadené pracovné položky nemôžu mať vlastné podriadené položky.",
     "errors": {
       "subtask_self_parent": "Pracovná položka nemôže byť svojím vlastným rodičom.",
       "subtask_parent_is_subtask": "Vybraný rodič je sám podriadenou položkou. Povolená je len jedna úroveň podriadených položiek.",

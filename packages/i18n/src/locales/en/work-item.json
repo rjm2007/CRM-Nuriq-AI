@@ -308,6 +308,9 @@
         "action": "Clear filters"
       }
     },
+    "progress_a11y": "{done} of {total} done",
+    "progress_count": "{progress} {count, plural, one {sub-work item} other {sub-work items}}",
+    "add_disabled": "Sub-work items can't have their own sub-work items.",
     "errors": {
       "subtask_self_parent": "A work item can't be its own parent.",
       "subtask_parent_is_subtask": "The selected parent is itself a sub-work item. Only one level of sub-work items is allowed.",

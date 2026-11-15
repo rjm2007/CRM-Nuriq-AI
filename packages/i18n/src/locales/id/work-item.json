@@ -308,6 +308,9 @@
         "action": "Hapus filter"
       }
     },
+    "progress_a11y": "{done} dari {total} selesai",
+    "progress_count": "{progress} {count, plural, one {sub-item kerja} other {sub-item kerja}}",
+    "add_disabled": "Sub-item kerja tidak dapat memiliki sub-item kerja sendiri.",
     "errors": {
       "subtask_self_parent": "Item kerja tidak dapat menjadi induknya sendiri.",
       "subtask_parent_is_subtask": "Induk yang dipilih sendiri merupakan sub-item kerja. Hanya satu tingkat sub-item kerja yang diizinkan.",

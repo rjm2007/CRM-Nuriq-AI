@@ -11,6 +11,8 @@ import { useTranslation } from "@plane/i18n";
 import { AddOutline, WorkItemsOutline } from "@makeplane/propel/icons";
 import type { TIssue, TIssueServiceType } from "@plane/types";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { canAddSubWorkItems } from "@plane/utils";
 // components
 import { handleTriggerClick, handleTriggerKeyDown } from "@/components/common/trigger-guard";
 // hooks
@@ -40,8 +42,10 @@ export const SubIssuesActionButton = observer(function SubIssuesActionButton(pro
   // derived values
   const issue = getIssueById(issueId);
 
-  // Neuric: one level of sub-work items only, so a sub-work item can't get its own
-  if (!issue || issue.parent_id) return <></>;
+  if (!issue) return <></>;
+  // Neuric: one level of sub-work items only, so a sub-work item can't get its own (disabled + tooltip)
+  const isBlocked = !canAddSubWorkItems(issue);
+  const isTriggerDisabled = disabled || isBlocked;
 
   // handlers
   const handleIssueCrudState = (
@@ -83,18 +87,18 @@ export const SubIssuesActionButton = observer(function SubIssuesActionButton(pro
     },
   ];
 
-  return (
+  const menu = (
     <Menu>
       {customButton ? (
         <MenuTrigger
-          disabled={disabled}
+          disabled={isTriggerDisabled}
           render={customButton}
           onClick={handleTriggerClick}
           onKeyDown={handleTriggerKeyDown}
         />
       ) : (
         <MenuTrigger
-          disabled={disabled}
+          disabled={isTriggerDisabled}
           aria-label={t("issue.add.sub_issue")}
           onClick={handleTriggerClick}
           onKeyDown={handleTriggerKeyDown}
@@ -116,5 +120,13 @@ export const SubIssuesActionButton = observer(function SubIssuesActionButton(pro
         ))}
       </MenuContent>
     </Menu>
+  );
+
+  if (!isBlocked || disabled) return menu;
+  return (
+    <Tooltip label={t("sub_work_item.add_disabled")} side="bottom">
+      {/* A disabled trigger gets no hover, so this wrapper takes it for the tooltip. */}
+      <span className="inline-flex cursor-not-allowed">{menu}</span>
+    </Tooltip>
   );
 });

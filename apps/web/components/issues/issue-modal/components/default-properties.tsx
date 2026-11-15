@@ -12,6 +12,7 @@ import { Icon as PropelIcon } from "@makeplane/propel/components/icon";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 import { Pill } from "@makeplane/propel/components/pill";
 import { Pill as PillChrome } from "@makeplane/propel/elements/pill";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { CalendarOutline, ParentOutline } from "@makeplane/propel/icons";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -19,7 +20,7 @@ import { useTranslation } from "@plane/i18n";
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 // ui
 import { DateSelect } from "@plane/blocks/property-select";
-import { getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
+import { canSetParent, getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
 import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
@@ -78,13 +79,14 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const { data: userProfile } = useUserProfile();
   const {
     issue: { getIssueById },
+    subIssues: { subIssuesByIssueId },
   } = useIssueDetail();
   // Neuric: a sub-work item's due date can't be after its parent's
   const { parentTargetDate } = useParentIssue(workspaceSlug, projectId, parentId);
   // derived values
   const projectDetails = getProjectById(projectId);
   // Neuric: one level of sub-work items only, so an existing work item with sub-work items can't get a parent
-  const hasSubWorkItems = !!id && !isDraft && (getIssueById(id)?.sub_issues_count ?? 0) > 0;
+  const isParentBlocked = !!id && !isDraft && !canSetParent(getIssueById(id), subIssuesByIssueId(id));
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
 
@@ -305,14 +307,24 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
             />
           </MenuContent>
         </Menu>
-      ) : hasSubWorkItems ? null : (
-        <Pill
-          size="sm"
-          variant="outline"
-          startIcon={<PropelIcon icon={<ParentOutline className="size-3.5" />} />}
-          onClick={() => setParentIssueListModalOpen(true)}
-          label={t("add_parent")}
-        />
+      ) : (
+        <Tooltip
+          label={t("sub_work_item.errors.subtask_has_children")}
+          side="bottom"
+          disabled={!isParentBlocked || isMobile}
+        >
+          {/* A disabled button gets no hover, so this wrapper takes it for the tooltip. */}
+          <span className={isParentBlocked ? "inline-flex cursor-not-allowed" : "inline-flex"}>
+            <Pill
+              size="sm"
+              variant="outline"
+              startIcon={<PropelIcon icon={<ParentOutline className="size-3.5" />} />}
+              onClick={() => setParentIssueListModalOpen(true)}
+              disabled={isParentBlocked}
+              label={t("add_parent")}
+            />
+          </span>
+        </Tooltip>
       )}
       <Controller
         control={control}

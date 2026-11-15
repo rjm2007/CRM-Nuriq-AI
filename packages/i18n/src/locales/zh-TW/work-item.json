@@ -308,6 +308,9 @@
         "action": "清除過濾器"
       }
     },
+    "progress_a11y": "已完成 {done}/{total}",
+    "progress_count": "{progress} {count, plural, one {個子工作事項} other {個子工作事項}}",
+    "add_disabled": "子工作事項不能有自己的子工作事項。",
     "errors": {
       "subtask_self_parent": "工作事項不能成為自身的父項。",
       "subtask_parent_is_subtask": "所選父項本身是子工作事項。子工作事項只允許一層。",

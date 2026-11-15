@@ -44,6 +44,7 @@ export const IssueDetailMetaRow = observer(function IssueDetailMetaRow(props: Pr
   const { t } = useTranslation();
   const {
     issue: { getIssueById },
+    subIssues: { subIssuesByIssueId },
   } = useIssueDetail();
   const { getStateById } = useProjectState();
   const { data: userProfile } = useUserProfile();
@@ -55,6 +56,15 @@ export const IssueDetailMetaRow = observer(function IssueDetailMetaRow(props: Pr
 
   const stateDetails = getStateById(issue.state_id);
   const minDate = getDate(issue.start_date) ?? undefined;
+  // Neuric: a parent's due date can't move before its loaded sub-work items' due dates
+  const latestSubIssueTargetDate = (subIssuesByIssueId(issueId) ?? []).reduce<Date | undefined>((latest, subId) => {
+    const date = getDate(getIssueById(subId)?.target_date);
+    return date && (!latest || date > latest) ? date : latest;
+  }, undefined);
+  const dueMinDate = [minDate, latestSubIssueTargetDate].reduce<Date | undefined>(
+    (latest, date) => (date && (!latest || date > latest) ? date : latest),
+    undefined
+  );
   const maxDate = getDate(issue.target_date) ?? undefined;
 
   return (
@@ -138,7 +148,7 @@ export const IssueDetailMetaRow = observer(function IssueDetailMetaRow(props: Pr
                 target_date: val ? renderFormattedPayloadDate(val) : null,
               })
             }
-            minDate={minDate}
+            minDate={dueMinDate}
             maxDate={parentTargetDate}
             disabled={disabled}
             clearable

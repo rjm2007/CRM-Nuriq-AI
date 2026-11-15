@@ -7,14 +7,23 @@
 // Neuric: unit tests for the subtask-rule helpers in @plane/utils (src/work-item/subtask-rules.ts).
 // They live here because @plane/utils has no test runner; @plane/blocks already depends on it.
 import { describe, expect, it } from "vitest";
-import { SUBTASK_ROLLUP_COMMENT, SUBTASK_RULE_ERROR_CODES } from "@plane/constants";
+import {
+  SUBTASK_ROLLUP_ACTIVITY_REFETCH_DELAY_MS,
+  SUBTASK_ROLLUP_COMMENT,
+  SUBTASK_ROLLUP_REFETCH_DELAYS_MS,
+  SUBTASK_RULE_ERROR_CODES,
+} from "@plane/constants";
 import {
   adjustCompletedSubIssuesCount,
+  applyCompletedSubIssuesCountDelta,
+  canAddSubWorkItems,
+  canSetParent,
   formatSubIssuesProgress,
   getCompletedSubIssuesCountDelta,
   getSubtaskRuleError,
   getSubtaskRuleErrorCode,
   isSubtaskRollupReady,
+  isSubtaskRollupReadyFromCounts,
 } from "@plane/utils";
 
 /** Fake `t`: returns the key plus its params so the test can see both. */
@@ -59,7 +68,7 @@ describe("getSubtaskRuleError", () => {
       parent_target_date: ["2026-11-20"],
     };
     expect(getSubtaskRuleError(serializerError, t)).toBe(
-      'sub_work_item.errors.subtask_date_after_parent {"date":"2026-11-20"}'
+      'sub_work_item.errors.subtask_date_after_parent {"date":"Nov 20, 2026"}'
     );
     const bulkError = {
       error: "Some work items are due after the parent's due date (2026-11-20).",
@@ -68,7 +77,7 @@ describe("getSubtaskRuleError", () => {
       parent_target_date: "2026-11-20",
     };
     expect(getSubtaskRuleError(bulkError, t)).toBe(
-      'sub_work_item.errors.subtask_date_after_parent {"date":"2026-11-20"}'
+      'sub_work_item.errors.subtask_date_after_parent {"date":"Nov 20, 2026"}'
     );
   });
 
@@ -128,6 +137,61 @@ describe("completed sub-work item count", () => {
     expect(formatSubIssuesProgress(5, undefined)).toBe("5");
     expect(formatSubIssuesProgress(5, null)).toBe("5");
     expect(formatSubIssuesProgress(2, 4)).toBe("2/2");
+  });
+});
+
+describe("applyCompletedSubIssuesCountDelta (undo by delta)", () => {
+  it("returns the delta that actually landed after clamping", () => {
+    expect(applyCompletedSubIssuesCountDelta(2, 1, 5)).toEqual({ next: 3, applied: 1 });
+    expect(applyCompletedSubIssuesCountDelta(5, 1, 5)).toEqual({ next: 5, applied: 0 });
+    expect(applyCompletedSubIssuesCountDelta(0, -1, 5)).toEqual({ next: 0, applied: 0 });
+    expect(applyCompletedSubIssuesCountDelta(undefined, 1, 5)).toEqual({ next: undefined, applied: 0 });
+  });
+
+  it("undoing one change keeps a sibling's change made meanwhile", () => {
+    // child A completes: 2 -> 3
+    const first = applyCompletedSubIssuesCountDelta(2, 1, 5);
+    // child B completes while A's request is in flight: 3 -> 4
+    const second = applyCompletedSubIssuesCountDelta(first.next, 1, 5);
+    // A's request fails: reverse only A's delta on top of the current count
+    expect(adjustCompletedSubIssuesCount(second.next, -first.applied, 5)).toBe(3);
+    // restoring A's stale absolute value (2) would have lost B's change
+    expect(adjustCompletedSubIssuesCount(second.next, -first.applied, 5)).not.toBe(2);
+  });
+});
+
+describe("isSubtaskRollupReadyFromCounts", () => {
+  it("counts known cancelled siblings and needs at least one completed", () => {
+    expect(isSubtaskRollupReadyFromCounts(3, 3)).toBe(true);
+    expect(isSubtaskRollupReadyFromCounts(3, 2, 1)).toBe(true);
+    expect(isSubtaskRollupReadyFromCounts(3, 2)).toBe(false);
+    expect(isSubtaskRollupReadyFromCounts(3, 0, 3)).toBe(false);
+    expect(isSubtaskRollupReadyFromCounts(0, 0)).toBe(false);
+    expect(isSubtaskRollupReadyFromCounts(3, undefined, 3)).toBe(false);
+    expect(isSubtaskRollupReadyFromCounts(undefined, 1)).toBe(false);
+  });
+});
+
+describe("one level of sub-work items", () => {
+  it("canAddSubWorkItems: not on a sub-work item, not before the item is loaded", () => {
+    expect(canAddSubWorkItems({ parent_id: null })).toBe(true);
+    expect(canAddSubWorkItems({ parent_id: "parent" })).toBe(false);
+    expect(canAddSubWorkItems(undefined)).toBe(false);
+  });
+
+  it("canSetParent: not when the item has sub-work items (counted or loaded)", () => {
+    expect(canSetParent({ sub_issues_count: 0 })).toBe(true);
+    expect(canSetParent({ sub_issues_count: 0 }, [])).toBe(true);
+    expect(canSetParent({ sub_issues_count: 2 })).toBe(false);
+    expect(canSetParent({ sub_issues_count: 0 }, ["child"])).toBe(false);
+    expect(canSetParent(undefined)).toBe(true);
+  });
+});
+
+describe("rollup refetch timing", () => {
+  it("retries with backoff, at most three tries, then waits ~1 s for the activity", () => {
+    expect([...SUBTASK_ROLLUP_REFETCH_DELAYS_MS]).toEqual([1500, 3000, 6000]);
+    expect(SUBTASK_ROLLUP_ACTIVITY_REFETCH_DELAY_MS).toBe(1000);
   });
 });
 

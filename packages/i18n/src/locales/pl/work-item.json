@@ -308,6 +308,9 @@
         "action": "Wyczyść filtry"
       }
     },
+    "progress_a11y": "{done} z {total} ukończone",
+    "progress_count": "{progress} {count, plural, one {podrzędny element pracy} few {podrzędne elementy pracy} many {podrzędnych elementów pracy} other {podrzędnego elementu pracy}}",
+    "add_disabled": "Podrzędne elementy pracy nie mogą mieć własnych elementów podrzędnych.",
     "errors": {
       "subtask_self_parent": "Element pracy nie może być swoim własnym elementem nadrzędnym.",
       "subtask_parent_is_subtask": "Wybrany element nadrzędny sam jest elementem podrzędnym. Dozwolony jest tylko jeden poziom elementów podrzędnych.",

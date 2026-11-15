@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import React from "react";
+import React, { useId } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ import { Button } from "@makeplane/propel/elements/button";
 import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { cn } from "@plane/utils";
+import { canSetParent, cn } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
@@ -67,8 +67,9 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
   const parentIssueProjectDetails =
     parentIssue && parentIssue.project_id ? getProjectById(parentIssue.project_id) : undefined;
   const { isMobile } = usePlatformOS();
+  const blockedReasonId = useId();
   // Neuric: one level of sub-work items only, so a work item with sub-work items can't get a parent
-  const hasSubWorkItems = (issue?.sub_issues_count ?? 0) > 0 || (subIssuesByIssueId(issueId)?.length ?? 0) > 0;
+  const isParentBlocked = !canSetParent(issue, subIssuesByIssueId(issueId));
 
   if (!issue) return <></>;
 
@@ -86,7 +87,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
           "group flex h-8 w-full min-w-0 items-center justify-between gap-2 rounded-md",
           {
             "px-2": !!(issue.parent_id && parentIssue),
-            "hover:bg-layer-transparent-hover": !disabled,
+            "hover:bg-layer-transparent-hover": !disabled && !(isParentBlocked && !issue.parent_id),
             "bg-layer-transparent-selected": isParentIssueModalOpen,
           },
           className
@@ -153,24 +154,42 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
           <Tooltip
             label={t("sub_work_item.errors.subtask_has_children")}
             side="bottom"
-            disabled={!hasSubWorkItems || disabled || isMobile}
+            disabled={!isParentBlocked || disabled || isMobile}
           >
-            <span className="flex w-full">
+            {/* The button is aria-disabled (no pointer events), so this wrapper takes the hover for the tooltip. */}
+            <span className={cn("flex w-full", { "cursor-not-allowed": isParentBlocked && !disabled })}>
               <Button
                 type="button"
                 variant="ghost"
                 size="md"
                 stretch="full"
-                onClick={() => toggleParentIssueModal(issue.id)}
-                disabled={disabled || hasSubWorkItems}
+                onClick={() => {
+                  if (isParentBlocked) return;
+                  toggleParentIssueModal(issue.id);
+                }}
+                disabled={disabled}
+                aria-disabled={isParentBlocked && !disabled ? true : undefined}
+                aria-describedby={isParentBlocked && !disabled ? blockedReasonId : undefined}
               >
-                <span className="grow text-left text-body-xs-regular text-placeholder">{t("issue.add.parent")}</span>
-                {!disabled && !hasSubWorkItems && (
+                <span
+                  className={cn("grow text-left text-body-xs-regular", {
+                    "text-placeholder": !isParentBlocked,
+                    "text-disabled": isParentBlocked,
+                  })}
+                >
+                  {t("issue.add.parent")}
+                </span>
+                {!disabled && !isParentBlocked && (
                   <span className="shrink-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100">
                     <Icon icon={EditOutline} />
                   </span>
                 )}
               </Button>
+              {isParentBlocked && !disabled && (
+                <span id={blockedReasonId} className="sr-only">
+                  {t("sub_work_item.errors.subtask_has_children")}
+                </span>
+              )}
             </span>
           </Tooltip>
         )}

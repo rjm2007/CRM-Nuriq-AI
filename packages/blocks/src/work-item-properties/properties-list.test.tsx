@@ -60,4 +60,19 @@ describe("WorkItemPropertyCountChip", () => {
     const chip = screen.getByRole("img", { name: "Sub-work items: 3/5" });
     expect(chip.textContent).toContain("3/5");
   });
+
+  it("reads accessibleValue in the accessible name while showing displayValue", () => {
+    render(
+      <WorkItemPropertyCountChip
+        icon={<svg />}
+        count={5}
+        displayValue="3/5"
+        accessibleValue="3 of 5 done"
+        label="Sub-work items"
+        onClick={() => {}}
+      />
+    );
+    const chip = screen.getByRole("button", { name: "Sub-work items: 3 of 5 done" });
+    expect(chip.textContent).toContain("3/5");
+  });
 });

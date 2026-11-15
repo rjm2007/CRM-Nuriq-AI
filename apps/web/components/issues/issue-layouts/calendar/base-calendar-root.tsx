@@ -11,8 +11,10 @@ import { useParams } from "next/navigation";
 // plane imports
 import { EIssueGroupByToServerOptions, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { setToast } from "@plane/blocks/toast";
+import { useTranslation } from "@plane/i18n";
 import type { TGroupedIssues } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
+import { getSubtaskRuleError } from "@plane/utils";
 // hooks
 import { useCalendarView } from "@/hooks/store/use-calendar-view";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -54,6 +56,7 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
 
   // router
   const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
 
   // hooks
   const fallbackStoreType = useIssueStoreType() as CalendarStoreType;
@@ -119,11 +122,16 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
       workspaceSlug?.toString(),
       issueProjectId,
       updateIssue
-    ).catch((err) => {
+    ).catch((err: unknown) => {
+      // Neuric: the subtask-rule message when the API sent an error_code
+      const detail = typeof err === "object" && err !== null && "detail" in err ? err.detail : undefined;
       setToast({
         title: "Error!",
         type: "error",
-        message: err?.detail ?? "Failed to perform this action",
+        message:
+          getSubtaskRuleError(err, t) ??
+          (typeof detail === "string" && detail ? detail : undefined) ??
+          "Failed to perform this action",
       });
     });
   };
@@ -137,12 +145,12 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
 
   const getPaginationData = useCallback(
     (groupId: string | undefined) => issues?.getPaginationData(groupId, undefined),
-    [issues?.getPaginationData]
+    [issues]
   );
 
   const getGroupIssueCount = useCallback(
     (groupId: string | undefined) => issues?.getGroupIssueCount(groupId, undefined, false),
-    [issues?.getGroupIssueCount]
+    [issues]
   );
 
   const canEditProperties = useCallback(

@@ -308,6 +308,9 @@
         "action": "Eliminar filtros"
       }
     },
+    "progress_a11y": "{done} de {total} completados",
+    "progress_count": "{progress} {count, plural, one {subelemento de trabajo} other {subelementos de trabajo}}",
+    "add_disabled": "Los sub-elementos de trabajo no pueden tener sus propios sub-elementos.",
     "errors": {
       "subtask_self_parent": "Un elemento de trabajo no puede ser su propio elemento principal.",
       "subtask_parent_is_subtask": "El elemento principal seleccionado ya es un sub-elemento. Solo se permite un nivel de sub-elementos.",

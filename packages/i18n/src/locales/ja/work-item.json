@@ -308,6 +308,9 @@
         "action": "フィルターをクリア"
       }
     },
+    "progress_a11y": "{total} 件中 {done} 件完了",
+    "progress_count": "{progress} {count, plural, one {サブ作業項目} other {サブ作業項目}}",
+    "add_disabled": "サブ作業項目に独自のサブ作業項目を追加することはできません。",
     "errors": {
       "subtask_self_parent": "作業項目を自身の親にすることはできません。",
       "subtask_parent_is_subtask": "選択した親はサブ作業項目です。サブ作業項目は1階層までしか作成できません。",

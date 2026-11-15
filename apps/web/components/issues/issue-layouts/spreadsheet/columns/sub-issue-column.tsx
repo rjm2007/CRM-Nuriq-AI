@@ -7,6 +7,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 // types
 import type { TIssue } from "@plane/types";
 // helpers
@@ -25,6 +26,7 @@ export const SpreadsheetSubIssueColumn = observer(function SpreadsheetSubIssueCo
   const router = useAppRouter();
   // hooks
   const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
   // derived values
   const isEpic = issue?.is_epic;
   const subIssueCount = issue?.sub_issues_count ?? 0;
@@ -37,7 +39,7 @@ export const SpreadsheetSubIssueColumn = observer(function SpreadsheetSubIssueCo
 
   // Neuric: "done/total" when the list endpoint sent completed_sub_issues_count
   const progress = formatSubIssuesProgress(subIssueCount, issue?.completed_sub_issues_count);
-  const label = `${progress} sub-work item${subIssueCount !== 1 ? "s" : ""}`;
+  const label = t("sub_work_item.progress_count", { progress, count: subIssueCount });
 
   return (
     <Row

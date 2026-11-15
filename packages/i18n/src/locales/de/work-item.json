@@ -308,6 +308,9 @@
         "action": "Filter entfernen"
       }
     },
+    "progress_a11y": "{done} von {total} erledigt",
+    "progress_count": "{progress} {count, plural, one {untergeordnetes Arbeitselement} other {untergeordnete Arbeitselemente}}",
+    "add_disabled": "Untergeordnete Arbeitselemente können keine eigenen untergeordneten Elemente haben.",
     "errors": {
       "subtask_self_parent": "Ein Arbeitselement kann nicht sein eigenes übergeordnetes Element sein.",
       "subtask_parent_is_subtask": "Das ausgewählte übergeordnete Element ist selbst ein untergeordnetes Element. Es ist nur eine Ebene untergeordneter Elemente erlaubt.",

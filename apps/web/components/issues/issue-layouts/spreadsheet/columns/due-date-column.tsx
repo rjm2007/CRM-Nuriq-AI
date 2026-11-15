@@ -6,6 +6,7 @@
 
 import React from "react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { DueDateOutline } from "@makeplane/propel/icons";
 import { DateSelect } from "@plane/blocks/property-select";
 import { useTranslation } from "@plane/i18n";
@@ -15,6 +16,7 @@ import { cn, getDate, renderFormattedPayloadDate, getIssueDueDateClassName } fro
 // hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useUserProfile } from "@/hooks/store/user";
+import { useParentIssue } from "@/hooks/use-parent-issue";
 
 type Props = {
   issue: TIssue;
@@ -28,6 +30,9 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
   // store hooks
   const { getStateById } = useProjectState();
   const { data: userProfile } = useUserProfile();
+  const { workspaceSlug } = useParams();
+  // Neuric: a sub-work item's due date can't be after its parent's
+  const { parentTargetDate } = useParentIssue(workspaceSlug?.toString(), issue.project_id, issue.parent_id);
   // plane hooks
   const { t } = useTranslation();
   // derived values
@@ -38,6 +43,7 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
       <DateSelect
         value={getDate(issue.target_date) ?? null}
         minDate={getDate(issue.start_date)}
+        maxDate={issue.parent_id ? parentTargetDate : undefined}
         onChange={(data) => {
           const targetDate = data ? renderFormattedPayloadDate(data) : null;
           onChange(

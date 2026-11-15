@@ -68,6 +68,7 @@ import type { IThemeStore } from "./theme.store";
 import { ThemeStore } from "./theme.store";
 import type { IUserStore } from "./user";
 import { UserStore } from "./user";
+import { clearPendingParentRefetches } from "./issue/helpers/subtask-progress.helper";
 import type { IWorkspaceRootStore } from "./workspace";
 
 enableStaticRendering(typeof window === "undefined");
@@ -138,6 +139,7 @@ export class CoreRootStore {
   }
 
   resetOnSignOut() {
+    clearPendingParentRefetches(); // Neuric: drop scheduled subtask-rollup parent re-fetches
     // handling the system theme when user logged out from the app
     localStorage.setItem("theme", "system");
     void setLanguage(FALLBACK_LANGUAGE);

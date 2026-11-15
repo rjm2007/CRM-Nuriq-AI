@@ -8,7 +8,9 @@
 // plane imports
 import { SUBTASK_RULE_ERROR_CODES } from "@plane/constants";
 import type { TSubtaskRuleErrorCode } from "@plane/constants";
-import type { TStateGroups } from "@plane/types";
+import type { TIssue, TStateGroups } from "@plane/types";
+// local imports
+import { renderFormattedDate } from "../datetime";
 
 type TTranslate = (key: string, params?: Record<string, unknown>) => string;
 
@@ -72,7 +74,9 @@ export const getSubtaskRuleError = (error: unknown, t: TTranslate): string | und
 
   const key = `sub_work_item.errors.${code.toLowerCase()}`;
   if (code === "SUBTASK_DATE_AFTER_PARENT") {
-    const date = firstString(error.parent_target_date);
+    const rawDate = firstString(error.parent_target_date);
+    // `MMM dd, yyyy`, like every other date in the UI; keep the raw value if it doesn't parse
+    const date = rawDate ? (renderFormattedDate(rawDate) ?? rawDate) : undefined;
     return date ? t(key, { date }) : fallback;
   }
   if (code === "PARENT_DATE_BEFORE_SUBTASKS") {
@@ -111,6 +115,21 @@ export const adjustCompletedSubIssuesCount = (
 };
 
 /**
+ * Applies `delta` like `adjustCompletedSubIssuesCount` and also returns the delta that actually
+ * landed after clamping, so an undo can reverse exactly that change (`-applied`) on top of whatever
+ * the count is by then, instead of restoring a stale absolute value.
+ */
+export const applyCompletedSubIssuesCountDelta = (
+  current: number | undefined,
+  delta: number,
+  total?: number
+): { next: number | undefined; applied: number } => {
+  const next = adjustCompletedSubIssuesCount(current, delta, total);
+  const applied = next === undefined || current === undefined || current === null ? 0 : next - current;
+  return { next, applied };
+};
+
+/**
  * True when the API will auto-complete the parent: every sub-work item is completed or cancelled,
  * and at least one is completed.
  */
@@ -118,6 +137,36 @@ export const isSubtaskRollupReady = (groups: (TStateGroups | undefined)[]): bool
   groups.length > 0 &&
   groups.every((group) => group === "completed" || group === "cancelled") &&
   groups.some((group) => group === "completed");
+
+/**
+ * Count-only fallback for `isSubtaskRollupReady`, used when not every sibling is loaded. Mirrors the
+ * API rule: every sub-work item completed or cancelled, at least one completed. `cancelled` is the
+ * number of cancelled siblings we know of (the list endpoints don't send a cancelled count).
+ */
+export const isSubtaskRollupReadyFromCounts = (
+  total: number | undefined | null,
+  completed: number | undefined | null,
+  cancelled = 0
+): boolean => {
+  if (!total || total <= 0 || completed === undefined || completed === null || completed < 1) return false;
+  return completed + Math.max(0, cancelled) >= total;
+};
+
+/**
+ * One level of sub-work items only: a work item can get sub-work items unless it is one itself.
+ * `false` while the work item is not loaded.
+ */
+export const canAddSubWorkItems = (issue: Pick<TIssue, "parent_id"> | undefined | null): boolean =>
+  !!issue && !issue.parent_id;
+
+/**
+ * One level of sub-work items only: a work item can get a parent unless it has sub-work items,
+ * counted by the API (`sub_issues_count`) or loaded in the sub-work items widget (`loadedSubIds`).
+ */
+export const canSetParent = (
+  issue: Pick<TIssue, "sub_issues_count"> | undefined | null,
+  loadedSubIds?: readonly string[] | null
+): boolean => (issue?.sub_issues_count ?? 0) <= 0 && (loadedSubIds?.length ?? 0) === 0;
 
 /** Card label: `done/total`, or just `total` when the completed count is not known. */
 export const formatSubIssuesProgress = (total: number, completed?: number | null): string =>

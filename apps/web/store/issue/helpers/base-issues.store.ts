@@ -110,6 +110,12 @@ export interface IBaseIssuesStore {
     removeModuleIds: string[]
   ): Promise<void>;
   updateIssueDates(workspaceSlug: string, updates: IBlockUpdateDependencyData[], projectId?: string): Promise<void>;
+  // Neuric: exposed so the subtask rollup refresh can regroup a parent in the current page's list
+  updateIssueList(
+    issue?: TIssue,
+    issueBeforeUpdate?: TIssue,
+    action?: EIssueGroupedAction.ADD | EIssueGroupedAction.DELETE
+  ): void;
 }
 
 // This constant maps the group by keys to the respective issue property that the key relies on
@@ -589,9 +595,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         workspaceSlug,
         issueBeforeUpdate,
         data,
-        (slug, parentProjectId, issueIds) => this.issueService.retrieveIssues(slug, parentProjectId, issueIds),
-        (parentProjectId, parentId, parent) =>
-          void this.issueUpdate(workspaceSlug, parentProjectId, parentId, parent, false)
+        (slug, parentProjectId, issueIds) => this.issueService.retrieveIssues(slug, parentProjectId, issueIds)
       );
 
       // call fetch Parent Stats
@@ -776,7 +780,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId?: string
   ) {
     if (!projectId) return;
-    const issueDatesBeforeChange: { id: string; start_date?: string; target_date?: string }[] = [];
+    const issueDatesBeforeChange: { id: string; start_date: string | null; target_date: string | null }[] = [];
     try {
       const getIssueById = this.rootIssueStore.issues.getIssueById;
       runInAction(() => {
@@ -791,8 +795,8 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
           if (currIssue) {
             issueDatesBeforeChange.push({
               id: update.id,
-              start_date: currIssue.start_date ?? undefined,
-              target_date: currIssue.target_date ?? undefined,
+              start_date: currIssue.start_date ?? null,
+              target_date: currIssue.target_date ?? null,
             });
           }
 
@@ -805,9 +809,8 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       runInAction(() => {
         // oxlint-disable-next-line no-shadow
         for (const update of issueDatesBeforeChange) {
-          const dates: Partial<TIssue> = {};
-          if (update.start_date) dates.start_date = update.start_date;
-          if (update.target_date) dates.target_date = update.target_date;
+          // Neuric: write both dates back, even when they were empty, so the undo is exact
+          const dates: Partial<TIssue> = { start_date: update.start_date, target_date: update.target_date };
 
           this.issueUpdate(workspaceSlug, projectId, update.id, dates, false);
         }

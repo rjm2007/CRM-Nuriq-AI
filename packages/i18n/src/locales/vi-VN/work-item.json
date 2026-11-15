@@ -308,6 +308,9 @@
         "action": "Xóa bộ lọc"
       }
     },
+    "progress_a11y": "{done} trên {total} đã xong",
+    "progress_count": "{progress} {count, plural, one {mục công việc con} other {mục công việc con}}",
+    "add_disabled": "Mục công việc con không thể có mục công việc con riêng.",
     "errors": {
       "subtask_self_parent": "Mục công việc không thể là mục cha của chính nó.",
       "subtask_parent_is_subtask": "Mục cha đã chọn là một mục công việc con. Chỉ cho phép một cấp mục công việc con.",

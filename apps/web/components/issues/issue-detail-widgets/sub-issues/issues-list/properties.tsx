@@ -24,6 +24,7 @@ import { WithDisplayPropertiesHOC } from "@/components/issues/issue-layouts/prop
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useUserProfile } from "@/hooks/store/user";
+import { useParentIssue } from "@/hooks/use-parent-issue";
 
 type Props = {
   workspaceSlug: string;
@@ -42,17 +43,20 @@ type Props = {
   issue: TIssue;
 };
 
+// Stops a press on a date chip from reaching the clickable row it sits in.
+const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 export const SubIssuesListItemProperties = observer(function SubIssuesListItemProperties(props: Props) {
   const { workspaceSlug, parentIssueId, issueId, canEdit, updateSubIssue, displayProperties, issue } = props;
   const { t } = useTranslation();
   const { getStateById } = useProjectState();
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { data: userProfile } = useUserProfile();
-
-  const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
+  // Neuric: a sub-work item's due date can't be after its parent's
+  const { parentTargetDate } = useParentIssue(workspaceSlug, issue.project_id, parentIssueId);
 
   const handleStartDate = (date: Date | null) => {
     if (issue.project_id) {
@@ -148,6 +152,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
               to: getDate(issue.target_date) ?? null,
             }}
             onChange={handleDateRangeUpdate}
+            maxDate={parentTargetDate}
             icon={<StartDateOutline />}
             clearable
             className={dueDateClassName}
@@ -196,6 +201,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
           value={getDate(issue?.target_date) ?? null}
           onChange={handleTargetDate}
           minDate={minDate}
+          maxDate={parentTargetDate}
           placeholder={t("common.order_by.due_date")}
           icon={<DueDateOutline />}
           className={dueDateClassName}

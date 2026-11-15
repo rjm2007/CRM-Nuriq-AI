@@ -26,5 +26,11 @@ export type TSubtaskRuleErrorCode = (typeof SUBTASK_RULE_ERROR_CODES)[number];
  */
 export const SUBTASK_ROLLUP_COMMENT = "updated the state to (all sub-work items are done)";
 
-/** Delay before re-fetching a parent after its last sub-work item is closed (the API rolls up in Celery). */
-export const SUBTASK_ROLLUP_REFETCH_DELAY_MS = 1500;
+/**
+ * Delays before each re-fetch of a parent after its last sub-work item is closed (the API rolls up in
+ * Celery, so it can take a moment). One try per entry; the retries stop once the parent is closed.
+ */
+export const SUBTASK_ROLLUP_REFETCH_DELAYS_MS = [1500, 3000, 6000] as const;
+
+/** Extra wait before re-fetching the parent's activity once it is closed, so the rollup's activity row exists. */
+export const SUBTASK_ROLLUP_ACTIVITY_REFETCH_DELAY_MS = 1000;

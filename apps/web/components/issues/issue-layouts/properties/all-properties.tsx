@@ -63,6 +63,8 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useUserProfile } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
+import { useIssueUpdateErrorToast } from "@/hooks/use-issue-update-error-toast";
+import { useParentIssue } from "@/hooks/use-parent-issue";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // local components
 import { buildLabelStepDownVariants, LabelsStepDownChip } from "./label-step-down";
@@ -128,12 +130,20 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   // router
   const router = useAppRouter();
   const { workspaceSlug, projectId } = useParams();
+  // Neuric: a sub-work item's due date can't be after its parent's; one toast when an edit fails
+  const { parentTargetDate } = useParentIssue(workspaceSlug?.toString(), issue.project_id, issue.parent_id);
+  const showUpdateError = useIssueUpdateErrorToast();
 
   // derived values
   const stateDetails = getStateById(issue.state_id);
   const subIssueCount = issue?.sub_issues_count ?? 0;
   // Neuric: "done/total" when the list endpoint sent completed_sub_issues_count
   const subIssueProgress = formatSubIssuesProgress(subIssueCount, issue?.completed_sub_issues_count);
+  const completedSubIssues = issue?.completed_sub_issues_count;
+  const subIssueProgressA11y =
+    completedSubIssues === undefined || completedSubIssues === null
+      ? undefined
+      : t("sub_work_item.progress_a11y", { done: Math.min(completedSubIssues, subIssueCount), total: subIssueCount });
 
   const issueOperations = useMemo(
     () => ({
@@ -157,21 +167,23 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
     [workspaceSlug, issue, changeModulesInIssue, addCycleToIssue, removeCycleFromIssue]
   );
 
-  const handleState = async (stateId: string) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { state_id: stateId });
+  // Every inline edit goes through here: the store rolls back on failure, this shows the one toast.
+  const runUpdate = async (data: Partial<TIssue>) => {
+    if (!updateIssue) return;
+    try {
+      await updateIssue(issue.project_id, issue.id, data);
+    } catch (error) {
+      showUpdateError(error);
+    }
   };
 
-  const handlePriority = async (value: TIssuePriorities) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { priority: value });
-  };
+  const handleState = async (stateId: string) => runUpdate({ state_id: stateId });
 
-  const handleLabel = async (ids: string[]) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { label_ids: ids });
-  };
+  const handlePriority = async (value: TIssuePriorities) => runUpdate({ priority: value });
 
-  const handleAssignee = async (ids: string[]) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { assignee_ids: ids });
-  };
+  const handleLabel = async (ids: string[]) => runUpdate({ label_ids: ids });
+
+  const handleAssignee = async (ids: string[]) => runUpdate({ assignee_ids: ids });
 
   const handleModule = useCallback(
     (moduleIds: string[] | null) => {
@@ -183,42 +195,34 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       for (const moduleId of updatedModuleIds)
         if (issue.module_ids.includes(moduleId)) modulesToRemove.push(moduleId);
         else modulesToAdd.push(moduleId);
-      if (modulesToAdd.length > 0) issueOperations.addModulesToIssue(modulesToAdd);
-      if (modulesToRemove.length > 0) issueOperations.removeModulesFromIssue(modulesToRemove);
+      if (modulesToAdd.length > 0) issueOperations.addModulesToIssue(modulesToAdd).catch(showUpdateError);
+      if (modulesToRemove.length > 0) issueOperations.removeModulesFromIssue(modulesToRemove).catch(showUpdateError);
     },
-    [issueOperations, issue]
+    [issueOperations, issue, showUpdateError]
   );
 
   const handleCycle = useCallback(
     (cycleId: string | null) => {
       if (!issue || issue.cycle_id === cycleId) return;
-      if (cycleId) issueOperations.addIssueToCycle?.(cycleId);
-      else issueOperations.removeIssueFromCycle?.();
+      if (cycleId) issueOperations.addIssueToCycle(cycleId).catch(showUpdateError);
+      else issueOperations.removeIssueFromCycle().catch(showUpdateError);
     },
-    [issue, issueOperations]
+    [issue, issueOperations, showUpdateError]
   );
 
-  const handleStartDate = async (date: Date | null) => {
-    if (updateIssue)
-      await updateIssue(issue.project_id, issue.id, { start_date: date ? renderFormattedPayloadDate(date) : null });
-  };
+  const handleStartDate = async (date: Date | null) =>
+    runUpdate({ start_date: date ? renderFormattedPayloadDate(date) : null });
 
-  const handleTargetDate = async (date: Date | null) => {
-    if (updateIssue)
-      await updateIssue(issue.project_id, issue.id, { target_date: date ? renderFormattedPayloadDate(date) : null });
-  };
+  const handleTargetDate = async (date: Date | null) =>
+    runUpdate({ target_date: date ? renderFormattedPayloadDate(date) : null });
 
-  const handleDateRangeUpdate = async (range: DateRangeValue) => {
-    if (updateIssue)
-      await updateIssue(issue.project_id, issue.id, {
-        start_date: range.from ? renderFormattedPayloadDate(range.from) : null,
-        target_date: range.to ? renderFormattedPayloadDate(range.to) : null,
-      });
-  };
+  const handleDateRangeUpdate = async (range: DateRangeValue) =>
+    runUpdate({
+      start_date: range.from ? renderFormattedPayloadDate(range.from) : null,
+      target_date: range.to ? renderFormattedPayloadDate(range.to) : null,
+    });
 
-  const handleEstimate = async (value: string | null) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { estimate_point: value });
-  };
+  const handleEstimate = async (value: string | null) => runUpdate({ estimate_point: value });
 
   const workItemLink = generateWorkItemLink({
     workspaceSlug: workspaceSlug?.toString(),
@@ -241,6 +245,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
   const minDate = getDate(issue.start_date);
   const maxDate = getDate(issue.target_date);
+  // Neuric: cap for a sub-work item's due date (and the merged date range)
+  const parentMaxDate = issue.parent_id ? parentTargetDate : undefined;
   const dueDateClassName = getIssueDueDateClassName(issue.target_date, stateDetails?.group);
   const none = t("common.none");
   const isShown = (key: keyof IIssueDisplayProperties) => !!displayProperties[key];
@@ -322,6 +328,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           to: getDate(issue.target_date) ?? null,
         }}
         onChange={handleDateRangeUpdate}
+        maxDate={parentMaxDate}
         icon={<StartDateOutline />}
         mergeDates
         disabled={isReadOnly}
@@ -388,6 +395,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         value={getDate(issue?.target_date) ?? null}
         onChange={handleTargetDate}
         minDate={minDate}
+        maxDate={parentMaxDate}
         placeholder={t("common.order_by.due_date")}
         icon={<DueDateOutline />}
         disabled={isReadOnly}
@@ -552,6 +560,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           icon={SubWorkItemsOutline}
           count={subIssueCount}
           displayValue={subIssueProgress}
+          accessibleValue={subIssueProgressA11y}
           label={t("common.sub_work_items")}
           tooltipDisabled={isMobile}
           onFocus={handleEventPropagation}

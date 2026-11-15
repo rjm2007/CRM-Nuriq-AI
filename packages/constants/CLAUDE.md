@@ -31,4 +31,5 @@ No unit tests in this package. `pnpm turbo run check --filter=@plane/constants`
 ## Our changes (Neuric)
 
 - 2026-11-15: `PROJECT_CREATE_TAB_INDICES` gains `"target_date"` after `"lead"` (`src/tab-indices.ts`).
-- Our changes (Neuric) 2026-11-15, subtask rules: `src/subtask.ts`: `SUBTASK_RULE_ERROR_CODES` / `TSubtaskRuleErrorCode`, `SUBTASK_ROLLUP_COMMENT` (must equal the backend constant in `bgtasks/subtask_rollup_task.py`), `SUBTASK_ROLLUP_REFETCH_DELAY_MS`.
+- Our changes (Neuric) 2026-11-15, subtask rules: `src/subtask.ts`: `SUBTASK_RULE_ERROR_CODES` / `TSubtaskRuleErrorCode`, `SUBTASK_ROLLUP_COMMENT` (must equal the backend constant in `bgtasks/subtask_rollup_task.py`), refetch delays (see below).
+- Our changes (Neuric) 2026-11-15, subtask rules review fixes: `SUBTASK_ROLLUP_REFETCH_DELAY_MS` replaced by `SUBTASK_ROLLUP_REFETCH_DELAYS_MS` (`[1500, 3000, 6000]`) and `SUBTASK_ROLLUP_ACTIVITY_REFETCH_DELAY_MS` (1000).

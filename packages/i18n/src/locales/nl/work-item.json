@@ -308,6 +308,9 @@
         "action": "Filters wissen"
       }
     },
+    "progress_a11y": "{done} van {total} klaar",
+    "progress_count": "{progress} {count, plural, one {subwerkitem} other {subwerkitems}}",
+    "add_disabled": "Subwerkitems kunnen geen eigen subwerkitems hebben.",
     "errors": {
       "subtask_self_parent": "Een werkitem kan niet zijn eigen bovenliggende item zijn.",
       "subtask_parent_is_subtask": "Het geselecteerde bovenliggende item is zelf een subwerkitem. Er is maar één niveau subwerkitems toegestaan.",

@@ -10,11 +10,12 @@ import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { observer } from "mobx-react";
 import { setToast } from "@plane/blocks/toast";
+import { useTranslation } from "@plane/i18n";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate } from "@plane/types";
 // types
 // ui
 // components
-import { cn, renderFormattedPayloadDate } from "@plane/utils";
+import { cn, renderFormattedDate, renderFormattedPayloadDate } from "@plane/utils";
 import { highlightIssueOnDrop } from "@/components/issues/issue-layouts/utils";
 // helpers
 import { MONTHS_LIST } from "@plane/constants";
@@ -76,6 +77,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
   } = props;
 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const { t } = useTranslation();
 
   const calendarLayout = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.layout ?? "month";
 
@@ -95,6 +97,21 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
           type: "error",
           title: "Error!",
           message: "Due date cannot be before the start date of the work item.",
+        });
+        return false;
+      }
+    }
+    // Neuric: a sub-work item's due date can't be after its parent's (when the parent is loaded)
+    const parentTargetDate = issueDetails?.parent_id ? issues?.[issueDetails.parent_id]?.target_date : undefined;
+    if (parentTargetDate) {
+      const diffInDays = differenceInCalendarDays(new Date(destinationDate), new Date(parentTargetDate));
+      if (diffInDays > 0) {
+        setToast({
+          type: "error",
+          title: "Error!",
+          message: t("sub_work_item.errors.subtask_date_after_parent", {
+            date: renderFormattedDate(parentTargetDate) ?? parentTargetDate,
+          }),
         });
         return false;
       }
