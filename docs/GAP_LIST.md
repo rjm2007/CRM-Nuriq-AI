@@ -2,35 +2,74 @@
 
 Checked against makeplane/plane source on 2026-11-15. Paths are under `apps/api/plane/`.
 
-| Need | Plane has | Gap / action |
-|---|---|---|
-| Project name, description | `Project.name`, `description_html` | — |
-| Project admin + employees | `ProjectMember` + roles (`app/permissions/base.py` ROLE) | Map Admin = project admin role |
-| Project completion date | **No** target date on Project | Add `Project.target_date` (nullable) |
-| PRD on project | **No** field | Add `Project.prd_page` FK → Page (nullable); uploads via FileAsset |
-| Tasks / subtasks | `Issue`, `Issue.parent`, `app/views/issue/sub_issue.py` | Add one-level rule + subtask due date ≤ parent (serializer) |
-| Subtask progress "3/5" | Partial (sub-issue list) | Add counts to issue detail serializer |
-| Parent auto-done | **No** | New Celery task `subtask_rollup_task.py`, hooked after state activity |
-| Custom statuses per project | `State` + `StateGroup` | — |
-| Priority, labels, assignees | Yes | — |
-| Dependencies | `IssueRelation` (blocked_by etc.) | — |
-| Comments + @mentions | `IssueComment`, `IssueMention` | — |
-| Activity tab (task + subtask) | `IssueActivity` + `bgtasks/issue_activities_task.py` | Subtasks are issues → already covered. Extend mapper for new models |
-| Time tracking | Only flag `Project.is_time_tracking_enabled`; **no worklog model** in CE | New `IssueWorkLog` model + endpoints + roll-up |
-| Kanban / List / Calendar | Frontend layouts | — |
-| Sprints | `Cycle` | Custom length already free-form (start/end dates) |
-| Keywords | `Module` (name, description, dates, lead, members) | Use Module; add `ModuleLink` for the map |
-| Phases | **No** | New `Phase` + `PhaseModule` |
-| Docs | `Page`, `FileAsset` | Add artifact `source` field |
-| Client share link | `DeployBoard` (anchor, comments/reactions flags) + `space/` | Add test results + client feedback, throttled |
-| Test cases | **No** | New TestSuite/TestCase/TestRun/TestResult |
-| AI agent | **No** (CE) | New Transcript, AIJob, AIProposal, AIProviderConnection + Celery |
-| Public API for MCP | `api/` at `/api/v1/`, X-Api-Key | Add endpoints for every new model |
-| My Tasks | Frontend "Your work" (verify in apps/web) | Frontend check next |
-| Dashboard / reports | `analytics`, `app/views/analytic` | Verify in frontend |
+| Need                          | Plane has                                                                | Gap / action                                                          |
+| ----------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| Project name, description     | `Project.name`, `description_html`                                       | —                                                                     |
+| Project admin + employees     | `ProjectMember` + roles (`app/permissions/base.py` ROLE)                 | Map Admin = project admin role                                        |
+| Project completion date       | **No** target date on Project                                            | Add `Project.target_date` (nullable)                                  |
+| PRD on project                | **No** field                                                             | Add `Project.prd_page` FK → Page (nullable); uploads via FileAsset    |
+| Tasks / subtasks              | `Issue`, `Issue.parent`, `app/views/issue/sub_issue.py`                  | Add one-level rule + subtask due date ≤ parent (serializer)           |
+| Subtask progress "3/5"        | Partial (sub-issue list)                                                 | Add counts to issue detail serializer                                 |
+| Parent auto-done              | **No**                                                                   | New Celery task `subtask_rollup_task.py`, hooked after state activity |
+| Custom statuses per project   | `State` + `StateGroup`                                                   | —                                                                     |
+| Priority, labels, assignees   | Yes                                                                      | —                                                                     |
+| Dependencies                  | `IssueRelation` (blocked_by etc.)                                        | —                                                                     |
+| Comments + @mentions          | `IssueComment`, `IssueMention`                                           | —                                                                     |
+| Activity tab (task + subtask) | `IssueActivity` + `bgtasks/issue_activities_task.py`                     | Subtasks are issues → already covered. Extend mapper for new models   |
+| Time tracking                 | Only flag `Project.is_time_tracking_enabled`; **no worklog model** in CE | New `IssueWorkLog` model + endpoints + roll-up                        |
+| Kanban / List / Calendar      | Frontend layouts                                                         | —                                                                     |
+| Sprints                       | `Cycle`                                                                  | Custom length already free-form (start/end dates)                     |
+| Keywords                      | `Module` (name, description, dates, lead, members)                       | Use Module; add `ModuleLink` for the map                              |
+| Phases                        | **No**                                                                   | New `Phase` + `PhaseModule`                                           |
+| Docs                          | `Page`, `FileAsset`                                                      | Add artifact `source` field                                           |
+| Client share link             | `DeployBoard` (anchor, comments/reactions flags) + `space/`              | Add test results + client feedback, throttled                         |
+| Test cases                    | **No**                                                                   | New TestSuite/TestCase/TestRun/TestResult                             |
+| AI agent                      | **No** (CE)                                                              | New Transcript, AIJob, AIProposal, AIProviderConnection + Celery      |
+| Public API for MCP            | `api/` at `/api/v1/`, X-Api-Key                                          | Add endpoints for every new model                                     |
+| My Tasks                      | Frontend "Your work" (verify in apps/web)                                | Frontend check next                                                   |
+| Dashboard / reports           | `analytics`, `app/views/analytic`                                        | Verify in frontend                                                    |
 
 ## Order for Step 1 backend
+
 1. Project fields (target_date, prd_page) — small migration.
 2. Subtask rules + progress counts — serializer only, no migration.
 3. Parent auto-done task.
 4. IssueWorkLog model + API + activity.
+
+# Gap list — frontend
+
+Checked against `apps/web` and `packages/*` on 2026-11-15. Routes come from `apps/web/app/routes/core.ts`; new routes go in `apps/web/app/routes/extended.ts` (empty). There are **no `ce/`/`ee/` folders**: paid features are only stubs (`UpgradeBadge`, billing page, disabled options). All code is AGPL-3.0.
+
+| Need                                              | Plane has (paths / routes)                                                                                                                                                                             | Gap / smallest change                                                                                                                                                                                                                                               |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project create modal                              | `apps/web/components/project/create-project-modal.tsx`; form `components/projects/create/root.tsx`, `project/create/common-attributes.tsx`, `projects/create/attributes.tsx` (network, `project_lead`) | Description + admin (lead) exist                                                                                                                                                                                                                                    |
+| Completion date                                   | Not in form or `IProject` (`packages/types/src/project/projects.ts`)                                                                                                                                   | Add `target_date`; `DateSelect` (`packages/blocks/src/property-select/date-select.tsx`) in create attributes, edit form `project/form.tsx`, pill on `project/card.tsx`                                                                                              |
+| Employees on create                               | Only after create, in settings (`project/send-project-invitation-modal.tsx`)                                                                                                                           | Add a members step to `create-project-modal.tsx` reusing that form logic                                                                                                                                                                                            |
+| PRD on project                                    | No page picker exists                                                                                                                                                                                  | Add `prd_page` to `IProject`; new shared `PageSelect` in `packages/blocks/src/property-select/` (model: `module-select.tsx`)                                                                                                                                        |
+| Assignee, priority, dates, state                  | `issues/issue-detail/detail-meta-row.tsx`; create modal `issue-modal/components/default-properties.tsx`                                                                                                | —                                                                                                                                                                                                                                                                   |
+| Labels, estimate, parent, cycle, keyword (Module) | `issues/issue-detail/sidebar-sections.tsx` (also used by peek); `issue-detail/module-select.tsx` (needs `module_view`)                                                                                 | Turn `module_view` on by default for new projects                                                                                                                                                                                                                   |
+| Phase                                             | None                                                                                                                                                                                                   | Derived from keyword (see DECISIONS): read-only row in `sidebar-sections.tsx` in Step 2                                                                                                                                                                             |
+| Estimate                                          | Points/categories in CE; time estimates paid-only (`isEstimateSystemEnabled` false)                                                                                                                    | Use points; worklog covers time. Don't re-enable time estimates                                                                                                                                                                                                     |
+| Dependencies                                      | `issue-detail-widgets/relations/*` (blocking, blocked_by, relates_to, duplicate). Gantt arrows stubbed (`store/timeline/base-timeline.store.ts:345`)                                                   | Enough for Step 1. Gantt arrows = parked (paid-only in Plane; don't recreate from their docs)                                                                                                                                                                       |
+| Attachments                                       | `issue-detail-widgets/attachments/*`                                                                                                                                                                   | —                                                                                                                                                                                                                                                                   |
+| Subtask list                                      | `issue-detail-widgets/sub-issues/*`, recursive rows in `issues-list/list-item.tsx`                                                                                                                     | —                                                                                                                                                                                                                                                                   |
+| "3/5" progress                                    | **Exists in detail** (`sub-issues/title.tsx`). Cards show total only (`issue-layouts/properties/all-properties.tsx`, `list/block.tsx`, `spreadsheet/columns/sub-issue-column.tsx`)                     | Show done/total on cards once backend sends completed count                                                                                                                                                                                                         |
+| One-level rule (UI)                               | Sub-issue quick action, `ExistingIssuesListModal`, `parent-select-root.tsx`, `parent-issues-list-modal.tsx`, `parent_id` in issue modal                                                                | Hide "add sub-work item" when `parent_id` set; parent pickers show top-level only; toast serializer errors                                                                                                                                                          |
+| Subtask due ≤ parent                              | `DateSelect` has `minDate`/`maxDate`                                                                                                                                                                   | Cap `maxDate` at parent's `target_date` in `detail-meta-row.tsx` and `default-properties.tsx`                                                                                                                                                                       |
+| Time tracking UI                                  | None (only billing upsell, unused `WORKLOG` activity type in `packages/types/src/issues/activity/base.ts`, `worklog` empty-state image)                                                                | New "Time" widget in `issue-detail-widgets/time/`; add `"time"` to `TWorkItemWidgets` (`packages/types/src/issues/issue.ts`); sidebar total incl. subtasks; `worklog.store.ts` + service; `is_time_tracking_enabled` toggle in `project/settings/features-list.tsx` |
+| My Tasks                                          | "Your work" → `/:ws/profile/:userId` (+ `/assigned`, `/created`, `/subscribed`, `/activity`); `components/profile/profile-issues.tsx`                                                                  | Mostly covered. Rename to "My Tasks" (i18n), default to `assigned`. Optional home widget (old AGPL `widgets/assigned-issues.tsx`, removed in commit `245167e8aa`)                                                                                                   |
+| Dashboard / analytics                             | `/:ws/analytics/:tabId` (overview, work-items), `components/analytics/*`                                                                                                                               | Enough for Step 1. Later: "Time" tab (time per person/project, completion vs `target_date`)                                                                                                                                                                         |
+| Layouts                                           | List, Kanban, Calendar, Spreadsheet, Gantt (`issue-layouts/roots/project-layout-root.tsx`)                                                                                                             | —                                                                                                                                                                                                                                                                   |
+| Activity tab                                      | `issue-activity/activity/activity-list.tsx` (switch on `field`), `store/issue/issue-details/activity.store.ts`                                                                                         | For worklog: `case "worklog"` + `actions/worklog.tsx` (copy `estimate.tsx`), icon in `common/activity/helper.tsx`, i18n                                                                                                                                             |
+
+Other notes: `apps/web` has **no unit-test runner** (`packages/blocks` has one); `check:lint` allows warnings.
+
+## Order for Step 1 frontend
+
+1. Project `target_date` (types, create, edit, card) + members step on create.
+2. Shared `PageSelect` in `packages/blocks` → PRD field.
+3. Subtask UI rules (one level, due-date cap, done/total on cards).
+4. Time: toggle, store/service, "Time" widget, sidebar roll-up.
+5. Activity renderer for `worklog` + i18n.
+6. My Tasks relabel; optional home widget.
+7. Analytics "Time" tab. Phase UI waits for Step 2.
