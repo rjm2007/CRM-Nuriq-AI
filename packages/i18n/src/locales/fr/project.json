@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Page indisponible",
     "prd_page_search_placeholder": "Rechercher des pages...",
     "prd_page_empty": "Seules les pages publiques et non archivées de ce projet peuvent être liées",
-    "prd_page_none": "Aucune page PRD"
+    "prd_page_none": "Aucune page PRD",
+    "members_step": {
+      "description": "Choisissez des membres de l’espace de travail pour ce projet. Vous pouvez ignorer cette étape et les ajouter plus tard dans les paramètres du projet.",
+      "skip": "Ignorer",
+      "select_role": "Sélectionner un rôle",
+      "member_required": "Sélectionnez un membre",
+      "role_required": "Sélectionnez un rôle",
+      "members_added": "Membres ajoutés au projet."
+    }
   }
 }

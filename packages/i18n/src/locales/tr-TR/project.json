@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Sayfa kullanılamıyor",
     "prd_page_search_placeholder": "Sayfa ara...",
     "prd_page_empty": "Yalnızca bu projenin herkese açık ve arşivlenmemiş sayfaları bağlanabilir",
-    "prd_page_none": "PRD sayfası yok"
+    "prd_page_none": "PRD sayfası yok",
+    "members_step": {
+      "description": "Bu proje için çalışma alanı üyelerini seçin. Bu adımı atlayabilir ve üyeleri daha sonra proje ayarlarından ekleyebilirsiniz.",
+      "skip": "Atla",
+      "select_role": "Rol seçin",
+      "member_required": "Bir üye seçin",
+      "role_required": "Bir rol seçin",
+      "members_added": "Üyeler projeye eklendi."
+    }
   }
 }

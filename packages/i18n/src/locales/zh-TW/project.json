@@ -423,6 +423,14 @@
     "prd_page_missing_short": "頁面無法使用",
     "prd_page_search_placeholder": "搜尋頁面...",
     "prd_page_empty": "只能連結此專案中公開且未封存的頁面",
-    "prd_page_none": "無 PRD 頁面"
+    "prd_page_none": "無 PRD 頁面",
+    "members_step": {
+      "description": "為此專案選擇工作區成員。您可以跳過此步驟，稍後在專案設定中新增。",
+      "skip": "略過",
+      "select_role": "選擇角色",
+      "member_required": "請選擇成員",
+      "role_required": "請選擇角色",
+      "members_added": "已將成員新增至專案。"
+    }
   }
 }

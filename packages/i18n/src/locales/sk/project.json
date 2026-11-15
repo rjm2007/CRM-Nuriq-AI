@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Stránka nie je dostupná",
     "prd_page_search_placeholder": "Hľadať stránky...",
     "prd_page_empty": "Prepojiť možno iba verejné, nearchivované stránky tohto projektu",
-    "prd_page_none": "Bez stránky PRD"
+    "prd_page_none": "Bez stránky PRD",
+    "members_step": {
+      "description": "Vyberte členov pracovného priestoru pre tento projekt. Tento krok môžete preskočiť a pridať ich neskôr v nastaveniach projektu.",
+      "skip": "Preskočiť",
+      "select_role": "Vyberte rolu",
+      "member_required": "Vyberte člena",
+      "role_required": "Vyberte rolu",
+      "members_added": "Členovia boli pridaní do projektu."
+    }
   }
 }

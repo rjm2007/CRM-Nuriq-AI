@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Página no disponible",
     "prd_page_search_placeholder": "Buscar páginas...",
     "prd_page_empty": "Solo se pueden vincular páginas públicas y no archivadas de este proyecto",
-    "prd_page_none": "Sin página PRD"
+    "prd_page_none": "Sin página PRD",
+    "members_step": {
+      "description": "Elija miembros del espacio de trabajo para este proyecto. Puede omitir este paso y agregarlos más tarde en la configuración del proyecto.",
+      "skip": "Omitir",
+      "select_role": "Seleccionar rol",
+      "member_required": "Seleccione un miembro",
+      "role_required": "Seleccione un rol",
+      "members_added": "Miembros agregados al proyecto."
+    }
   }
 }

@@ -17,6 +17,7 @@ import type { TProject } from "@plane/types";
 // services
 import { FileService } from "@/services/file.service";
 const fileService = new FileService();
+import { ProjectCreateMembersStep } from "./create/members-step";
 import { ProjectFeatureUpdate } from "./project-feature-update";
 
 type Props = {
@@ -30,6 +31,8 @@ type Props = {
 
 enum EProjectCreationSteps {
   CREATE_PROJECT = "CREATE_PROJECT",
+  // Neuric: optional step to add workspace members right after the project is created
+  MEMBERS = "MEMBERS",
   FEATURE_SELECTION = "FEATURE_SELECTION",
 }
 
@@ -50,7 +53,7 @@ export function CreateProjectModal(props: Props) {
   const handleNextStep = (projectId: string) => {
     if (!projectId) return;
     setCreatedProjectId(projectId);
-    setCurrentStep(EProjectCreationSteps.FEATURE_SELECTION);
+    setCurrentStep(EProjectCreationSteps.MEMBERS);
   };
 
   const handleCoverImageStatusUpdate = async (projectId: string, coverImage: string) => {
@@ -82,6 +85,13 @@ export function CreateProjectModal(props: Props) {
               templateId={templateId}
             />
           </div>
+        )}
+        {currentStep === EProjectCreationSteps.MEMBERS && createdProjectId && (
+          <ProjectCreateMembersStep
+            workspaceSlug={workspaceSlug}
+            projectId={createdProjectId}
+            onNext={() => setCurrentStep(EProjectCreationSteps.FEATURE_SELECTION)}
+          />
         )}
         {currentStep === EProjectCreationSteps.FEATURE_SELECTION && (
           <ProjectFeatureUpdate projectId={createdProjectId} workspaceSlug={workspaceSlug} onClose={onClose} />

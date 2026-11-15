@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Trang không khả dụng",
     "prd_page_search_placeholder": "Tìm kiếm trang...",
     "prd_page_empty": "Chỉ có thể liên kết các trang công khai, chưa lưu trữ của dự án này",
-    "prd_page_none": "Không có trang PRD"
+    "prd_page_none": "Không có trang PRD",
+    "members_step": {
+      "description": "Chọn thành viên không gian làm việc cho dự án này. Bạn có thể bỏ qua bước này và thêm họ sau trong cài đặt dự án.",
+      "skip": "Bỏ qua",
+      "select_role": "Chọn vai trò",
+      "member_required": "Chọn một thành viên",
+      "role_required": "Chọn một vai trò",
+      "members_added": "Đã thêm thành viên vào dự án."
+    }
   }
 }

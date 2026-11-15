@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Seite nicht verfügbar",
     "prd_page_search_placeholder": "Seiten suchen...",
     "prd_page_empty": "Nur öffentliche, nicht archivierte Seiten dieses Projekts können verknüpft werden",
-    "prd_page_none": "Keine PRD-Seite"
+    "prd_page_none": "Keine PRD-Seite",
+    "members_step": {
+      "description": "Wählen Sie Mitglieder des Arbeitsbereichs für dieses Projekt aus. Sie können diesen Schritt überspringen und sie später in den Projekteinstellungen hinzufügen.",
+      "skip": "Überspringen",
+      "select_role": "Rolle auswählen",
+      "member_required": "Mitglied auswählen",
+      "role_required": "Rolle auswählen",
+      "members_added": "Mitglieder wurden dem Projekt hinzugefügt."
+    }
   }
 }

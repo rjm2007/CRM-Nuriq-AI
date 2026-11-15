@@ -64,8 +64,9 @@ export const SidebarItemBase = observer(function SidebarItemBase({
   const isPinned = isWorkspaceItemPinned(item.key);
   if (!isPinned && !staticItems.includes(item.key)) return null;
 
-  const itemHref =
-    item.key === "your_work" && data?.id ? joinUrlPath(slug, item.href, data?.id) : joinUrlPath(slug, item.href);
+  // Neuric: "My Tasks" opens the assigned tab; the item stays highlighted on every profile tab
+  const profileHref = item.key === "your_work" && data?.id ? joinUrlPath(slug, item.href, data.id) : undefined;
+  const itemHref = profileHref ? joinUrlPath(profileHref, "assigned") : joinUrlPath(slug, item.href);
   const icon = getSidebarNavigationItemIcon(item.key);
 
   return (
@@ -74,7 +75,7 @@ export const SidebarItemBase = observer(function SidebarItemBase({
         href={itemHref}
         render={<Link href={itemHref} />}
         onClick={handleLinkClick}
-        aria-current={item.highlight(pathname, itemHref) ? "page" : undefined}
+        aria-current={item.highlight(pathname, profileHref ?? itemHref) ? "page" : undefined}
       >
         {icon}
         <ListItemLabel>{t(item.labelTranslationKey)}</ListItemLabel>

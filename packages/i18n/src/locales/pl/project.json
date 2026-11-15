@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Strona niedostępna",
     "prd_page_search_placeholder": "Szukaj stron...",
     "prd_page_empty": "Można powiązać tylko publiczne, niezarchiwizowane strony tego projektu",
-    "prd_page_none": "Brak strony PRD"
+    "prd_page_none": "Brak strony PRD",
+    "members_step": {
+      "description": "Wybierz członków przestrzeni roboczej do tego projektu. Możesz pominąć ten krok i dodać ich później w ustawieniach projektu.",
+      "skip": "Pomiń",
+      "select_role": "Wybierz rolę",
+      "member_required": "Wybierz członka",
+      "role_required": "Wybierz rolę",
+      "members_added": "Członkowie zostali dodani do projektu."
+    }
   }
 }

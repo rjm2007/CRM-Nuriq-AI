@@ -53,3 +53,4 @@ React Router v7 in SPA mode (`ssr: false`) + Vite, MobX for state. Dev server on
 ## Our changes (Neuric)
 
 - Our changes (Neuric) 2026-11-15, subtask rules: frontend for one-level sub-work items, due date capped by the parent, `done/total` progress on cards, parent auto-done refresh and toasts for the API's `error_code`s. See `components/`, `store/`, `hooks/` CLAUDE.md.
+- Our changes (Neuric) 2026-11-15: "Your work" is labelled "My Tasks" (i18n only, routes unchanged) and the sidebar opens the `assigned` tab; create-project modal has a Members step; new projects default to Modules (Keywords) on. See `components/CLAUDE.md`.

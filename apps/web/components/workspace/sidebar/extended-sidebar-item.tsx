@@ -139,9 +139,10 @@ export const ExtendedSidebarItem = observer(function ExtendedSidebarItem(props: 
     );
   }, [isLastChild, handleOnNavigationItemDrop, disableDrag, disableDrop, item.key]);
 
+  // Neuric: "My Tasks" opens the assigned tab
   const itemHref =
     item.key === "your_work"
-      ? `/${workspaceSlug.toString()}${item.href}${data?.id}`
+      ? `/${workspaceSlug.toString()}${item.href}${data?.id}/assigned`
       : `/${workspaceSlug.toString()}${item.href}`;
   const isActive = itemHref === pathname;
 

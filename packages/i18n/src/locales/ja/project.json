@@ -423,6 +423,14 @@
     "prd_page_missing_short": "ページを利用できません",
     "prd_page_search_placeholder": "ページを検索...",
     "prd_page_empty": "このプロジェクトの公開済みかつアーカイブされていないページのみリンクできます",
-    "prd_page_none": "PRD ページなし"
+    "prd_page_none": "PRD ページなし",
+    "members_step": {
+      "description": "このプロジェクトに参加するワークスペースのメンバーを選択してください。この手順はスキップして、後でプロジェクト設定から追加することもできます。",
+      "skip": "スキップ",
+      "select_role": "役割を選択",
+      "member_required": "メンバーを選択してください",
+      "role_required": "役割を選択してください",
+      "members_added": "メンバーをプロジェクトに追加しました。"
+    }
   }
 }

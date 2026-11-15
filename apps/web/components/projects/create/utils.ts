@@ -18,6 +18,8 @@ export const getProjectFormValues = (): Partial<IProject> => ({
     },
   },
   identifier: "",
+  // Neuric: Keywords (Modules) are on for new projects; the backend default stays false
+  module_view: true,
   name: "",
   network: 2,
   project_lead: null,

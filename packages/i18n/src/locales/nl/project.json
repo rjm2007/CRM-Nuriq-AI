@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Pagina niet beschikbaar",
     "prd_page_search_placeholder": "Pagina's zoeken...",
     "prd_page_empty": "Alleen openbare, niet-gearchiveerde pagina's van dit project kunnen worden gekoppeld",
-    "prd_page_none": "Geen PRD-pagina"
+    "prd_page_none": "Geen PRD-pagina",
+    "members_step": {
+      "description": "Kies werkruimteleden voor dit project. Je kunt deze stap overslaan en ze later toevoegen in de projectinstellingen.",
+      "skip": "Overslaan",
+      "select_role": "Rol selecteren",
+      "member_required": "Selecteer een lid",
+      "role_required": "Selecteer een rol",
+      "members_added": "Leden toegevoegd aan het project."
+    }
   }
 }

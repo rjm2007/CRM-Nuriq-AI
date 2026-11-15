@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Page unavailable",
     "prd_page_search_placeholder": "Search pages...",
     "prd_page_empty": "Only public, non-archived pages of this project can be linked",
-    "prd_page_none": "No PRD page"
+    "prd_page_none": "No PRD page",
+    "members_step": {
+      "description": "Pick workspace members for this project. You can skip this step and add them later in project settings.",
+      "skip": "Skip",
+      "select_role": "Select role",
+      "member_required": "Select a member",
+      "role_required": "Select a role",
+      "members_added": "Members added to the project."
+    }
   }
 }

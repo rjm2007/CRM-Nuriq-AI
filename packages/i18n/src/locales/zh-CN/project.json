@@ -423,6 +423,14 @@
     "prd_page_missing_short": "页面不可用",
     "prd_page_search_placeholder": "搜索页面...",
     "prd_page_empty": "只能关联此项目中公开且未归档的页面",
-    "prd_page_none": "无 PRD 页面"
+    "prd_page_none": "无 PRD 页面",
+    "members_step": {
+      "description": "为此项目选择工作区成员。您可以跳过此步骤，稍后在项目设置中添加。",
+      "skip": "跳过",
+      "select_role": "选择角色",
+      "member_required": "请选择成员",
+      "role_required": "请选择角色",
+      "members_added": "已将成员添加到项目。"
+    }
   }
 }

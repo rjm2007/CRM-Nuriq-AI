@@ -423,6 +423,14 @@
     "prd_page_missing_short": "Pagină indisponibilă",
     "prd_page_search_placeholder": "Căutați pagini...",
     "prd_page_empty": "Pot fi asociate doar paginile publice, nearhivate ale acestui proiect",
-    "prd_page_none": "Nicio pagină PRD"
+    "prd_page_none": "Nicio pagină PRD",
+    "members_step": {
+      "description": "Alegeți membrii spațiului de lucru pentru acest proiect. Puteți sări peste acest pas și îi puteți adăuga mai târziu din setările proiectului.",
+      "skip": "Omite",
+      "select_role": "Selectați rolul",
+      "member_required": "Selectați un membru",
+      "role_required": "Selectați un rol",
+      "members_added": "Membrii au fost adăugați la proiect."
+    }
   }
 }
