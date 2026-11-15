@@ -49,6 +49,8 @@ from plane.db.models import (
     IssueLabel,
     IssueAssignee,
 )
+from plane.api.serializers import ModuleRelationSerializer, PhaseSerializer  # Neuric
+from plane.db.models import ModuleRelation, Phase  # Neuric
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
 from plane.utils.exception_logger import log_exception
@@ -65,6 +67,8 @@ SERIALIZER_MAPPER = {
     "issue_comment": IssueCommentSerializer,
     "user": UserLiteSerializer,
     "intake_issue": IntakeIssueSerializer,
+    "phase": PhaseSerializer,  # Neuric
+    "module_relation": ModuleRelationSerializer,  # Neuric
 }
 
 MODEL_MAPPER = {
@@ -77,6 +81,8 @@ MODEL_MAPPER = {
     "issue_comment": IssueComment,
     "user": User,
     "intake_issue": IntakeIssue,
+    "phase": Phase,  # Neuric
+    "module_relation": ModuleRelation,  # Neuric
 }
 
 
@@ -438,7 +444,7 @@ def webhook_activity(
         if event == "issue":
             webhooks = webhooks.filter(issue=True)
 
-        if event == "module" or event == "module_issue":
+        if event in ("module", "module_issue", "phase", "module_relation"):  # Neuric: keyword map events
             webhooks = webhooks.filter(module=True)
 
         if event == "cycle" or event == "cycle_issue":

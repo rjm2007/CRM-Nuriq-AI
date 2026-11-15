@@ -28,6 +28,7 @@ export type TProjectSettingsTabs =
   | "features_pages"
   | "features_intake"
   | "features_time_tracking" // Neuric: time tracking (IssueWorkLog) toggle page
+  | "phases" // Neuric: project phases (Step 2)
   | "states"
   | "labels"
   | "estimates"

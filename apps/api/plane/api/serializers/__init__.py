@@ -70,3 +70,4 @@ from .member import (
 from .sticky import StickySerializer
 
 from .worklog import IssueWorkLogSerializer, WorkLogSummarySerializer  # Neuric
+from .phase import ModuleRelationSerializer, PhaseModuleAssignSerializer, PhaseSerializer  # Neuric

@@ -33,6 +33,7 @@ export const PROJECT_SETTINGS_ICONS: Record<TProjectSettingsTabs, IconGlyph | Re
   features_pages: PagesOutline,
   features_intake: IntakeOutline,
   features_time_tracking: TimeTrackingOutline, // Neuric
+  phases: ModuleOutline, // Neuric (Step 2)
   states: StateOutline,
   labels: LabelsOutline,
   estimates: EstimateOutline,

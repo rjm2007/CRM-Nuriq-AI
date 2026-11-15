@@ -56,6 +56,8 @@ import type { IWorkspaceNotificationStore } from "./notifications/workspace-noti
 import { WorkspaceNotificationStore } from "./notifications/workspace-notifications.store";
 import type { IProjectPageStore } from "./pages/project-page.store";
 import { ProjectPageStore } from "./pages/project-page.store";
+import type { IModuleRelationStore, IPhaseStore } from "./phase.store";
+import { ModuleRelationStore, PhaseStore } from "./phase.store";
 import type { IProjectRootStore } from "./project";
 import { ProjectRootStore } from "./project";
 import type { IProjectViewStore } from "./project-view.store";
@@ -105,6 +107,8 @@ export class CoreRootStore {
   workItemFilters: IWorkItemFilterStore;
   powerK: IPowerKStore;
   timelineStore: ITimelineStore;
+  phase: IPhaseStore; // Neuric: project phases (Step 2)
+  moduleRelation: IModuleRelationStore; // Neuric: keyword-map relations (Step 2)
 
   constructor() {
     this.router = new RouterStore();
@@ -137,6 +141,8 @@ export class CoreRootStore {
     this.workItemFilters = new WorkItemFilterStore();
     this.powerK = new PowerKStore();
     this.timelineStore = new TimeLineStore(this);
+    this.phase = new PhaseStore(this);
+    this.moduleRelation = new ModuleRelationStore();
   }
 
   resetOnSignOut() {
@@ -173,6 +179,8 @@ export class CoreRootStore {
     this.workItemFilters = new WorkItemFilterStore();
     this.powerK = new PowerKStore();
     this.timelineStore = new TimeLineStore(this);
+    this.phase = new PhaseStore(this);
+    this.moduleRelation = new ModuleRelationStore();
   }
 }
 

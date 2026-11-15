@@ -87,6 +87,15 @@ export const PROJECT_SETTINGS: Record<TProjectSettingsTabs, TProjectSettingsItem
     access: [EUserProjectRoles.ADMIN],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/features/time-tracking/`,
   },
+  // Neuric: project phases (Step 2). Everyone in the project can open it; only admins edit (checked in the page).
+  // Route registered in apps/web/app/routes/extended.ts.
+  phases: {
+    key: "phases",
+    i18n_label: "project_settings.phases.short_title",
+    href: `/phases`,
+    access: [EUserProjectRoles.ADMIN, EUserProjectRoles.MEMBER, EUserProjectRoles.GUEST],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/phases/`,
+  },
   states: {
     key: "states",
     i18n_label: "common.states",
@@ -130,6 +139,7 @@ export const GROUPED_PROJECT_SETTINGS: Record<PROJECT_SETTINGS_CATEGORY, TProjec
     PROJECT_SETTINGS["features_time_tracking"],
   ],
   [PROJECT_SETTINGS_CATEGORY.WORK_STRUCTURE]: [
+    // Neuric: PROJECT_SETTINGS["phases"] is listed here once the phases settings page exists (Step 2, WIP).
     PROJECT_SETTINGS["states"],
     PROJECT_SETTINGS["labels"],
     PROJECT_SETTINGS["estimates"],

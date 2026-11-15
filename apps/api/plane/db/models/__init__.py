@@ -92,3 +92,5 @@ from .sticky import Sticky
 from .description import Description, DescriptionVersion
 
 from .worklog import IssueWorkLog  # Neuric
+from .phase import Phase, PhaseModule  # Neuric
+from .module_relation import ModuleRelation  # Neuric

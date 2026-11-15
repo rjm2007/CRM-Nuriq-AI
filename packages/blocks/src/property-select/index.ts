@@ -25,6 +25,8 @@ export { ModuleSelect } from "./module-select";
 export type { ModuleOption, ModuleSelectProps } from "./module-select";
 export { PageSelect } from "./page-select";
 export type { PageOption, PageSelectProps } from "./page-select";
+export { PhaseSelect } from "./phase-select";
+export type { PhaseOption, PhaseSelectProps } from "./phase-select";
 export { PrioritySelect } from "./priority-select";
 export type { PriorityOption, PrioritySelectProps } from "./priority-select";
 export { ProjectSelect } from "./project-select";

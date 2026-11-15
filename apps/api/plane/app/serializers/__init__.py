@@ -137,3 +137,4 @@ from .draft import (
 )
 
 from .worklog import IssueWorkLogSerializer  # Neuric
+from .phase import ModuleRelationSerializer, PhaseModuleAssignSerializer, PhaseSerializer  # Neuric
