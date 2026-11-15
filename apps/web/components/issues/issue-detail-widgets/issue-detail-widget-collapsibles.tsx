@@ -16,6 +16,7 @@ import { AttachmentsCollapsible } from "./attachments";
 import { LinksCollapsible } from "./links";
 import { RelationsCollapsible } from "./relations";
 import { SubIssuesCollapsible } from "./sub-issues";
+import { TimeCollapsible, useWorkLogPermissions } from "./time";
 
 type Props = {
   workspaceSlug: string;
@@ -49,6 +50,9 @@ export const IssueDetailWidgetCollapsibles = observer(function IssueDetailWidget
   const shouldRenderAttachments =
     attachmentsCount > 0 ||
     (!!attachmentUploads && attachmentUploads.length > 0 && !hideWidgets?.includes("attachments"));
+  // Neuric: time tracking widget (flag on + project admin/member), shown even when empty
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const shouldRenderTime = !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 
   return (
     <div className="flex flex-col">
@@ -85,6 +89,15 @@ export const IssueDetailWidgetCollapsibles = observer(function IssueDetailWidget
           issueId={issueId}
           disabled={disabled}
           issueServiceType={issueServiceType}
+        />
+      )}
+      {shouldRenderTime && (
+        <TimeCollapsible
+          workspaceSlug={workspaceSlug}
+          projectId={projectId}
+          issueId={issueId}
+          disabled={disabled}
+          permissions={workLogPermissions}
         />
       )}
     </div>

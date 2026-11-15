@@ -5,8 +5,15 @@
  */
 
 import React from "react";
+import { observer } from "mobx-react";
 import { TooltipProvider } from "@makeplane/propel/components/tooltip";
-import { AttachOutline, LinkOutline, RelationsOutline, SubWorkItemsOutline } from "@makeplane/propel/icons";
+import {
+  AttachOutline,
+  LinkOutline,
+  RelationsOutline,
+  SubWorkItemsOutline,
+  TimeTrackingOutline,
+} from "@makeplane/propel/icons";
 // plane imports
 import {
   EntityDetailWidgetToolbar,
@@ -22,6 +29,7 @@ import { IssueAttachmentActionButton } from "./attachments";
 import { IssueLinksActionButton } from "./links";
 import { RelationActionButton } from "./relations";
 import { SubIssuesActionButton } from "./sub-issues";
+import { IssueWorkLogActionButton, useWorkLogPermissions } from "./time";
 
 type Props = {
   workspaceSlug: string;
@@ -32,7 +40,7 @@ type Props = {
   hideWidgets?: TWorkItemWidgets[];
 };
 
-export function IssueDetailWidgetActionButtons(props: Props) {
+export const IssueDetailWidgetActionButtons = observer(function IssueDetailWidgetActionButtons(props: Props) {
   const { workspaceSlug, projectId, issueId, disabled, issueServiceType, hideWidgets } = props;
   // translation
   const { t } = useTranslation();
@@ -40,6 +48,9 @@ export function IssueDetailWidgetActionButtons(props: Props) {
   // Neuric: on a sub-work item, SubIssuesActionButton renders disabled with a tooltip (one level only)
   const showLinks = !hideWidgets?.includes("links");
   const showAttachments = !hideWidgets?.includes("attachments");
+  // Neuric: time tracking, only when the project flag is on and the user is a project admin/member
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const showTime = !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 
   return (
     <TooltipProvider>
@@ -109,7 +120,22 @@ export function IssueDetailWidgetActionButtons(props: Props) {
             )}
           </EntityDetailWidgetToolbarGroup>
         )}
+        {showTime && (
+          <EntityDetailWidgetToolbarGroup>
+            <IssueWorkLogActionButton
+              issueId={issueId}
+              tooltip={t("work_log.log_time")}
+              customButton={
+                <EntityDetailWidgetToolbarIconButton
+                  icon={<TimeTrackingOutline className="size-3.5 shrink-0" />}
+                  aria-label={t("work_log.log_time")}
+                />
+              }
+              disabled={disabled}
+            />
+          </EntityDetailWidgetToolbarGroup>
+        )}
       </EntityDetailWidgetToolbar>
     </TooltipProvider>
   );
-}
+});

@@ -458,5 +458,53 @@
       "label": "Judul Epik",
       "required": "Judul epik wajib diisi."
     }
+  },
+  "work_log": {
+    "title": "Waktu tercatat",
+    "log_time": "Catat waktu",
+    "edit_entry": "Edit entri waktu",
+    "save": "Simpan",
+    "saving": "Menyimpan",
+    "entry_actions": "Tindakan entri waktu",
+    "own": "Item kerja ini: {duration}",
+    "including_sub_work_items": "Termasuk sub-item kerja: {duration}",
+    "logged_by": "Dicatat oleh {name}",
+    "empty": {
+      "title": "Belum ada waktu tercatat",
+      "description": "Catat waktu yang Anda habiskan untuk item kerja ini."
+    },
+    "fields": {
+      "date": "Tanggal",
+      "duration": "Durasi",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Misalnya 1h 30m, 1:30 atau 90m",
+      "duration_invalid": "Masukkan durasi antara 1 menit dan 24 jam.",
+      "duration_required": "Masukkan durasi.",
+      "note": "Catatan",
+      "note_placeholder": "Apa yang Anda kerjakan?",
+      "member": "Anggota"
+    },
+    "delete": {
+      "title": "Hapus entri waktu",
+      "content": "Hapus entri waktu {duration} ini? Tindakan ini tidak dapat dibatalkan."
+    },
+    "toasts": {
+      "created": "Waktu dicatat.",
+      "updated": "Entri waktu diperbarui.",
+      "deleted": "Entri waktu dihapus.",
+      "save_error": "Tidak dapat menyimpan entri waktu. Coba lagi.",
+      "delete_error": "Tidak dapat menghapus entri waktu. Coba lagi."
+    },
+    "errors": {
+      "time_tracking_disabled": "Pelacakan waktu dinonaktifkan untuk proyek ini.",
+      "invalid_worklog_user": "Waktu hanya dapat dicatat untuk admin atau anggota proyek yang aktif.",
+      "forbidden": "Anda hanya dapat mengubah entri waktu Anda sendiri."
+    },
+    "activity": {
+      "created": "mencatat entri waktu {duration}",
+      "updated": "mengubah entri waktu dari {from} menjadi {to}",
+      "updated_same": "memperbarui entri waktu {duration}",
+      "deleted": "menghapus entri waktu {duration}"
+    }
   }
 }

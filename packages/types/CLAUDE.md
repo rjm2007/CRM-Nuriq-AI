@@ -34,3 +34,4 @@ No unit tests. `pnpm turbo run check --filter=@plane/types`
 
 - 2026-11-15: `IPartialProject` gains `target_date?: string | null` and `prd_page?: string | null` (`src/project/projects.ts`).
 - Our changes (Neuric) 2026-11-15, subtask rules: `TBaseIssue.completed_sub_issues_count?: number` and the same key in `IPublicIssue`'s pick (`src/issues/issue.ts`).
+- Our changes (Neuric) 2026-11-15, time tracking: new `src/issues/worklog.ts` (`TIssueWorkLog`, `TIssueWorkLogPayload`, `TWorkLogSummary`, `TWorkLogFilters`), exported via `src/issues/base.ts`. `TBaseIssue.logged_minutes?` / `total_logged_minutes?`, `TWorkItemWidgets` gains `"time"` (`src/issues/issue.ts`), `IPartialProject.is_time_tracking_enabled?` (`src/project/projects.ts`).

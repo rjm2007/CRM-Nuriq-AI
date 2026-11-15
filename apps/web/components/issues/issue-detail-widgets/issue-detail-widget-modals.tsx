@@ -18,6 +18,7 @@ import { IssueLinkCreateUpdateModal } from "../issue-detail/links/create-update-
 import { CreateUpdateIssueModal } from "../issue-modal/modal";
 import { useLinkOperations } from "./links/helper";
 import { useSubIssueOperations } from "./sub-issues/helper";
+import { IssueWorkLogDeleteModal, IssueWorkLogModal, useWorkLogOperations, useWorkLogPermissions } from "./time";
 
 type Props = {
   workspaceSlug: string;
@@ -51,6 +52,10 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
   // helper hooks
   const subIssueOperations = useSubIssueOperations(issueServiceType);
   const handleLinkOperations = useLinkOperations(workspaceSlug, projectId, issueId, issueServiceType);
+  const workLogOperations = useWorkLogOperations(workspaceSlug, projectId, issueId);
+  const workLogPermissions = useWorkLogPermissions(workspaceSlug, projectId, issueServiceType);
+  const shouldRenderWorkLogModals =
+    !hideWidgets?.includes("time") && workLogPermissions.isEnabled && workLogPermissions.canLog;
 
   // handlers
   const handleIssueCrudState = (
@@ -194,6 +199,19 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
           handleOnSubmit={handleExistingIssueModalOnSubmit}
           workspaceLevelToggle
         />
+      )}
+
+      {shouldRenderWorkLogModals && (
+        <>
+          <IssueWorkLogModal
+            workspaceSlug={workspaceSlug}
+            projectId={projectId}
+            issueId={issueId}
+            operations={workLogOperations}
+            permissions={workLogPermissions}
+          />
+          <IssueWorkLogDeleteModal issueId={issueId} operations={workLogOperations} />
+        </>
       )}
     </>
   );

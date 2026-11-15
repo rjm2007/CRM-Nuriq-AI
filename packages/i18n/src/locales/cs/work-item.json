@@ -458,5 +458,53 @@
       "label": "Název epiku",
       "required": "Název epiku je povinný."
     }
+  },
+  "work_log": {
+    "title": "Zaznamenaný čas",
+    "log_time": "Zaznamenat čas",
+    "edit_entry": "Upravit záznam času",
+    "save": "Uložit",
+    "saving": "Ukládání",
+    "entry_actions": "Akce záznamu času",
+    "own": "Tato pracovní položka: {duration}",
+    "including_sub_work_items": "Včetně podřízených pracovních položek: {duration}",
+    "logged_by": "Zaznamenal(a) {name}",
+    "empty": {
+      "title": "Zatím nebyl zaznamenán žádný čas",
+      "description": "Zaznamenávejte čas strávený na této pracovní položce."
+    },
+    "fields": {
+      "date": "Datum",
+      "duration": "Doba trvání",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Například 1h 30m, 1:30 nebo 90m",
+      "duration_invalid": "Zadejte dobu trvání od 1 minuty do 24 hodin.",
+      "duration_required": "Zadejte dobu trvání.",
+      "note": "Poznámka",
+      "note_placeholder": "Na čem jste pracovali?",
+      "member": "Člen"
+    },
+    "delete": {
+      "title": "Smazat záznam času",
+      "content": "Smazat tento záznam času ({duration})? Tuto akci nelze vrátit."
+    },
+    "toasts": {
+      "created": "Čas zaznamenán.",
+      "updated": "Záznam času aktualizován.",
+      "deleted": "Záznam času smazán.",
+      "save_error": "Záznam času se nepodařilo uložit. Zkuste to znovu.",
+      "delete_error": "Záznam času se nepodařilo smazat. Zkuste to znovu."
+    },
+    "errors": {
+      "time_tracking_disabled": "Sledování času je pro tento projekt vypnuté.",
+      "invalid_worklog_user": "Čas lze zaznamenat jen pro aktivní správce nebo členy projektu.",
+      "forbidden": "Můžete měnit jen své vlastní záznamy času."
+    },
+    "activity": {
+      "created": "zaznamenal(a) čas {duration}",
+      "updated": "změnil(a) záznam času z {from} na {to}",
+      "updated_same": "aktualizoval(a) záznam času {duration}",
+      "deleted": "odstranil(a) záznam času {duration}"
+    }
   }
 }

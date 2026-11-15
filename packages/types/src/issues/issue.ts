@@ -59,6 +59,9 @@ export type TBaseIssue = {
   completed_sub_issues_count?: number;
   attachment_count: number;
   link_count: number;
+  // Neuric: minutes logged on this item (detail only) and incl. direct sub-work items (detail + lists)
+  logged_minutes?: number;
+  total_logged_minutes?: number;
 
   project_id: string | null;
   parent_id: string | null;
@@ -157,7 +160,8 @@ export type TBulkOperationsPayload = {
   properties: Partial<TBulkIssueProperties>;
 };
 
-export type TWorkItemWidgets = "sub-work-items" | "relations" | "links" | "attachments";
+// Neuric: "time" = time tracking (IssueWorkLog) widget
+export type TWorkItemWidgets = "sub-work-items" | "relations" | "links" | "attachments" | "time";
 
 export type TIssueServiceType = EIssueServiceType.ISSUES | EIssueServiceType.EPICS | EIssueServiceType.WORK_ITEMS;
 

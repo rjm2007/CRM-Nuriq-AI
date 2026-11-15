@@ -458,5 +458,53 @@
       "label": "Título do Épico",
       "required": "O título do épico é obrigatório."
     }
+  },
+  "work_log": {
+    "title": "Tempo registrado",
+    "log_time": "Registrar tempo",
+    "edit_entry": "Editar registro de tempo",
+    "save": "Salvar",
+    "saving": "Salvando",
+    "entry_actions": "Ações do registro de tempo",
+    "own": "Este item de trabalho: {duration}",
+    "including_sub_work_items": "Incluindo sub-itens de trabalho: {duration}",
+    "logged_by": "Registrado por {name}",
+    "empty": {
+      "title": "Nenhum tempo registrado ainda",
+      "description": "Registre o tempo que você dedica a este item de trabalho."
+    },
+    "fields": {
+      "date": "Data",
+      "duration": "Duração",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Por exemplo 1h 30m, 1:30 ou 90m",
+      "duration_invalid": "Informe uma duração entre 1 minuto e 24 horas.",
+      "duration_required": "Informe uma duração.",
+      "note": "Nota",
+      "note_placeholder": "No que você trabalhou?",
+      "member": "Membro"
+    },
+    "delete": {
+      "title": "Excluir registro de tempo",
+      "content": "Excluir este registro de tempo de {duration}? Esta ação não pode ser desfeita."
+    },
+    "toasts": {
+      "created": "Tempo registrado.",
+      "updated": "Registro de tempo atualizado.",
+      "deleted": "Registro de tempo excluído.",
+      "save_error": "Não foi possível salvar o registro de tempo. Tente novamente.",
+      "delete_error": "Não foi possível excluir o registro de tempo. Tente novamente."
+    },
+    "errors": {
+      "time_tracking_disabled": "O controle de tempo está desativado neste projeto.",
+      "invalid_worklog_user": "Só é possível registrar tempo para administradores ou membros ativos do projeto.",
+      "forbidden": "Você só pode alterar seus próprios registros de tempo."
+    },
+    "activity": {
+      "created": "registrou um tempo de {duration}",
+      "updated": "alterou um registro de tempo de {from} para {to}",
+      "updated_same": "atualizou um registro de tempo de {duration}",
+      "deleted": "removeu um registro de tempo de {duration}"
+    }
   }
 }

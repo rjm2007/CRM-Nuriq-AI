@@ -458,5 +458,53 @@
       "label": "Tytuł epiku",
       "required": "Tytuł epiku jest wymagany."
     }
+  },
+  "work_log": {
+    "title": "Zarejestrowany czas",
+    "log_time": "Zarejestruj czas",
+    "edit_entry": "Edytuj wpis czasu",
+    "save": "Zapisz",
+    "saving": "Zapisywanie",
+    "entry_actions": "Akcje wpisu czasu",
+    "own": "Ten element pracy: {duration}",
+    "including_sub_work_items": "Łącznie z elementami podrzędnymi: {duration}",
+    "logged_by": "Zarejestrowane przez: {name}",
+    "empty": {
+      "title": "Nie zarejestrowano jeszcze czasu",
+      "description": "Rejestruj czas poświęcony na ten element pracy."
+    },
+    "fields": {
+      "date": "Data",
+      "duration": "Czas trwania",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Na przykład 1h 30m, 1:30 lub 90m",
+      "duration_invalid": "Wprowadź czas trwania od 1 minuty do 24 godzin.",
+      "duration_required": "Wprowadź czas trwania.",
+      "note": "Notatka",
+      "note_placeholder": "Nad czym pracowano?",
+      "member": "Członek"
+    },
+    "delete": {
+      "title": "Usuń wpis czasu",
+      "content": "Usunąć ten wpis czasu ({duration})? Tej operacji nie można cofnąć."
+    },
+    "toasts": {
+      "created": "Zarejestrowano czas.",
+      "updated": "Zaktualizowano wpis czasu.",
+      "deleted": "Usunięto wpis czasu.",
+      "save_error": "Nie udało się zapisać wpisu czasu. Spróbuj ponownie.",
+      "delete_error": "Nie udało się usunąć wpisu czasu. Spróbuj ponownie."
+    },
+    "errors": {
+      "time_tracking_disabled": "Śledzenie czasu jest wyłączone w tym projekcie.",
+      "invalid_worklog_user": "Czas można rejestrować tylko dla aktywnych administratorów lub członków projektu.",
+      "forbidden": "Możesz zmieniać tylko własne wpisy czasu."
+    },
+    "activity": {
+      "created": "zarejestrował(a) wpis czasu: {duration}",
+      "updated": "zmienił(a) wpis czasu z {from} na {to}",
+      "updated_same": "zaktualizował(a) wpis czasu: {duration}",
+      "deleted": "usunął(-ęła) wpis czasu: {duration}"
+    }
   }
 }

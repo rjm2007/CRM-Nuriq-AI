@@ -15,6 +15,7 @@ import type {
   TIssueReaction,
   TIssueRelationTypes,
   TIssueServiceType,
+  TIssueWorkLogPayload,
   TWorkItemWidgets,
 } from "@plane/types";
 // plane web store
@@ -39,6 +40,8 @@ import { IssueSubIssuesStore } from "./sub_issues.store";
 import type { IIssueSubIssuesStore, IIssueSubIssuesStoreActions } from "./sub_issues.store";
 import { IssueSubscriptionStore } from "./subscription.store";
 import type { IIssueSubscriptionStore, IIssueSubscriptionStoreActions } from "./subscription.store";
+import { IssueWorkLogStore } from "./worklog.store";
+import type { IIssueWorkLogStore, IIssueWorkLogStoreActions } from "./worklog.store";
 
 export type TPeekIssue = {
   workspaceSlug: string;
@@ -71,7 +74,8 @@ export interface IIssueDetail
     IIssueRelationStoreActions,
     IIssueActivityStoreActions,
     IIssueCommentStoreActions,
-    IIssueCommentReactionStoreActions {
+    IIssueCommentReactionStoreActions,
+    IIssueWorkLogStoreActions {
   // observables
   peekIssue: TPeekIssue | undefined;
   relationKey: TIssueRelationTypes | null;
@@ -120,6 +124,8 @@ export interface IIssueDetail
   link: IIssueLinkStore;
   subscription: IIssueSubscriptionStore;
   relation: IIssueRelationStore;
+  // Neuric: time tracking entries
+  workLog: IIssueWorkLogStore;
 }
 
 export class IssueDetail implements IIssueDetail {
@@ -163,6 +169,7 @@ export class IssueDetail implements IIssueDetail {
   activity: IIssueActivityStore;
   comment: IIssueCommentStore;
   commentReaction: IIssueCommentReactionStore;
+  workLog: IIssueWorkLogStore;
 
   constructor(rootStore: IIssueRootStore, serviceType: TIssueServiceType) {
     makeObservable(this, {
@@ -215,6 +222,7 @@ export class IssueDetail implements IIssueDetail {
     this.link = new IssueLinkStore(this, serviceType);
     this.subscription = new IssueSubscriptionStore(this, serviceType);
     this.relation = new IssueRelationStore(this);
+    this.workLog = new IssueWorkLogStore(this);
   }
 
   // computed
@@ -227,7 +235,9 @@ export class IssueDetail implements IIssueDetail {
       !!this.isArchiveIssueModalOpen ||
       !!this.isRelationModalOpen?.issueId ||
       !!this.isSubIssuesModalOpen ||
-      !!this.attachmentDeleteModalId
+      !!this.attachmentDeleteModalId ||
+      !!this.workLog.workLogModal ||
+      !!this.workLog.workLogDeleteId
     );
   }
 
@@ -255,8 +265,8 @@ export class IssueDetail implements IIssueDetail {
     this.openWidgets = state;
     if (this.lastWidgetAction) this.lastWidgetAction = null;
   };
-  setLastWidgetAction = (action: TWorkItemWidgets) => {
-    this.openWidgets = [action];
+  setLastWidgetAction = (widget: TWorkItemWidgets) => {
+    this.openWidgets = [widget];
   };
   toggleOpenWidget = (state: TWorkItemWidgets) => {
     if (this.openWidgets && this.openWidgets.includes(state))
@@ -413,4 +423,19 @@ export class IssueDetail implements IIssueDetail {
     reaction: string,
     userId: string
   ) => this.commentReaction.removeCommentReaction(workspaceSlug, projectId, commentId, reaction, userId);
+
+  // work logs (Neuric: time tracking)
+  fetchWorkLogs = async (workspaceSlug: string, projectId: string, issueId: string) =>
+    this.workLog.fetchWorkLogs(workspaceSlug, projectId, issueId);
+  createWorkLog = async (workspaceSlug: string, projectId: string, issueId: string, data: TIssueWorkLogPayload) =>
+    this.workLog.createWorkLog(workspaceSlug, projectId, issueId, data);
+  updateWorkLog = async (
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    workLogId: string,
+    data: Partial<TIssueWorkLogPayload>
+  ) => this.workLog.updateWorkLog(workspaceSlug, projectId, issueId, workLogId, data);
+  removeWorkLog = async (workspaceSlug: string, projectId: string, issueId: string, workLogId: string) =>
+    this.workLog.removeWorkLog(workspaceSlug, projectId, issueId, workLogId);
 }

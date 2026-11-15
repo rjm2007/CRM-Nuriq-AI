@@ -68,6 +68,8 @@ export const iconsMap: ActivityIconMap = {
   is_epic_enabled: GridOutline,
   is_workflow_enabled: GitBranchOutline,
   is_time_tracking_enabled: TimeTrackingOutline,
+  // Neuric: time tracking activity rows
+  worklog: TimeTrackingOutline,
   is_issue_type_enabled: ToDoOutline,
   default: HierarchyOutline,
   module_view: ModuleOutline,

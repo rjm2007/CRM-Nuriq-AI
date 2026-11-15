@@ -458,5 +458,53 @@
       "label": "Epic Title",
       "required": "Epic title is required."
     }
+  },
+  "work_log": {
+    "title": "Time logged",
+    "log_time": "Log time",
+    "edit_entry": "Edit time entry",
+    "save": "Save",
+    "saving": "Saving",
+    "entry_actions": "Time entry actions",
+    "own": "This work item: {duration}",
+    "including_sub_work_items": "Including sub-work items: {duration}",
+    "logged_by": "Logged by {name}",
+    "empty": {
+      "title": "No time logged yet",
+      "description": "Log the time you spend on this work item."
+    },
+    "fields": {
+      "date": "Date",
+      "duration": "Duration",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "For example 1h 30m, 1:30 or 90m",
+      "duration_invalid": "Enter a duration between 1 minute and 24 hours.",
+      "duration_required": "Enter a duration.",
+      "note": "Note",
+      "note_placeholder": "What did you work on?",
+      "member": "Member"
+    },
+    "delete": {
+      "title": "Delete time entry",
+      "content": "Delete this time entry of {duration}? This can't be undone."
+    },
+    "toasts": {
+      "created": "Time logged.",
+      "updated": "Time entry updated.",
+      "deleted": "Time entry deleted.",
+      "save_error": "Couldn't save the time entry. Try again.",
+      "delete_error": "Couldn't delete the time entry. Try again."
+    },
+    "errors": {
+      "time_tracking_disabled": "Time tracking is turned off for this project.",
+      "invalid_worklog_user": "Time can only be logged for active project admins or members.",
+      "forbidden": "You can only change your own time entries."
+    },
+    "activity": {
+      "created": "logged a time entry of {duration}",
+      "updated": "updated a time entry from {from} to {to}",
+      "updated_same": "updated a time entry of {duration}",
+      "deleted": "removed a time entry of {duration}"
+    }
   }
 }

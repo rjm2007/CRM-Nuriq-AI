@@ -458,5 +458,53 @@
       "label": "Titre de l’Epic",
       "required": "Le titre de l’Epic est requis."
     }
+  },
+  "work_log": {
+    "title": "Temps enregistré",
+    "log_time": "Enregistrer du temps",
+    "edit_entry": "Modifier l’entrée de temps",
+    "save": "Enregistrer",
+    "saving": "Enregistrement",
+    "entry_actions": "Actions de l’entrée de temps",
+    "own": "Cet élément de travail : {duration}",
+    "including_sub_work_items": "Sous-éléments de travail compris : {duration}",
+    "logged_by": "Enregistré par {name}",
+    "empty": {
+      "title": "Aucun temps enregistré",
+      "description": "Enregistrez le temps que vous passez sur cet élément de travail."
+    },
+    "fields": {
+      "date": "Date",
+      "duration": "Durée",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Par exemple 1h 30m, 1:30 ou 90m",
+      "duration_invalid": "Saisissez une durée comprise entre 1 minute et 24 heures.",
+      "duration_required": "Saisissez une durée.",
+      "note": "Note",
+      "note_placeholder": "Sur quoi avez-vous travaillé ?",
+      "member": "Membre"
+    },
+    "delete": {
+      "title": "Supprimer l’entrée de temps",
+      "content": "Supprimer cette entrée de temps de {duration} ? Cette action est irréversible."
+    },
+    "toasts": {
+      "created": "Temps enregistré.",
+      "updated": "Entrée de temps mise à jour.",
+      "deleted": "Entrée de temps supprimée.",
+      "save_error": "Impossible d’enregistrer l’entrée de temps. Réessayez.",
+      "delete_error": "Impossible de supprimer l’entrée de temps. Réessayez."
+    },
+    "errors": {
+      "time_tracking_disabled": "Le suivi du temps est désactivé pour ce projet.",
+      "invalid_worklog_user": "Le temps ne peut être enregistré que pour des administrateurs ou membres actifs du projet.",
+      "forbidden": "Vous ne pouvez modifier que vos propres entrées de temps."
+    },
+    "activity": {
+      "created": "a enregistré une entrée de temps de {duration}",
+      "updated": "a modifié une entrée de temps de {from} à {to}",
+      "updated_same": "a mis à jour une entrée de temps de {duration}",
+      "deleted": "a supprimé une entrée de temps de {duration}"
+    }
   }
 }

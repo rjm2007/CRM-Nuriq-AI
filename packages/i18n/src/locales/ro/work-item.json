@@ -458,5 +458,53 @@
       "label": "Titlu sarcină majoră",
       "required": "Titlul sarcinii majore este obligatoriu."
     }
+  },
+  "work_log": {
+    "title": "Timp înregistrat",
+    "log_time": "Înregistrează timp",
+    "edit_entry": "Editează înregistrarea de timp",
+    "save": "Salvează",
+    "saving": "Se salvează",
+    "entry_actions": "Acțiuni pentru înregistrarea de timp",
+    "own": "Această activitate: {duration}",
+    "including_sub_work_items": "Inclusiv sub-activitățile: {duration}",
+    "logged_by": "Înregistrat de {name}",
+    "empty": {
+      "title": "Încă nu s-a înregistrat timp",
+      "description": "Înregistrați timpul petrecut pe această activitate."
+    },
+    "fields": {
+      "date": "Dată",
+      "duration": "Durată",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "De exemplu 1h 30m, 1:30 sau 90m",
+      "duration_invalid": "Introduceți o durată între 1 minut și 24 de ore.",
+      "duration_required": "Introduceți o durată.",
+      "note": "Notă",
+      "note_placeholder": "La ce ați lucrat?",
+      "member": "Membru"
+    },
+    "delete": {
+      "title": "Șterge înregistrarea de timp",
+      "content": "Ștergeți această înregistrare de timp de {duration}? Acțiunea nu poate fi anulată."
+    },
+    "toasts": {
+      "created": "Timp înregistrat.",
+      "updated": "Înregistrarea de timp a fost actualizată.",
+      "deleted": "Înregistrarea de timp a fost ștearsă.",
+      "save_error": "Înregistrarea de timp nu a putut fi salvată. Încercați din nou.",
+      "delete_error": "Înregistrarea de timp nu a putut fi ștearsă. Încercați din nou."
+    },
+    "errors": {
+      "time_tracking_disabled": "Urmărirea timpului este dezactivată pentru acest proiect.",
+      "invalid_worklog_user": "Timpul poate fi înregistrat doar pentru administratori sau membri activi ai proiectului.",
+      "forbidden": "Puteți modifica doar propriile înregistrări de timp."
+    },
+    "activity": {
+      "created": "a înregistrat {duration} de timp",
+      "updated": "a modificat o înregistrare de timp de la {from} la {to}",
+      "updated_same": "a actualizat o înregistrare de timp de {duration}",
+      "deleted": "a eliminat o înregistrare de timp de {duration}"
+    }
   }
 }

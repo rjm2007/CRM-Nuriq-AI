@@ -23,6 +23,7 @@
     "./common": "./dist/common/index.js",
     "./context-menu": "./dist/context-menu/index.js",
     "./dialog": "./dist/dialog/index.js",
+    "./duration-input": "./dist/duration-input/index.js",
     "./emoji-icon-picker": "./dist/emoji-icon-picker/index.js",
     "./emoji-icon-picker/data": "./dist/emoji-icon-picker/data.js",
     "./emoji-reaction": "./dist/emoji-reaction/index.js",

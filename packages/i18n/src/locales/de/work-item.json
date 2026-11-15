@@ -458,5 +458,53 @@
       "label": "Epic-Titel",
       "required": "Ein Titel für das Epic ist erforderlich."
     }
+  },
+  "work_log": {
+    "title": "Erfasste Zeit",
+    "log_time": "Zeit erfassen",
+    "edit_entry": "Zeiteintrag bearbeiten",
+    "save": "Speichern",
+    "saving": "Wird gespeichert",
+    "entry_actions": "Aktionen für Zeiteintrag",
+    "own": "Dieses Arbeitselement: {duration}",
+    "including_sub_work_items": "Einschließlich untergeordneter Arbeitselemente: {duration}",
+    "logged_by": "Erfasst von {name}",
+    "empty": {
+      "title": "Noch keine Zeit erfasst",
+      "description": "Erfassen Sie die Zeit, die Sie für dieses Arbeitselement aufwenden."
+    },
+    "fields": {
+      "date": "Datum",
+      "duration": "Dauer",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Zum Beispiel 1h 30m, 1:30 oder 90m",
+      "duration_invalid": "Geben Sie eine Dauer zwischen 1 Minute und 24 Stunden ein.",
+      "duration_required": "Geben Sie eine Dauer ein.",
+      "note": "Notiz",
+      "note_placeholder": "Woran haben Sie gearbeitet?",
+      "member": "Mitglied"
+    },
+    "delete": {
+      "title": "Zeiteintrag löschen",
+      "content": "Diesen Zeiteintrag über {duration} löschen? Dies kann nicht rückgängig gemacht werden."
+    },
+    "toasts": {
+      "created": "Zeit erfasst.",
+      "updated": "Zeiteintrag aktualisiert.",
+      "deleted": "Zeiteintrag gelöscht.",
+      "save_error": "Der Zeiteintrag konnte nicht gespeichert werden. Versuchen Sie es erneut.",
+      "delete_error": "Der Zeiteintrag konnte nicht gelöscht werden. Versuchen Sie es erneut."
+    },
+    "errors": {
+      "time_tracking_disabled": "Die Zeiterfassung ist für dieses Projekt deaktiviert.",
+      "invalid_worklog_user": "Zeit kann nur für aktive Projektadministratoren oder -mitglieder erfasst werden.",
+      "forbidden": "Sie können nur Ihre eigenen Zeiteinträge ändern."
+    },
+    "activity": {
+      "created": "hat einen Zeiteintrag über {duration} erfasst",
+      "updated": "hat einen Zeiteintrag von {from} auf {to} geändert",
+      "updated_same": "hat einen Zeiteintrag über {duration} aktualisiert",
+      "deleted": "hat einen Zeiteintrag über {duration} entfernt"
+    }
   }
 }

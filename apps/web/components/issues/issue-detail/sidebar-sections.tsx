@@ -14,6 +14,7 @@ import {
   LabelsOutline,
   ModuleOutline,
   ParentOutline,
+  TimeTrackingOutline,
   UpdatedAtOutline,
   UserOutline,
 } from "@makeplane/propel/icons";
@@ -22,6 +23,7 @@ import { calculateTimeAgo, cn, renderFormattedDate } from "@plane/utils";
 // components
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
+import { IssueWorkLogTotal } from "@/components/issues/issue-detail-widgets/time/title";
 import { IssueParentSelectRoot } from "@/components/issues/parent-select-root";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
@@ -140,6 +142,15 @@ export const IssueDetailSidebarSections = observer(function IssueDetailSidebarSe
                 placeholder={t("common.none")}
                 tooltip
               />
+            </SidebarPropertyListItem>
+          )}
+
+          {/* Neuric: time tracking total (own + sub-work items), behind the project flag */}
+          {projectDetails?.is_time_tracking_enabled && (
+            <SidebarPropertyListItem icon={TimeTrackingOutline} label={t("work_log.title")}>
+              <div className="flex h-8 w-full grow items-center px-2">
+                <IssueWorkLogTotal issueId={issueId} testId="sidebar-work-log-total" />
+              </div>
             </SidebarPropertyListItem>
           )}
         </IssueDetailSidebarGroup>

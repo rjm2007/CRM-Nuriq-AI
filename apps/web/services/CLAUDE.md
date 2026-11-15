@@ -34,4 +34,4 @@ Parent: `../CLAUDE.md`.
 
 ## Our changes (Neuric)
 
-None yet (2026-11-15)
+- Our changes (Neuric) 2026-11-15, time tracking: `issue/issue_worklog.service.ts` (`IssueWorkLogService`: issue list/create/update/remove under `.../issues/<id>/worklogs/`, `listProjectWorkLogs` (paginated) and `getProjectSummary` under `.../projects/<id>/worklogs/`), exported from `issue/index.ts`.

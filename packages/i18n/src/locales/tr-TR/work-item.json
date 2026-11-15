@@ -458,5 +458,53 @@
       "label": "Epik Başlığı",
       "required": "Epik başlığı gereklidir."
     }
+  },
+  "work_log": {
+    "title": "Kaydedilen süre",
+    "log_time": "Süre kaydet",
+    "edit_entry": "Süre kaydını düzenle",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor",
+    "entry_actions": "Süre kaydı işlemleri",
+    "own": "Bu iş öğesi: {duration}",
+    "including_sub_work_items": "Alt iş öğeleri dahil: {duration}",
+    "logged_by": "Kaydeden: {name}",
+    "empty": {
+      "title": "Henüz süre kaydedilmedi",
+      "description": "Bu iş öğesinde harcadığınız süreyi kaydedin."
+    },
+    "fields": {
+      "date": "Tarih",
+      "duration": "Süre",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Örneğin 1h 30m, 1:30 veya 90m",
+      "duration_invalid": "1 dakika ile 24 saat arasında bir süre girin.",
+      "duration_required": "Bir süre girin.",
+      "note": "Not",
+      "note_placeholder": "Ne üzerinde çalıştınız?",
+      "member": "Üye"
+    },
+    "delete": {
+      "title": "Süre kaydını sil",
+      "content": "{duration} süresindeki bu kayıt silinsin mi? Bu işlem geri alınamaz."
+    },
+    "toasts": {
+      "created": "Süre kaydedildi.",
+      "updated": "Süre kaydı güncellendi.",
+      "deleted": "Süre kaydı silindi.",
+      "save_error": "Süre kaydı kaydedilemedi. Tekrar deneyin.",
+      "delete_error": "Süre kaydı silinemedi. Tekrar deneyin."
+    },
+    "errors": {
+      "time_tracking_disabled": "Bu projede süre takibi kapalı.",
+      "invalid_worklog_user": "Süre yalnızca aktif proje yöneticileri veya üyeleri için kaydedilebilir.",
+      "forbidden": "Yalnızca kendi süre kayıtlarınızı değiştirebilirsiniz."
+    },
+    "activity": {
+      "created": "{duration} süre kaydetti",
+      "updated": "bir süre kaydını {from} değerinden {to} değerine değiştirdi",
+      "updated_same": "{duration} süresindeki bir kaydı güncelledi",
+      "deleted": "{duration} süresindeki bir kaydı kaldırdı"
+    }
   }
 }

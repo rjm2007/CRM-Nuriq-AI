@@ -458,5 +458,53 @@
       "label": "Titolo Epic",
       "required": "Il titolo dell'Epic è obbligatorio."
     }
+  },
+  "work_log": {
+    "title": "Tempo registrato",
+    "log_time": "Registra tempo",
+    "edit_entry": "Modifica registrazione del tempo",
+    "save": "Salva",
+    "saving": "Salvataggio",
+    "entry_actions": "Azioni della registrazione del tempo",
+    "own": "Questo elemento di lavoro: {duration}",
+    "including_sub_work_items": "Inclusi i sotto-elementi di lavoro: {duration}",
+    "logged_by": "Registrato da {name}",
+    "empty": {
+      "title": "Nessun tempo registrato",
+      "description": "Registri il tempo che dedica a questo elemento di lavoro."
+    },
+    "fields": {
+      "date": "Data",
+      "duration": "Durata",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Per esempio 1h 30m, 1:30 o 90m",
+      "duration_invalid": "Inserisca una durata tra 1 minuto e 24 ore.",
+      "duration_required": "Inserisca una durata.",
+      "note": "Nota",
+      "note_placeholder": "Su cosa ha lavorato?",
+      "member": "Membro"
+    },
+    "delete": {
+      "title": "Elimina registrazione del tempo",
+      "content": "Eliminare questa registrazione di {duration}? L’azione non può essere annullata."
+    },
+    "toasts": {
+      "created": "Tempo registrato.",
+      "updated": "Registrazione del tempo aggiornata.",
+      "deleted": "Registrazione del tempo eliminata.",
+      "save_error": "Impossibile salvare la registrazione del tempo. Riprovi.",
+      "delete_error": "Impossibile eliminare la registrazione del tempo. Riprovi."
+    },
+    "errors": {
+      "time_tracking_disabled": "Il monitoraggio del tempo è disattivato per questo progetto.",
+      "invalid_worklog_user": "Il tempo può essere registrato solo per amministratori o membri attivi del progetto.",
+      "forbidden": "Può modificare solo le proprie registrazioni del tempo."
+    },
+    "activity": {
+      "created": "ha registrato {duration} di tempo",
+      "updated": "ha modificato una registrazione del tempo da {from} a {to}",
+      "updated_same": "ha aggiornato una registrazione di {duration}",
+      "deleted": "ha rimosso una registrazione di {duration}"
+    }
   }
 }

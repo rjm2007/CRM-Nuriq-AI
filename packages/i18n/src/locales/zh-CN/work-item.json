@@ -458,5 +458,53 @@
       "label": "史诗标题",
       "required": "史诗标题为必填项"
     }
+  },
+  "work_log": {
+    "title": "已记录时间",
+    "log_time": "记录时间",
+    "edit_entry": "编辑时间记录",
+    "save": "保存",
+    "saving": "正在保存",
+    "entry_actions": "时间记录操作",
+    "own": "此工作项：{duration}",
+    "including_sub_work_items": "包括子工作项：{duration}",
+    "logged_by": "记录人：{name}",
+    "empty": {
+      "title": "尚未记录时间",
+      "description": "记录您在此工作项上花费的时间。"
+    },
+    "fields": {
+      "date": "日期",
+      "duration": "时长",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "例如 1h 30m、1:30 或 90m",
+      "duration_invalid": "请输入 1 分钟到 24 小时之间的时长。",
+      "duration_required": "请输入时长。",
+      "note": "备注",
+      "note_placeholder": "您做了什么工作？",
+      "member": "成员"
+    },
+    "delete": {
+      "title": "删除时间记录",
+      "content": "要删除这条 {duration} 的时间记录吗？此操作无法撤销。"
+    },
+    "toasts": {
+      "created": "已记录时间。",
+      "updated": "时间记录已更新。",
+      "deleted": "时间记录已删除。",
+      "save_error": "无法保存时间记录，请重试。",
+      "delete_error": "无法删除时间记录，请重试。"
+    },
+    "errors": {
+      "time_tracking_disabled": "此项目已关闭时间跟踪。",
+      "invalid_worklog_user": "只能为活跃的项目管理员或成员记录时间。",
+      "forbidden": "您只能更改自己的时间记录。"
+    },
+    "activity": {
+      "created": "记录了一条 {duration} 的时间记录",
+      "updated": "将一条时间记录从 {from} 改为 {to}",
+      "updated_same": "更新了一条 {duration} 的时间记录",
+      "deleted": "删除了一条 {duration} 的时间记录"
+    }
   }
 }

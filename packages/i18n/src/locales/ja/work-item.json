@@ -458,5 +458,53 @@
       "label": "エピックのタイトル",
       "required": "エピックのタイトルは必須です。"
     }
+  },
+  "work_log": {
+    "title": "記録した時間",
+    "log_time": "時間を記録",
+    "edit_entry": "時間エントリーを編集",
+    "save": "保存",
+    "saving": "保存中",
+    "entry_actions": "時間エントリーの操作",
+    "own": "この作業項目：{duration}",
+    "including_sub_work_items": "サブ作業項目を含む：{duration}",
+    "logged_by": "記録者：{name}",
+    "empty": {
+      "title": "まだ時間が記録されていません",
+      "description": "この作業項目に費やした時間を記録してください。"
+    },
+    "fields": {
+      "date": "日付",
+      "duration": "時間",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "例：1h 30m、1:30、90m",
+      "duration_invalid": "1分から24時間までの時間を入力してください。",
+      "duration_required": "時間を入力してください。",
+      "note": "メモ",
+      "note_placeholder": "何に取り組みましたか？",
+      "member": "メンバー"
+    },
+    "delete": {
+      "title": "時間エントリーを削除",
+      "content": "この{duration}の時間エントリーを削除しますか？この操作は元に戻せません。"
+    },
+    "toasts": {
+      "created": "時間を記録しました。",
+      "updated": "時間エントリーを更新しました。",
+      "deleted": "時間エントリーを削除しました。",
+      "save_error": "時間エントリーを保存できませんでした。もう一度お試しください。",
+      "delete_error": "時間エントリーを削除できませんでした。もう一度お試しください。"
+    },
+    "errors": {
+      "time_tracking_disabled": "このプロジェクトでは時間トラッキングがオフになっています。",
+      "invalid_worklog_user": "時間はアクティブなプロジェクト管理者またはメンバーにのみ記録できます。",
+      "forbidden": "変更できるのは自分の時間エントリーのみです。"
+    },
+    "activity": {
+      "created": "{duration}の時間を記録しました",
+      "updated": "時間エントリーを{from}から{to}に変更しました",
+      "updated_same": "{duration}の時間エントリーを更新しました",
+      "deleted": "{duration}の時間エントリーを削除しました"
+    }
   }
 }

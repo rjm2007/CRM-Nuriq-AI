@@ -458,5 +458,53 @@
       "label": "Tiêu đề sử thi",
       "required": "Tiêu đề sử thi là bắt buộc"
     }
+  },
+  "work_log": {
+    "title": "Thời gian đã ghi",
+    "log_time": "Ghi thời gian",
+    "edit_entry": "Sửa mục thời gian",
+    "save": "Lưu",
+    "saving": "Đang lưu",
+    "entry_actions": "Thao tác với mục thời gian",
+    "own": "Mục công việc này: {duration}",
+    "including_sub_work_items": "Bao gồm mục công việc con: {duration}",
+    "logged_by": "Được ghi bởi {name}",
+    "empty": {
+      "title": "Chưa ghi thời gian nào",
+      "description": "Ghi lại thời gian bạn dành cho mục công việc này."
+    },
+    "fields": {
+      "date": "Ngày",
+      "duration": "Thời lượng",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Ví dụ 1h 30m, 1:30 hoặc 90m",
+      "duration_invalid": "Nhập thời lượng từ 1 phút đến 24 giờ.",
+      "duration_required": "Nhập thời lượng.",
+      "note": "Ghi chú",
+      "note_placeholder": "Bạn đã làm gì?",
+      "member": "Thành viên"
+    },
+    "delete": {
+      "title": "Xóa mục thời gian",
+      "content": "Xóa mục thời gian {duration} này? Không thể hoàn tác thao tác này."
+    },
+    "toasts": {
+      "created": "Đã ghi thời gian.",
+      "updated": "Đã cập nhật mục thời gian.",
+      "deleted": "Đã xóa mục thời gian.",
+      "save_error": "Không thể lưu mục thời gian. Hãy thử lại.",
+      "delete_error": "Không thể xóa mục thời gian. Hãy thử lại."
+    },
+    "errors": {
+      "time_tracking_disabled": "Theo dõi thời gian đang tắt cho dự án này.",
+      "invalid_worklog_user": "Chỉ có thể ghi thời gian cho quản trị viên hoặc thành viên đang hoạt động của dự án.",
+      "forbidden": "Bạn chỉ có thể thay đổi các mục thời gian của mình."
+    },
+    "activity": {
+      "created": "đã ghi một mục thời gian {duration}",
+      "updated": "đã đổi một mục thời gian từ {from} thành {to}",
+      "updated_same": "đã cập nhật một mục thời gian {duration}",
+      "deleted": "đã xóa một mục thời gian {duration}"
+    }
   }
 }

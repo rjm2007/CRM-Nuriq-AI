@@ -43,6 +43,8 @@ export interface IPartialProject {
   // Neuric: planned completion date ("YYYY-MM-DD") and linked PRD page id (list + retrieve return both)
   target_date?: string | null;
   prd_page?: string | null;
+  // Neuric: time tracking (IssueWorkLog) on; gates worklog writes only
+  is_time_tracking_enabled?: boolean;
 }
 
 export interface IProject extends IPartialProject {

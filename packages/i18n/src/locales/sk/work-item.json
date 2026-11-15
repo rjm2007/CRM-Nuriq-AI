@@ -458,5 +458,53 @@
       "label": "Názov epiky",
       "required": "Názov epiky je povinný."
     }
+  },
+  "work_log": {
+    "title": "Zaznamenaný čas",
+    "log_time": "Zaznamenať čas",
+    "edit_entry": "Upraviť záznam času",
+    "save": "Uložiť",
+    "saving": "Ukladá sa",
+    "entry_actions": "Akcie záznamu času",
+    "own": "Táto pracovná položka: {duration}",
+    "including_sub_work_items": "Vrátane podriadených pracovných položiek: {duration}",
+    "logged_by": "Zaznamenal(a) {name}",
+    "empty": {
+      "title": "Zatiaľ nebol zaznamenaný žiadny čas",
+      "description": "Zaznamenávajte čas strávený na tejto pracovnej položke."
+    },
+    "fields": {
+      "date": "Dátum",
+      "duration": "Trvanie",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Napríklad 1h 30m, 1:30 alebo 90m",
+      "duration_invalid": "Zadajte trvanie od 1 minúty do 24 hodín.",
+      "duration_required": "Zadajte trvanie.",
+      "note": "Poznámka",
+      "note_placeholder": "Na čom ste pracovali?",
+      "member": "Člen"
+    },
+    "delete": {
+      "title": "Odstrániť záznam času",
+      "content": "Odstrániť tento záznam času ({duration})? Túto akciu nie je možné vrátiť."
+    },
+    "toasts": {
+      "created": "Čas zaznamenaný.",
+      "updated": "Záznam času aktualizovaný.",
+      "deleted": "Záznam času odstránený.",
+      "save_error": "Záznam času sa nepodarilo uložiť. Skúste to znova.",
+      "delete_error": "Záznam času sa nepodarilo odstrániť. Skúste to znova."
+    },
+    "errors": {
+      "time_tracking_disabled": "Sledovanie času je pre tento projekt vypnuté.",
+      "invalid_worklog_user": "Čas je možné zaznamenať len pre aktívnych správcov alebo členov projektu.",
+      "forbidden": "Môžete meniť len svoje vlastné záznamy času."
+    },
+    "activity": {
+      "created": "zaznamenal(a) čas {duration}",
+      "updated": "zmenil(a) záznam času z {from} na {to}",
+      "updated_same": "aktualizoval(a) záznam času {duration}",
+      "deleted": "odstránil(a) záznam času {duration}"
+    }
   }
 }

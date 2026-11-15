@@ -458,5 +458,53 @@
       "label": "에픽 제목",
       "required": "에픽 제목이 필요합니다."
     }
+  },
+  "work_log": {
+    "title": "기록된 시간",
+    "log_time": "시간 기록",
+    "edit_entry": "시간 항목 편집",
+    "save": "저장",
+    "saving": "저장 중",
+    "entry_actions": "시간 항목 작업",
+    "own": "이 작업 항목: {duration}",
+    "including_sub_work_items": "하위 작업 항목 포함: {duration}",
+    "logged_by": "기록한 사람: {name}",
+    "empty": {
+      "title": "아직 기록된 시간이 없습니다",
+      "description": "이 작업 항목에 사용한 시간을 기록하세요."
+    },
+    "fields": {
+      "date": "날짜",
+      "duration": "소요 시간",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "예: 1h 30m, 1:30 또는 90m",
+      "duration_invalid": "1분에서 24시간 사이의 시간을 입력하세요.",
+      "duration_required": "소요 시간을 입력하세요.",
+      "note": "메모",
+      "note_placeholder": "어떤 작업을 했나요?",
+      "member": "멤버"
+    },
+    "delete": {
+      "title": "시간 항목 삭제",
+      "content": "{duration} 시간 항목을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+    },
+    "toasts": {
+      "created": "시간이 기록되었습니다.",
+      "updated": "시간 항목이 업데이트되었습니다.",
+      "deleted": "시간 항목이 삭제되었습니다.",
+      "save_error": "시간 항목을 저장할 수 없습니다. 다시 시도하세요.",
+      "delete_error": "시간 항목을 삭제할 수 없습니다. 다시 시도하세요."
+    },
+    "errors": {
+      "time_tracking_disabled": "이 프로젝트에서는 시간 추적이 꺼져 있습니다.",
+      "invalid_worklog_user": "활성 프로젝트 관리자 또는 멤버에 대해서만 시간을 기록할 수 있습니다.",
+      "forbidden": "본인의 시간 항목만 변경할 수 있습니다."
+    },
+    "activity": {
+      "created": "{duration} 시간 항목을 기록했습니다",
+      "updated": "시간 항목을 {from}에서 {to}(으)로 변경했습니다",
+      "updated_same": "{duration} 시간 항목을 업데이트했습니다",
+      "deleted": "{duration} 시간 항목을 삭제했습니다"
+    }
   }
 }

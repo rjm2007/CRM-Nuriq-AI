@@ -458,5 +458,53 @@
       "label": "Epic-titel",
       "required": "Epic-titel is verplicht."
     }
+  },
+  "work_log": {
+    "title": "Geregistreerde tijd",
+    "log_time": "Tijd registreren",
+    "edit_entry": "Tijdregistratie bewerken",
+    "save": "Opslaan",
+    "saving": "Opslaan",
+    "entry_actions": "Acties voor tijdregistratie",
+    "own": "Dit werkitem: {duration}",
+    "including_sub_work_items": "Inclusief subwerkitems: {duration}",
+    "logged_by": "Geregistreerd door {name}",
+    "empty": {
+      "title": "Nog geen tijd geregistreerd",
+      "description": "Registreer de tijd die u aan dit werkitem besteedt."
+    },
+    "fields": {
+      "date": "Datum",
+      "duration": "Duur",
+      "duration_placeholder": "1h 30m",
+      "duration_hint": "Bijvoorbeeld 1h 30m, 1:30 of 90m",
+      "duration_invalid": "Voer een duur in tussen 1 minuut en 24 uur.",
+      "duration_required": "Voer een duur in.",
+      "note": "Notitie",
+      "note_placeholder": "Waar heeft u aan gewerkt?",
+      "member": "Lid"
+    },
+    "delete": {
+      "title": "Tijdregistratie verwijderen",
+      "content": "Deze tijdregistratie van {duration} verwijderen? Dit kan niet ongedaan worden gemaakt."
+    },
+    "toasts": {
+      "created": "Tijd geregistreerd.",
+      "updated": "Tijdregistratie bijgewerkt.",
+      "deleted": "Tijdregistratie verwijderd.",
+      "save_error": "Kan de tijdregistratie niet opslaan. Probeer het opnieuw.",
+      "delete_error": "Kan de tijdregistratie niet verwijderen. Probeer het opnieuw."
+    },
+    "errors": {
+      "time_tracking_disabled": "Tijdregistratie is uitgeschakeld voor dit project.",
+      "invalid_worklog_user": "Tijd kan alleen worden geregistreerd voor actieve projectbeheerders of -leden.",
+      "forbidden": "U kunt alleen uw eigen tijdregistraties wijzigen."
+    },
+    "activity": {
+      "created": "heeft {duration} tijd geregistreerd",
+      "updated": "heeft een tijdregistratie gewijzigd van {from} naar {to}",
+      "updated_same": "heeft een tijdregistratie van {duration} bijgewerkt",
+      "deleted": "heeft een tijdregistratie van {duration} verwijderd"
+    }
   }
 }
